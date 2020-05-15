@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="PostgreSQL" id="Project_2bef6b8" database="PostgreSQL" >
+	<schema name="public" >
+		<table name="conteo_votos" >
+			<column name="id_voto" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_proc_elect" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_det_proc_elect" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_tipo_proc_elec" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_lista" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_facultad" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_escuela" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_departamento" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_general" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="total" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
+		</table>
+		<table name="departamento_academico" >
+			<column name="id_dptoaca" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Identificador  autonumérico  del Departamento Académico]]></comment>
+			</column>
+			<column name="id_facultad" type="integer" jt="4" />
+			<column name="nombre" type="varchar" length="100" decimal="0" jt="12" mandatory="y" >
+				<comment><![CDATA[Nombre del Departamento Académico]]></comment>
+			</column>
+			<column name="estado" type="bool" length="1" decimal="0" jt="-7" mandatory="y" >
+				<comment><![CDATA[0=inactivo,1=activo]]></comment>
+			</column>
+			<index name="departamento_academico_pkey" unique="PRIMARY_KEY" >
+				<column name="id_dptoaca" />
+			</index>
+			<index name="unq_departamento_academico_id_facultad" unique="UNIQUE" >
+				<column name="id_facultad" />
+			</index>
+			<fk name="fk_departamento_academico_padron_electoral" to_schema="public" to_table="padron_electoral" >
+				<fk_column name="id_dptoaca" pk="id_dptoaca" />
+			</fk>
+			<fk name="fk_departamento_academico_listas_electorales" to_schema="public" to_table="listas_electorales" >
+				<fk_column name="id_dptoaca" pk="id_dptoaca" />
+			</fk>
+		</table>
+		<table name="detalle_proceso_electoral" >
+			<column name="id_det_proc_elec" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_lista_electoral" type="integer" jt="4" />
+			<index name="unq_detalle_proceso_electoral_id_lista_electoral" unique="UNIQUE" >
+				<column name="id_lista_electoral" />
+			</index>
+		</table>
+		<table name="escuelas" >
+			<column name="id_escuela" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Identificador autonumérico de las escuelas]]></comment>
+			</column>
+			<column name="id_facultad" type="integer" jt="4" />
+			<column name="nues" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Código interno que identifica las escuelas]]></comment>
+			</column>
+			<column name="nombre" type="varchar" length="100" decimal="0" jt="12" mandatory="y" >
+				<comment><![CDATA[Nombre de la Escuela]]></comment>
+			</column>
+			<column name="estado" type="bool" length="1" decimal="0" jt="-7" mandatory="y" >
+				<comment><![CDATA[0=inactivo,1=activo]]></comment>
+			</column>
+			<index name="escuelas_pkey" unique="PRIMARY_KEY" >
+				<column name="id_escuela" />
+			</index>
+			<index name="unq_escuelas_id_facultad" unique="UNIQUE" >
+				<column name="id_facultad" />
+			</index>
+			<fk name="fk_escuelas_padron_electoral" to_schema="public" to_table="padron_electoral" >
+				<fk_column name="id_escuela" pk="id_escuela" />
+			</fk>
+			<fk name="fk_escuelas_listas_electorales" to_schema="public" to_table="listas_electorales" >
+				<fk_column name="id_escuela" pk="id_escuela" />
+			</fk>
+		</table>
+		<table name="facultades" >
+			<column name="id_facultad" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Identificador  autonumérico  de la Facultad]]></comment>
+			</column>
+			<column name="nombre" type="varchar" jt="12" />
+			<column name="estado" type="bool" length="1" decimal="0" jt="-7" mandatory="y" >
+				<comment><![CDATA[0=inactivo, 1=inactivo]]></comment>
+			</column>
+			<index name="facultades_pkey" unique="PRIMARY_KEY" >
+				<column name="id_facultad" />
+			</index>
+			<fk name="fk_facultades_padron_electoral" to_schema="public" to_table="padron_electoral" >
+				<fk_column name="id_facultad" pk="id_facultad" />
+			</fk>
+			<fk name="fk_facultades_listas_electorales" to_schema="public" to_table="listas_electorales" >
+				<fk_column name="id_facultad" pk="id_facultad" />
+			</fk>
+			<fk name="fk_facultades_departamento_academico" to_schema="public" to_table="departamento_academico" >
+				<fk_column name="id_facultad" pk="id_facultad" />
+			</fk>
+			<fk name="fk_facultades_escuelas" to_schema="public" to_table="escuelas" >
+				<fk_column name="id_facultad" pk="id_facultad" />
+			</fk>
+		</table>
+		<table name="listas_electorales" >
+			<column name="id_lista_electoral" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_facultad" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_dptoaca" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_escuela" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_tipo_proc_elec" type="integer" jt="4" />
+			<column name="nombre" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
+			<column name="logo" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
+			<column name="tipo_representacion" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
+			<column name="representacion" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
+			<index name="pk_listas_electorales_id_lista_electoral" unique="PRIMARY_KEY" >
+				<column name="id_lista_electoral" />
+			</index>
+			<index name="unq_listas_electorales_id_facultad" unique="UNIQUE" >
+				<column name="id_facultad" />
+			</index>
+			<index name="unq_listas_electorales_id_dptoaca" unique="UNIQUE" >
+				<column name="id_dptoaca" />
+			</index>
+			<index name="unq_listas_electorales_id_escuela" unique="UNIQUE" >
+				<column name="id_escuela" />
+			</index>
+			<index name="unq_listas_electorales_id_tipo_proc_elec" unique="UNIQUE" >
+				<column name="id_tipo_proc_elec" />
+			</index>
+			<fk name="fk_listas_electorales_detalle_proceso_electoral" to_schema="public" to_table="detalle_proceso_electoral" >
+				<fk_column name="id_lista_electoral" pk="id_lista_electoral" />
+			</fk>
+			<fk name="fk_listas_electorales_proceso_padron" to_schema="public" to_table="votacion" >
+				<fk_column name="id_lista_electoral" pk="id_lista_electoral" />
+			</fk>
+		</table>
+		<table name="padron_electoral" >
+			<comment><![CDATA[Se debe pensar como se va a automatizar la subida de electores habiles para cada proceso electoral]]></comment>
+			<column name="id_elector" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Identificador autonumérico del Elector]]></comment>
+			</column>
+			<column name="id_facultad" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Llave foránea de la facultad]]></comment>
+			</column>
+			<column name="id_dptoaca" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Llave foránea del Departamento Académico]]></comment>
+			</column>
+			<column name="id_escuela" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Llave foránea de la escuela]]></comment>
+			</column>
+			<column name="tipo_elector" type="integer" jt="4" >
+				<comment><![CDATA[0=docente,1=administrativo,2=estudiante,3=egresado,4=directivo]]></comment>
+			</column>
+			<column name="dni" type="varchar" length="8" decimal="0" jt="12" mandatory="y" >
+				<comment><![CDATA[Documento nacional de identidad]]></comment>
+			</column>
+			<column name="email" type="varchar" length="100" decimal="0" jt="12" mandatory="y" >
+				<comment><![CDATA[Correo electrónico]]></comment>
+			</column>
+			<column name="nombres" type="varchar" length="100" decimal="0" jt="12" mandatory="y" >
+				<comment><![CDATA[Nombres]]></comment>
+			</column>
+			<column name="ap_pat" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Apellido Paterno]]></comment>
+			</column>
+			<column name="ap_mat" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[Apellido Materno]]></comment>
+			</column>
+			<column name="clave_ingreso" type="varchar" length="100" decimal="0" jt="12" mandatory="y" >
+				<comment><![CDATA[Clave unica de ingreso autogenerada 24 horas antes de la votación]]></comment>
+			</column>
+			<index name="pk_padron_electoral_id_elector" unique="PRIMARY_KEY" >
+				<column name="id_elector" />
+			</index>
+			<index name="unq_padron_electoral_id_facultad" unique="UNIQUE" >
+				<column name="id_facultad" />
+			</index>
+			<index name="unq_padron_electoral_id_escuela" unique="UNIQUE" >
+				<column name="id_escuela" />
+			</index>
+			<index name="unq_padron_electoral_id_dptoaca" unique="UNIQUE" >
+				<column name="id_dptoaca" />
+			</index>
+			<fk name="fk_padron_electoral_asistencia" to_schema="public" to_table="votacion" >
+				<fk_column name="id_elector" pk="id_elector" />
+			</fk>
+		</table>
+		<table name="procesos_electorales" >
+			<column name="id_proc_elec" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Identificador  autonumérico  del proceso]]></comment>
+			</column>
+			<column name="anio_proceso" type="date" length="13" decimal="0" jt="91" mandatory="y" >
+				<comment><![CDATA[Corresponde al año al que corresponde el proceso]]></comment>
+			</column>
+			<column name="fecha_ingreso" type="timestamp" length="29" decimal="6" jt="93" mandatory="y" >
+				<comment><![CDATA[Fecha de registro del proceso]]></comment>
+			</column>
+			<column name="numero_procesos" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Número de procesos que componen el proceso macro]]></comment>
+			</column>
+			<column name="fecha_inicio" type="timestamp" length="29" decimal="6" jt="93" mandatory="y" >
+				<comment><![CDATA[Fecha en que se dara el proceso de votacion]]></comment>
+			</column>
+			<column name="fecha_fin" type="timestamp" jt="93" />
+			<index name="procesos_electorales_pkey" unique="PRIMARY_KEY" >
+				<column name="id_proc_elec" />
+			</index>
+			<fk name="fk_procesos_electorales_asistencia" to_schema="public" to_table="votacion" >
+				<fk_column name="id_proc_elec" pk="id_proc_elec" />
+			</fk>
+			<fk name="fk_procesos_electorales_tipos_proceso" to_schema="public" to_table="tipos_proceso" >
+				<fk_column name="id_proc_elec" pk="id_proc_elec" />
+			</fk>
+		</table>
+		<table name="tipos_proceso" >
+			<column name="id_tipo_proc_elec" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Identificador autonumérico del tipo de proceso elctoral]]></comment>
+			</column>
+			<column name="id_proc_elec" type="integer" jt="4" >
+				<comment><![CDATA[Llave foránea del proceso electoral]]></comment>
+			</column>
+			<column name="nomb_proc_elec" type="varchar" length="100" decimal="0" jt="12" mandatory="y" >
+				<comment><![CDATA[Nombre del tipo de elecciones]]></comment>
+			</column>
+			<index name="tipos_proceso_pkey" unique="PRIMARY_KEY" >
+				<column name="id_tipo_proc_elec" />
+			</index>
+			<index name="unq_tipos_proceso_id_proc_elec" unique="UNIQUE" >
+				<column name="id_proc_elec" />
+			</index>
+			<fk name="fk_tipos_proceso_listas_electorales" to_schema="public" to_table="listas_electorales" >
+				<fk_column name="id_tipo_proc_elec" pk="id_tipo_proc_elec" />
+			</fk>
+		</table>
+		<table name="votacion" >
+			<column name="id_votacion" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Identificador autonumérico de la asistentencia al proceso electoral]]></comment>
+			</column>
+			<column name="id_proc_elec" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Llave foránea del proceso electoral]]></comment>
+			</column>
+			<column name="id_elector" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[Llave foránea del elector]]></comment>
+			</column>
+			<column name="id_lista_electoral" type="integer" jt="4" />
+			<column name="asistencia" type="timestamp" jt="93" >
+				<comment><![CDATA[0=no asistio, 1=asistio]]></comment>
+			</column>
+			<column name="fecha" type="timestamp" length="29" decimal="6" jt="93" >
+				<comment><![CDATA[Fecha en la que se registró la asistencia]]></comment>
+			</column>
+			<index name="pk_asistencia_id_asistencia" unique="PRIMARY_KEY" >
+				<column name="id_votacion" />
+			</index>
+			<index name="unq_asistencia_id_proc_elec" unique="UNIQUE" >
+				<column name="id_proc_elec" />
+			</index>
+			<index name="unq_asistencia_id_elector" unique="UNIQUE" >
+				<column name="id_elector" />
+			</index>
+			<index name="unq_proceso_padron_id_lista_electoral" unique="UNIQUE" >
+				<column name="id_lista_electoral" />
+			</index>
+		</table>
+	</schema>
+	<connector name="PostgreSQL" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.2.12.jar" driver_desc="Standard" host="localhost" port="5432" instance="evote" user="postgres" passwd="cm9vdA==" />
+	<layout name="Default Layout" id="Layout_10773a2" show_relation="columns" >
+		<comment><![CDATA[Modelo Voto electronico 3.0]]></comment>
+		<entity schema="public" name="departamento_academico" color="BED3F4" x="416" y="352" />
+		<entity schema="public" name="escuelas" color="BED3F4" x="416" y="480" />
+		<entity schema="public" name="facultades" color="BED3F4" x="416" y="240" />
+		<entity schema="public" name="listas_electorales" color="BED3F4" x="48" y="416" />
+		<entity schema="public" name="padron_electoral" color="BED3F4" x="864" y="336" />
+		<entity schema="public" name="procesos_electorales" color="BED3F4" x="384" y="80" />
+		<entity schema="public" name="tipos_proceso" color="BED3F4" x="64" y="96" />
+		<entity schema="public" name="votacion" color="BED3F4" x="816" y="48" />
+	</layout>
+	<layout name="Sample Layout with Tools" id="Layout_59db6af" show_column_type="y" show_relation="columns" >
+		<entity schema="public" name="conteo_votos" color="BED3F4" x="640" y="416" />
+		<entity schema="public" name="departamento_academico" color="BED3F4" x="640" y="720" />
+		<entity schema="public" name="detalle_proceso_electoral" color="BED3F4" x="368" y="720" />
+		<entity schema="public" name="escuelas" color="BED3F4" x="112" y="720" />
+		<entity schema="public" name="facultades" color="BED3F4" x="112" y="528" />
+		<entity schema="public" name="listas_electorales" color="BED3F4" x="48" y="80" />
+		<entity schema="public" name="padron_electoral" color="BED3F4" x="368" y="96" />
+		<entity schema="public" name="procesos_electorales" color="BED3F4" x="640" y="192" />
+		<entity schema="public" name="tipos_proceso" color="BED3F4" x="1200" y="416" />
+		<entity schema="public" name="votacion" color="BED3F4" x="368" y="416" />
+		<callout x="368" y="304" pointer="Round" >
+			<comment><![CDATA[This is a sample layout with tools. 
+For better understanding the schema create multiple layouts with same or different tables. 
+Double-click on any table, column or foreign key to edit.]]></comment>
+		</callout>
+		<group name="asistencia_proceso_electoral" color="ECF0F7" >
+			<entity schema="public" name="votacion" />
+			<entity schema="public" name="conteo_votos" />
+			<entity schema="public" name="departamento_academico" />
+			<entity schema="public" name="detalle_proceso_electoral" />
+			<entity schema="public" name="escuelas" />
+			<entity schema="public" name="facultades" />
+			<entity schema="public" name="listas_electorales" />
+			<entity schema="public" name="padron_electoral" />
+			<entity schema="public" name="procesos_electorales" />
+			<entity schema="public" name="tipos_proceso" />
+		</group>
+		<script name="Sample SQL Editor" id="Editor_872ec8" language="SQL" >
+			<string><![CDATA[SELECT id_asistencia, id_proc_elec, id_elector, id_facultad, id_escuela, id_departamento, id_general, fecha, clave_ingreso, 
+	dni
+FROM
+	"public".asistencia_proceso_electoral l;]]></string>
+		</script>
+		<browser id="Browse_5353d1a" name="Sample Relational Data Browse" confirm_updates="y" >
+			<browse_table schema="public" entity="votacion" x="20" y="20" width="400" height="300" />
+		</browser>
+		<query id="Query_3127b39" name="Sample Query Builder" >
+			<query_table schema="public" name="votacion" alias="ape" x="48" y="48" >
+				<column name="id_votacion" />
+				<column name="id_proc_elec" />
+				<column name="id_elector" />
+				<column name="fecha" />
+			</query_table>
+		</query>
+	</layout>
+</project>
