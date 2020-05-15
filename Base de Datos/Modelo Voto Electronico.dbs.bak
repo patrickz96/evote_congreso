@@ -23,9 +23,6 @@
 			<index name="unq_asistencia_id_elector" unique="UNIQUE" >
 				<column name="id_elector" />
 			</index>
-			<fk name="fk_asistencia_proceso_electoral_votos_emitidos" to_schema="public" to_table="votos_emitidos" >
-				<fk_column name="id_asistprocelec" pk="id_asistprocelec" />
-			</fk>
 		</table>
 		<table name="conteo_votos" >
 			<column name="id_voto" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
@@ -55,19 +52,12 @@
 			<fk name="fk_departamento_academico_padron_electoral" to_schema="public" to_table="padron_electoral" >
 				<fk_column name="id_dptoaca" pk="id_dptoaca" />
 			</fk>
-			<fk name="fk_departamento_academico_listas_electorales" to_schema="public" to_table="listas_electorales" >
-				<fk_column name="id_dptoaca" pk="id_dptoaca" />
-			</fk>
 		</table>
 		<table name="detalle_proceso_electoral" >
-			<column name="id_det_proc_elec" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
-			<column name="id_lista_electoral" type="integer" jt="4" />
-			<index name="unq_detalle_proceso_electoral_id_lista_electoral" unique="UNIQUE" >
-				<column name="id_lista_electoral" />
-			</index>
-			<fk name="fk_detalle_proceso_electoral_votos_emitidos" to_schema="public" to_table="votos_emitidos" >
-				<fk_column name="id_det_proc_elec" pk="id_lista_electoral" />
-			</fk>
+			<column name="id_proc_elect" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_det_proc_elect" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_tipo_proc_elec" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_tipo_elec" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
 		</table>
 		<table name="escuelas" >
 			<column name="id_escuela" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
@@ -88,9 +78,6 @@
 			<fk name="fk_escuelas_padron_electoral" to_schema="public" to_table="padron_electoral" >
 				<fk_column name="id_escuela" pk="id_escuela" />
 			</fk>
-			<fk name="fk_escuelas_listas_electorales" to_schema="public" to_table="listas_electorales" >
-				<fk_column name="id_escuela" pk="id_escuela" />
-			</fk>
 		</table>
 		<table name="facultades" >
 			<column name="id_facultad" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
@@ -108,16 +95,16 @@
 			<fk name="fk_facultades_padron_electoral" to_schema="public" to_table="padron_electoral" >
 				<fk_column name="id_facultad" pk="id_facultad" />
 			</fk>
-			<fk name="fk_facultades_listas_electorales" to_schema="public" to_table="listas_electorales" >
-				<fk_column name="id_facultad" pk="id_facultad" />
-			</fk>
 		</table>
 		<table name="listas_electorales" >
 			<column name="id_lista_electoral" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_proc_elec" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_det_proc_elect" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_tipo_proc_elec" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
 			<column name="id_facultad" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
-			<column name="id_dptoaca" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
 			<column name="id_escuela" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
-			<column name="id_tipo_proc_elec" type="integer" jt="4" />
+			<column name="id_departamento" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_general" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
 			<column name="nombre" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
 			<column name="logo" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
 			<column name="tipo_representacion" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
@@ -125,24 +112,9 @@
 			<index name="pk_listas_electorales_id_lista_electoral" unique="PRIMARY_KEY" >
 				<column name="id_lista_electoral" />
 			</index>
-			<index name="unq_listas_electorales_id_facultad" unique="UNIQUE" >
-				<column name="id_facultad" />
+			<index name="unq_listas_electorales_id_proc_elec" unique="UNIQUE" >
+				<column name="id_proc_elec" />
 			</index>
-			<index name="unq_listas_electorales_id_dptoaca" unique="UNIQUE" >
-				<column name="id_dptoaca" />
-			</index>
-			<index name="unq_listas_electorales_id_escuela" unique="UNIQUE" >
-				<column name="id_escuela" />
-			</index>
-			<index name="unq_listas_electorales_id_tipo_proc_elec" unique="UNIQUE" >
-				<column name="id_tipo_proc_elec" />
-			</index>
-			<fk name="fk_listas_electorales_detalle_proceso_electoral" to_schema="public" to_table="detalle_proceso_electoral" >
-				<fk_column name="id_lista_electoral" pk="id_lista_electoral" />
-			</fk>
-			<fk name="fk_listas_electorales_votos_emitidos" to_schema="public" to_table="votos_emitidos" >
-				<fk_column name="id_lista_electoral" pk="id_lista_electoral" />
-			</fk>
 		</table>
 		<table name="padron_electoral" >
 			<column name="id_elector" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
@@ -219,7 +191,7 @@
 			<fk name="fk_procesos_electorales_asistencia" to_schema="public" to_table="asistencia_proceso_electoral" >
 				<fk_column name="id_proc_elec" pk="id_proc_elec" />
 			</fk>
-			<fk name="fk_procesos_electorales_tipos_proceso" to_schema="public" to_table="tipos_proceso" >
+			<fk name="fk_procesos_electorales_listas_electorales" to_schema="public" to_table="listas_electorales" >
 				<fk_column name="id_proc_elec" pk="id_proc_elec" />
 			</fk>
 		</table>
@@ -238,49 +210,40 @@
 			</fk>
 		</table>
 		<table name="tipos_proceso" >
-			<column name="id_tipo_proc_elec" type="integer" length="10" decimal="0" jt="4" mandatory="y" >
-				<comment><![CDATA[Identificador autonumérico del tipo de proceso elctoral]]></comment>
-			</column>
-			<column name="id_proc_elec" type="integer" jt="4" >
-				<comment><![CDATA[Llave foránea del proceso electoral]]></comment>
-			</column>
-			<column name="nomb_proc_elec" type="varchar" length="100" decimal="0" jt="12" mandatory="y" >
-				<comment><![CDATA[Nombre del tipo de elecciones]]></comment>
-			</column>
+			<column name="id_tipo_proc_elec" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="nomb_proc_elec" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
 			<index name="tipos_proceso_pkey" unique="PRIMARY_KEY" >
 				<column name="id_tipo_proc_elec" />
 			</index>
-			<index name="unq_tipos_proceso_id_proc_elec" unique="UNIQUE" >
-				<column name="id_proc_elec" />
-			</index>
-			<fk name="fk_tipos_proceso_listas_electorales" to_schema="public" to_table="listas_electorales" >
-				<fk_column name="id_tipo_proc_elec" pk="id_tipo_proc_elec" />
-			</fk>
 		</table>
 		<table name="votos_emitidos" >
 			<column name="id_voto" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
-			<column name="id_lista_electoral" type="integer" jt="4" />
-			<column name="id_asistprocelec" type="integer" jt="4" />
-			<index name="unq_votos_emitidos_id_elector" unique="UNIQUE" >
-				<column name="id_asistprocelec" />
-			</index>
-			<index name="unq_votos_emitidos_id_det_proc_elec" unique="UNIQUE" >
-				<column name="id_lista_electoral" />
-			</index>
+			<column name="id_proc_elect" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_det_proc_elect" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_tipo_proc_elec" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_facultad" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_escuela" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_departamento" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_general" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id_asistencia" type="integer" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="total_listas" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
+			<column name="voto" type="varchar" length="100" decimal="0" jt="12" mandatory="y" />
 		</table>
 	</schema>
 	<connector name="PostgreSQL" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.2.12.jar" driver_desc="Standard" host="localhost" port="5432" instance="evote" user="postgres" passwd="cm9vdA==" />
 	<layout name="Default Layout" id="Layout_10773a2" show_relation="columns" >
-		<entity schema="public" name="asistencia_proceso_electoral" color="BED3F4" x="896" y="80" />
-		<entity schema="public" name="departamento_academico" color="BED3F4" x="560" y="384" />
-		<entity schema="public" name="escuelas" color="BED3F4" x="592" y="496" />
-		<entity schema="public" name="facultades" color="BED3F4" x="608" y="256" />
-		<entity schema="public" name="listas_electorales" color="BED3F4" x="240" y="432" />
-		<entity schema="public" name="padron_electoral" color="BED3F4" x="1056" y="352" />
-		<entity schema="public" name="procesos_electorales" color="BED3F4" x="592" y="96" />
-		<entity schema="public" name="tipos_electores" color="BED3F4" x="576" y="624" />
-		<entity schema="public" name="tipos_proceso" color="BED3F4" x="256" y="112" />
-		<entity schema="public" name="votos_emitidos" color="BED3F4" x="48" y="48" />
+		<entity schema="public" name="asistencia_proceso_electoral" color="BED3F4" x="704" y="48" />
+		<entity schema="public" name="conteo_votos" color="BED3F4" x="64" y="704" />
+		<entity schema="public" name="departamento_academico" color="BED3F4" x="368" y="352" />
+		<entity schema="public" name="detalle_proceso_electoral" color="BED3F4" x="48" y="560" />
+		<entity schema="public" name="escuelas" color="BED3F4" x="400" y="464" />
+		<entity schema="public" name="facultades" color="BED3F4" x="416" y="224" />
+		<entity schema="public" name="listas_electorales" color="BED3F4" x="64" y="256" />
+		<entity schema="public" name="padron_electoral" color="BED3F4" x="704" y="304" />
+		<entity schema="public" name="procesos_electorales" color="BED3F4" x="400" y="64" />
+		<entity schema="public" name="tipos_electores" color="BED3F4" x="384" y="624" />
+		<entity schema="public" name="tipos_proceso" color="BED3F4" x="464" y="768" />
+		<entity schema="public" name="votos_emitidos" color="BED3F4" x="256" y="752" />
 	</layout>
 	<layout name="Sample Layout with Tools" id="Layout_59db6af" show_column_type="y" show_relation="columns" >
 		<entity schema="public" name="asistencia_proceso_electoral" color="BED3F4" x="368" y="416" />
