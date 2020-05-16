@@ -28,10 +28,12 @@ All set!!!
 * Port `5432`
 * Password `e3f61d1aeff561d1c4019d473d2bbd007fe0e097d62c6a5844383acdb796713a`
 
-## Update a model from table
+## Update models from database 
 1) Restore the development database in local with the name evote <br/>
 2) In the project directory run this code:<br/>
 * `npx sequelize-auto -h localhost -d evote -u postgres -x 'your_password' -p 5432 -e postgres`
+3) To restore an specific model from a table:<br/>
+* `npx sequelize-auto -h localhost -d evote -t 'table_name' -u postgres -x 'your_password' -p 5432 -e postgres`
 
 
 
