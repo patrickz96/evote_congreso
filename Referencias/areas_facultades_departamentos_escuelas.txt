@@ -1,0 +1,148 @@
+AREA: actarea
++------+--------------------------------+
+| area | narea                          |
++------+--------------------------------+
+| 1    | CIENCIAS BIOMEDICAS            |
+| 2    | CIENCIAS FISICAS E INGENIERIAS |
+| 3    | CIENCIAS SOCIALES              |
++------+--------------------------------+
+
+FACULTAD: actfacu
+| area | facu | nfac                                                                          |
++------+------+-------------------------------------------------------------------------------+
+| 1    | CB   | FACULTAD DE CIENCIAS BIOLOGICAS                                               |
+| 1    | EN   | FACULTAD DE ENFERMERIA                                                        |
+| 1    | MD   | FACULTAD DE MEDICINA                                                          |
+| 2    | AU   | FACULTAD DE ARQUITECTURA Y URBANISMO                                          |
+| 2    | CN   | FACULTAD DE CIENCIAS NATURALES                                                |
+| 2    | GG   | FACULTAD DE INGENIERIA GEOLOGICA, GEOFISICA Y MINAS                           |
+| 2    | IC   | FACULTAD DE INGENIERIA CIVIL                                                  |
+| 2    | IP   | FACULTAD DE INGENIERIA DE PROCESOS                                            |
+| 2    | IS   | FACULTAD DE INGENIERIA DE PRODUCCION Y SERVICIOS                              |
+| 3    | CC   | FACULTAD DE CIENCIAS CONTABLES Y ADMINISTRATIVAS                              |
+| 3    | CE   | FACULTAD DE CIENCIAS DE LA EDUCACION                                          |
+| 3    | CH   | FACULTAD DE CIENCIAS HISTORICOS SOCIALES                                      |
+| 3    | DE   | FACULTAD DE DERECHO                                                           |
+| 3    | EC   | FACULTAD DE ECONOMIA                                                          |
+| 3    | FH   | FACULTAD DE FILOSOFIA Y HUMANIDADES                                           |
+| 3    | PR   | FACULTAD DE PSICOLOGIA, RELACIONES INDUSTRIALES Y CIENCIAS DE LA COMUNICACION |
+| 3    | CF   | FACULTAD DE CIENCIAS CONTABLES Y FINANCIERAS                                  |
+| 3    | AD   | FACULTAD DE ADMINISTRACION                                                    |
+| 1    | AG   | FACULTAD DE AGRONOMIA                                                         |
++------+------+-------------------------------------------------------------------------------+
+
+DEPARTAMENTOS: actdepa
++------+------+--------------------------------------+-----+-----+
+| facu | depa | ndep                                 | flc | fln |
++------+------+--------------------------------------+-----+-----+
+| CN   | FS   | F I S I C A                          |     |   1 |
+| CN   | MA   | MATEMATICAS Y ESTADI                 |     |   0 |
+| CN   | QU   | Q U I M I C A                        |     |   1 |
+| DE   | PR   | DERECHO PRIVADO                      |     |   1 |
+| DE   | PU   | DERECHO PUBLICO                      |     |   1 |
+| EC   | EC   | E C O N O M I A                      |     |   1 |
+| EN   | EN   | E N F E R M E R I A                  |     |   1 |
+| FH   | FL   | F I L O S O F I A                    |     |   1 |
+| FH   | LL   | LITERATURA Y LENGUA                  |     |   1 |
+| GG   | GG   | GEOLOGIA Y GEOFISICA                 |     |   1 |
+| IC   | IC   | INGENIERIA CIVIL                     |     |   1 |
+| IP   | IM   | ING. METALURGICA E ING. AMBIENTAL    |     |   1 |
+| IP   | IQ   | ING. QUIMICA E IND. ALIM.            |     |   0 |
+| IS   | IE   | ING. ELECTRONICA                     |     |   1 |
+| IS   | II   | ING. INDUSTRIAL                      |     |   1 |
+| IS   | ME   | ING. MECANICA-ELECTR                 |     |   1 |
+| MD   | CR   | C I R U G I A                        |     |   1 |
+| MD   | MN   | MEDICINA Y NEUROPSIQUIATRIA          |     |   0 |
+| MD   | MP   | MICROBIOLOGIA Y PATOLOGIA            |     |   1 |
+| MD   | MH   | MORFOLOGIA HUMANA                    |     |   1 |
+| MD   | OG   | OBSTETRICIA Y GINECOLOGIA            |     |   1 |
+| MD   | PM   | PEDIATRIA Y MED.SOCIAL               |     |   0 |
+| PR   | PS   | P S I C O L O G I A                  |     |   1 |
+| PR   | RI   | RR. II. Y PP.                        |     |   0 |
+| AD   | AA   | CS.ADMINISTRAT.Y ACT                 |     |   0 |
+| AG   | AG   | CS.AGROPECUARIAS                     |     |   1 |
+| AU   | AQ   | ARQUITECTURA                         |     |   1 |
+| FH   | AR   | A R T E S                            |     |   1 |
+| CB   | BI   | BIOLOGIA                             |     |   1 |
+| MD   | CF   | CS. FISIOLOGICAS                     |     |   1 |
+| CF   | CO   | CONTABILIDAD                         |     |   1 |
+| CE   | ED   | E D U C A C I O N                    |     |   1 |
+| CH   | HG   | HISTO.GEOGR.Y ANTROP                 |     |   1 |
+| CB   | IP   | INGENIERIA PESQUERA                  |     |   1 |
+| CB   | NU   | CS. DE LA NUTRICION                  |     |   1 |
+| CH   | SO   | S O C I O L O G I A                  |     |   1 |
+| CH   | TS   | TRABAJO SOCIAL.                      |     |   1 |
+| PR   | CC   | CS. DE LA COMUNICACION               |     |   1 |
+| IS   | SI   | INGENIERIA DE SISTEMAS E INFORMATICA |     |   1 |
+| MD   | SP   | SALUD PUBLICA                        |     |   1 |
+| IS   | EL   | ING. ELECTRICA                       |     |   1 |
+| MD   | NC   | NEUROCIENCIAS                        |     |   1 |
+| PR   | RC   | RR.II. Y CIENCIAS DE LA COMUNICACION |     |   0 |
+| MD   | MD   | MEDICINA                             |     |   1 |
+| IP   | MM   | ING. METALURGICA Y MATERIALES        |     |   0 |
+| MD   | PP   | PEDIATRIA                            |     |   1 |
+| AD   | AD   | ADMINISTRACION                       |     |   1 |
+| IP   | IA   | ING. INDUSTRIAS ALIMENTARIAS         |     |   1 |
+| PR   | RR   | RELACIONES INDUSTRIALES              |     |   1 |
+| IP   | MT   | INGENIERIA DE MATERIALES             |     |   1 |
+| CN   | ES   | ESTADISTICA                          |     |   1 |
+| CN   | MS   | MATEMATICAS                          |     |   1 |
+| IP   | QM   | INGENIERIA QUIMICA                   |     |   1 |
+|      | PG   | POSGRADO                             |     |   0 |
++------+------+--------------------------------------+-----+-----+
+
+Escuelas: actescu
+
++------+------+------+----------------------------------------+
+| area | facu | nues | nesc                                   |
++------+------+------+----------------------------------------+
+| 3    | CH   | 479  | TURISMO Y HOTELERÍA                    |
+| 1    | CB   | 402  | BIOLOGÍA                               |
+| 1    | CB   | 403  | CIENCIAS DE LA NUTRICIÓN               |
+| 1    | CB   | 404  | INGENIERÍA PESQUERA                    |
+| 1    | EN   | 405  | ENFERMERÍA                             |
+| 1    | MD   | 406  | MEDICINA                               |
+| 2    | AU   | 431  | ARQUITECTURA                           |
+| 2    | CN   | 432  | FÍSICA                                 |
+| 2    | CN   | 433  | MATEMÁTICAS                            |
+| 2    | CN   | 434  | QUÍMICA                                |
+| 2    | GG   | 435  | INGENIERÍA GEOFÍSICA                   |
+| 2    | GG   | 436  | INGENIERÍA GEOLÓGICA                   |
+| 2    | IS   | 437  | INGENIERÍA ELECTRÓNICA                 |
+| 2    | IS   | 438  | INGENIERÍA INDUSTRIAL                  |
+| 2    | IS   | 439  | INGENIERÍA MECÁNICA ELÉCTRICA          |
+| 2    | IC   | 440  | INGENIERÍA CIVIL                       |
+| 2    | IP   | 441  | INGENIERÍA METALÚRGICA                 |
+| 2    | IP   | 442  | INGENIERÍA QUÍMICA                     |
+| 3    | CH   | 463  | HISTORIA                               |
+| 3    | CH   | 464  | SOCIOLOGÍA                             |
+| 3    | CH   | 465  | TRABAJO SOCIAL                         |
+| 3    | CH   | 466  | ANTROPOLOGÍA                           |
+| 3    | FH   | 471  | ARTES                                  |
+| 3    | EC   | 470  | ECONOMÍA                               |
+| 3    | AD   | 467  | ADMINISTRACIÓN                         |
+| 3    | PR   | 478  | CIENCIAS DE LA COMUNICACIÓN            |
+| 3    | CF   | 468  | CONTABILIDAD                           |
+| 3    | PR   | 475  | RELACIONES INDUSTRIALES                |
+| 3    | PR   | 474  | PSICOLOGÍA                             |
+| 3    | FH   | 472  | FILOSOFÍA                              |
+| 3    | FH   | 473  | LITERATURA Y LINGÜÍSTICA               |
+| 3    | CE   | 461  | EDUCACIÓN                              |
+| 1    | AG   | 401  | AGRONOMÍA                              |
+| 2    | IP   | 444  | INGENIERÍA DE INDUSTRIAS ALIMENTARIAS  |
+| 2    | IP   | 445  | INGENIERÍA DE MATERIALES               |
+| 2    | GG   | 443  | INGENIERÍA DE MINAS                    |
+| 2    | IS   | 446  | INGENIERÍA DE SISTEMAS                 |
+| 2    | IS   | 447  | INGENIERÍA ELÉCTRICA                   |
+| 2    | IS   | 448  | INGENIERÍA MECÁNICA                    |
+| 3    | DE   | 469  | DERECHO                                |
+| 3    | CF   | 486  | FINANZAS                               |
+| 3    | AD   | 487  | MARKETING                              |
+| 3    | AD   | 488  | BANCA Y SEGUROS                        |
+| 3    | AD   | 489  | GESTIÓN                                |
+| 2    | IP   | 449  | INGENIERÍA AMBIENTAL                   |
+| 2    | IS   | 450  | CIENCIA DE LA COMPUTACIÓN              |
+| 2    | IC   | 451  | INGENIERÍA SANITARIA                   |
+| 2    | IS   | 452  | INGENIERÍA EN TELECOMUNICACIONES       |
++------+------+------+----------------------------------------+
+
