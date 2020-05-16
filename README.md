@@ -3,121 +3,37 @@
 # Electronic Vote (evote)
 
 
-### Database creation
+## Get started
 
-```sql
+1) Clone repository<br/>
+`git clone https://github.com/UNSA-OUIS/elecciones-virtuales.git`
 
-create database evote;
+2) Change directory<br/>
+`cd elecciones-virtuales`
 
-create table facultades(		            		            
-id_facultad	INTEGER PRIMARY KEY,			
-nombre	VARCHAR(100) NOT NULL,			
-estado BOOLEAN NOT NULL
-);				
-				
-create table departamento_academico(
-id_dptoaca INTEGER PRIMARY KEY,
-nombres VARCHAR(100) NOT NULL,
-estado BOOLEAN NOT NULL
-);
+3) Install dependencies<br/>
+`npm install`
 
-create table escuelas(
-id_escuela INTEGER PRIMARY KEY,
-nues INTEGER NOT NULL,
-nombres VARCHAR(100) NOT NULL,
-estado BOOLEAN NOT NULL
-);
+All set!!!
 
-create table tipos_electores(
-id_tipo_elec INTEGER PRIMARY KEY,
-nomb_tipo_elec VARCHAR(100) NOT NULL
-);
+## Run App
 
-create table tipos_proceso(     
-id_tipo_proc_elec INTEGER PRIMARY KEY,
-nomb_proc_elec VARCHAR(100) NOT NULL
-);
+* `npm start`
 
-create table procesos_electorales(      
-id_proc_elec INTEGER PRIMARY KEY,
-anio DATE NOT NULL,
-fecha_ingreso TIMESTAMP NOT NULL,
-numero_procesos INTEGER NOT NULL,
-Fecha_proc_electoral TIMESTAMP NOT NULL
-);
+## Configuration Development Database using Heroku 
 
-create table detalle_proceso_electoral(
-id_proc_elect INTEGER NOT NULL,
-id_det_proc_elect INTEGER NOT NULL,
-id_tipo_proc_elec INTEGER NOT NULL,
-id_tipo_elec INTEGER NOT NULL
-);
+* Host `ec2-52-71-55-81.compute-1.amazonaws.com`
+* Database `daitvf87a4l2mq`
+* User `nnezeqdygiubyg`
+* Port `5432`
+* Password `e3f61d1aeff561d1c4019d473d2bbd007fe0e097d62c6a5844383acdb796713a`
 
-create table padron_electoral(
-id_proc_elect INTEGER NOT NULL,
-id_elector INTEGER NOT NULL,
-tipo_elector BOOLEAN NOT NULL,
-dni VARCHAR(8) NOT NULL,
-correo VARCHAR(100) NOT NULL,
-nombres VARCHAR(100) NOT NULL,
-id_facultad INTEGER NOT NULL,    
-id_escuela INTEGER NOT NULL,      
-id_departamento INTEGER NOT NULL, 
-id_otros INTEGER NOT NULL,
-clave_ingreso VARCHAR(100) NOT NULL
-);
+## Update models from database 
+1) Restore the development database in local with the name evote <br/>
+2) In the project directory run this code:<br/>
+* `npx sequelize-auto -h localhost -d evote -u postgres -x 'your_password' -p 5432 -e postgres`
+3) To restore an specific model from a table:<br/>
+* `npx sequelize-auto -h localhost -d evote -t 'table_name' -u postgres -x 'your_password' -p 5432 -e postgres`
 
-create table listas_electorales(
-id_lista INTEGER NOT NULL,
-id_proc_elect INTEGER NOT NULL,
-id_det_proc_elect INTEGER NOT NULL,
-id_tipo_proc_elec INTEGER NOT NULL,
-id_facultad INTEGER NOT NULL,     
-id_escuela INTEGER NOT NULL,   
-id_departamento INTEGER NOT NULL,
-id_general INTEGER NOT NULL,
-nombre VARCHAR(100) NOT NULL,
-logo VARCHAR(100) NOT NULL,
-tipo_representacion VARCHAR(100) NOT NULL,
-representacion VARCHAR(100) NOT NULL
-);
 
-create table asistencia_proceso_electoral(
-id_asistencia INTEGER NOT NULL,
-id_proc_elec INTEGER NOT NULL,
-id_elector INTEGER NOT NULL,
-id_facultad INTEGER NOT NULL, 
-id_escuela INTEGER NOT NULL,  
-id_departamento INTEGER NOT NULL,
-id_general INTEGER NOT NULL,
-fecha timestamp,
-clave_ingreso VARCHAR(100) NOT NULL,
-dni VARCHAR(8) NOT NULL
-);
 
-create table votos_emitidos(
-id_voto INTEGER NOT NULL,
-id_proc_elect INTEGER NOT NULL,
-id_det_proc_elect INTEGER NOT NULL,
-id_tipo_proc_elec INTEGER NOT NULL,
-id_facultad INTEGER NOT NULL,
-id_escuela INTEGER NOT NULL,
-id_departamento INTEGER NOT NULL,
-id_general INTEGER NOT NULL,
-id_asistencia INTEGER NOT NULL,
-total_listas VARCHAR(100) NOT NULL,
-voto VARCHAR(100) NOT NULL
-);
-
-create table conteo_votos(
-id_voto INTEGER NOT NULL,
-id_proc_elect INTEGER NOT NULL,
-id_det_proc_elect INTEGER NOT NULL,
-id_tipo_proc_elec INTEGER NOT NULL,
-id_lista INTEGER NOT NULL,
-id_facultad INTEGER NOT NULL,
-id_escuela INTEGER NOT NULL,   
-id_departamento INTEGER NOT NULL,
-id_general INTEGER NOT NULL,
-total VARCHAR(100) NOT NULL
-);
