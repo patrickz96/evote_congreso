@@ -5,7 +5,6 @@ const models = require("../models");
 const db = require("../models").sequelize;
 
 
-
 router.get('/',function(req,res){
 
     models.electoral_census.findAll().then(data => {
