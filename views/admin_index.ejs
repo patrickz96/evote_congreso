@@ -20,7 +20,7 @@
 
           <div class="">
               <img  src="/images/unsa2.png" id="logo"/>
-              <label style="font-size: xx-large;margin-left: 10px;"> VOTO ELECTRONICO UNSA-2020 </label>
+              <label style="font-size: xx-large;margin-left: 10px;"> VOTO ELECTRONICO-ADMIN PANEL </label>
           </div>
         </div>
 
@@ -29,7 +29,9 @@
           <div class="middle">
                 <div id="login">
           
-                  <form id="form" method="post" action="/login" onsubmit="return validateForm()">
+                  <form action="javascript:void(0);" method="get">
+          
+                    <fieldset class="clearfix">
           
                       <p ><span class="fa fa-user"></span><input type="text"  Placeholder="Correo Electronico" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
                       <p><span class="fa fa-lock"></span><input type="password"  Placeholder="Contraseña" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
@@ -42,12 +44,15 @@
                       </div>
 
                     </fieldset>
-
+          <div class="clearfix"></div>
                   </form>
+          
+                  <div class="clearfix"></div>
           
                 </div> <!-- end login -->
                 <div class="logo">
-                    <img  src="/images/unsa.png" id="logo2"/>
+                    ADMIN
+                    <div class="clearfix"></div>
                 </div>
                 
                 </div>
@@ -59,12 +64,7 @@
   </body>
 </html>
 
-<script>
-  function validateForm(){
-    console.log("validating form");
-    return true;
-  }
-</script>
+
 
 <style>
 
@@ -225,3 +225,7 @@ fieldset{
 
 </style>
 
+<script>
+
+
+</script>
