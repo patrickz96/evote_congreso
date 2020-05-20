@@ -9,12 +9,18 @@ router.get('/', function(req, res) {
     res.render('index', { title: 'Ingreso' });
 });
 
+router.get('/index2', function(req, res) {
+    res.render('index2', { title: 'Ingreso' });
+});
+
 
 router.post('/login', function(req, res) {
-
     //validate user and password
-    res.render('vote', { title: 'Ingreso' });
+    //res.redirect('vote');
+    res.redirect('assistance');
+    //res.render('vote', { title: 'Ingreso' });
 });
+
 
 
 module.exports = router;

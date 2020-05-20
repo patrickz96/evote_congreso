@@ -9,6 +9,7 @@ var ElectoralCensusController = require('./controllers/ElectoralCensusController
 var AdminController = require('./controllers/AdminController');
 var UserController = require('./controllers/UserController');
 var VoteController = require('./controllers/VoteController');
+var AssistanceController = require('./controllers/AssistanceController');
 
 //var indexRouter = require('./routes/index');
 //var usersRouter = require('./routes/users');
@@ -31,8 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', UserController);
 app.use('/admin', AdminController);
 app.use('/vote', VoteController);
-
 app.use('/test', ElectoralCensusController);
+app.use('/assistance',AssistanceController);
 
 
 

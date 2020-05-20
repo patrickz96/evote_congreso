@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evote</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="librerias/scss/estilos.css">
+    <link rel="stylesheet" href="../librerias/scss/estilos.css">
 </head>
 <body>
     <header>
         <div class="cabecera">
-        <img src="images/logo-unsa.svg" alt="UNSA" class="logo">
+            <a href="/">
+                <img src="../images/logo-unsa.svg" alt="UNSA" class="logo" href="/">
+            </a>
             <div class="titulo">
                 <h1><span class="text-big">Elecciones 2020</span></h1>
                 <span>Sistema Digital de Votación <b>E-vote</b></span>
@@ -21,16 +23,15 @@
         <!-- inicio formulario busqueda -->
         <div class="container">
         <div class="vertical-center">
-        <form class="formulario" method="post" action="/login" onsubmit="return validateForm()">
-            <fieldset>
-                <legend>Identificación de Elector</legend>
-                <label for="codigo">Usuario</label>
-                <input id="codigo" name="usuario" type="text" placeholder="Ingrese su usuario" required autofocus>
-                <label for="documento">Contraseña</label>
-                <input id="documento" name="documento" type="password" placeholder="Ingrese su Contraseña" required>
-            </fieldset>
-            <button class="boton-accion" >Ingresar</button>
-        </form>
+            <form class="formulario">
+                <fieldset>
+                    <legend>Emisión de Votación</legend>
+                    <h1>GRACIAS POR EMITIR SU VOTO</h1>
+                    <H3> USTED PUEDE DESCARGAR SU COMPROBANTE PULSANDO DESCARGAR</H3>
+                 
+                </fieldset>
+                <button class="boton-accion" type="submit">DESCARGAR</button>
+            </form>
         </div>
         </div>
     </main>
