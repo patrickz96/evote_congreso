@@ -2,9 +2,11 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var cookieSession = require('cookie-session')
 var logger = require('morgan');
 
 //Controllers
+var AuthController = require('./auth/AuthController');
 var ElectoralCensusController = require('./controllers/ElectoralCensusController');
 var AdminController = require('./controllers/AdminController');
 var UserController = require('./controllers/UserController');
@@ -24,11 +26,16 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cookieSession({
+  name: 'session',
+  keys: ['status', 'msg']
+}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', indexRouter);
 //app.use('/users', usersRouter);
-
+app.use('/admin',AuthController);
 app.use('/', UserController);
 app.use('/admin', AdminController);
 app.use('/vote', VoteController);

@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<!--link rel='stylesheet' href='/stylesheets/register.css' /-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+</head>
+
+<body style="background-color: darkgray">
+
+        <div class="col-md-6" style="float:none;margin:auto;">
+                <% var status; %>
+                <% if(status=="error"){%>
+             
+                    <div class="col-md-6" style="position: fixed;">
+                            <div class="alert alert-danger alert-dismissible" role="alert" align="center">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>¡ERROR! : </strong> <%= message %>
+                            </div>
+                    </div>
+            
+            <%}if(status == "ok"){%>
+   
+                    <div class="col-md-6" style="position: fixed;">
+                        <div class="alert alert-success alert-dismissible" role="alert" align="center">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>¡EXITO!</strong> <%= message %>
+                        </div>
+                    </div>
+           
+        
+            <%}%>
+        </div>
+
+<!--div class="card bg-primary"-->
+<div class="container h-100">
+
+       
+<div class="d-flex justify-content-center h-100">
+
+
+    
+
+    
+    <div class="user_card">
+              
+        <!--div class="d-flex justify-content-center">
+          <div class="brand_logo_container">
+            <img src="/images/bus.svg" class="brand_logo" alt="Logo">
+          </div>
+        </div-->
+    <!--article class="card-body mx-auto" style="max-width: 400px;"-->
+    
+    <!--div class="d-flex justify-content-center form_container"-->
+    <!--h4 class="card-title  text-center ">Crear Cuenta</h4-->
+
+    
+    <h4 class="f_white text-center mb-5">Crear un Administrador eVote</h4>
+
+
+
+
+	<form method="post" action="/admin/register">
+
+            <!--div class="input-group mb-3 mt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                    </div>
+                    <select class="form-control">
+                        <option selected=""> Seleccionar Tipo de Cargo</option>
+                        <option>Administrador</option>
+                        <option>Conductor</option>
+                    </select>
+            </div--> 
+
+            <!--div class="form-group">
+                <label>Your email</label>
+                <input name="" class="form-control" placeholder="Email" type="email">
+            </div-->
+
+            <div class="form-group row ">
+                <label for="email_address" class="col-md-3 col-form-label text-md-center">Nombre:</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" name="name" class="form-control" value="" placeholder="Nombre">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row ">
+                <label for="email_address" class="col-md-3 col-form-label text-md-center">Usuario:</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" name="username" class="form-control" value="" placeholder="Usuario">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row ">
+                <label for="email_address" class="col-md-3 col-form-label text-md-center">Contraseña:</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            </div>
+                            <input type="text" name="password" class="form-control" value="" placeholder="Contraseña">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group row ">
+                    <label for="email_address" class="col-md-3 col-form-label text-md-center">RContraseña:</label>
+                    <div class="col-md-9">
+                        <div class="input-group">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                </div>
+                                <input type="text" name="rpassword" class="form-control" value="" placeholder="Repetir Contraseña">
+                        </div>
+                    </div>
+                </div>
+
+            
+                <!--div class="form-group row">
+                    <label for="email_address" class="col-md-3 col-form-label text-md-center">Empresa:</label>
+                    <div class="col-md-9">
+                        <div class="input-group">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fa fa-building"></i></span>
+                                </div>
+                                <input type="text" name="company_name" class="form-control" value="" placeholder="Empresa">
+                        </div>
+                    </div>
+                </div-->
+
+    
+            
+            <div class="d-flex justify-content-center mt-5 login_container mb-2">
+            <button type="submit" class="btn login_btn">Registrarse</button>
+            </div>
+
+            <!--p class="text-center" style="color:white" >Regresar al -> <a class="f_white" href="/"> Login</a> </p--> 
+
+            <!--div class="user-footer" style="padding-top: 30px">
+                <div align=center>
+                  <a href="/logout" class="btn btn-danger btn-flat">Cerrar Sesión</a>
+                </div>
+            </div-->
+
+    </form>
+<!--/div-->
+<!--/article-->
+</div>
+</div>
+</div>
+</div>
+
+
+</body>
+</html>

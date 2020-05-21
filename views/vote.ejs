@@ -22,7 +22,7 @@
     <main>
         <!-- inicio formulario busqueda -->
         <div class="container">
-        <div class="vertical-center">
+
             <form class="formulario" method="post" action="/vote" onsubmit="return validateForm()">
                 <fieldset>
                     <legend>Emisión de Votación</legend>
@@ -37,12 +37,36 @@
                 
                         <input type="radio" name="lista" id="lista3">
                         <label for="lista3">Lista 3</label>
+
+                        <input type="radio" name="lista" id="lista4">
+                        <label for="lista4">Nulo/Blanco</label>
                     </div>
 
                 </fieldset>
+
+                <fieldset>
+                    <legend>Emisión de Votación</legend>
+                    <h1>ASAMBLEA UNIVERSITARIA</h1>
+                    <H3>FACULTAD DE PRODUCCION Y SERVICIOS</H3>
+                    <div class="marcacion-voto"> 
+                        <input type="radio" name="lista_asamblea" id="lista_asam1">
+                        <label for="lista_asam1">Lista 1</label>
+                
+                        <input type="radio" name="lista_asamblea" id="lista_asam2">
+                        <label for="lista_asam2">Lista 2</label>
+                
+                        <input type="radio" name="lista_asamblea" id="lista_asam3">
+                        <label for="lista_asam3">Lista 3</label>
+
+                        <input type="radio" name="lista_asamblea" id="lista_asam4">
+                        <label for="lista_asam4">Nulo/Blanco</label>
+                    </div>
+
+                </fieldset>
+
                 <button class="boton-accion" type="submit">VOTAR</button>
             </form>
-        </div>
+
         </div>
     </main>
 </body>

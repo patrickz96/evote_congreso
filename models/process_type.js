@@ -1,7 +1,8 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('process_type', {
+  
+  var Process_type = sequelize.define('process_type', {
     id_process_type: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -23,4 +24,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     tableName: 'process_type'
   });
+
+  Process_type.associate = function(models) {
+    models.process_type.belongsTo(models.electoral_process, {foreignKey: 'id_electoral_process'});
+  };
+  return Process_type;
 };

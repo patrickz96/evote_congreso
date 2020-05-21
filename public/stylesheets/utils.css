@@ -1,0 +1,20 @@
+#mywrapper{
+
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+
+
+@media (min-width: 481px) and (max-width: 767px) {
+  #mywrapper{
+    padding-top: 80px;
+  }
+}
+
+
+@media (min-width: 768px) {
+  
+  #mywrapper{
+    padding-top: 40px;
+  }
+}

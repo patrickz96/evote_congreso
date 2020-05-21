@@ -1,0 +1,61 @@
+<div class="modal fade" id="info_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" align="center" style="background-color: cornflowerblue">
+                <h2 class="modal-title"> INFORMACIÓN DEL BUS</h2>
+            </div>
+
+            <div class="modal-body">
+                    <div class="form-group   col-sm-offset-2" align="center">
+                            <div class="col-md-3" style="border:2px solid black; max-height: 70px">
+                                    <div class="form-group row">
+                                            <label  style="font-size: 20px;">PLACA:
+                                            <p id="plate"></p>
+                                            </label>
+                                    </div> 
+                            </div>
+                            <div class="col-md-3" style="border:2px solid black; max-height: 70px">
+                                    <div class="form-group row">
+                                            <label  style="font-size: 20px;">RUTA:
+                                            <p id="route_name"></p>
+                                            </label>
+                                    </div> 
+                            </div>
+                           
+                            
+                            <div class="col-md-3" style="padding: 5px;border:2px solid black;">
+                                <i id="icon_bus" class="fa fa-bus fa-4x"></i>
+                            </div>    
+                    </div>
+               
+                <div style="margin:90px"></div>    
+
+                <div class="row">
+                    <form method="post" action="/bus">
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <label class="col-md-3" style="font-size: 20px;">Conductor:</label>
+                                <div class="col-md-9 pull-left">
+                                        <input type="text" id="driver_name" class="input-lg form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row" align="center">
+                                <label class="col-md-3" style="font-size: 20px;">DNI:</label>
+                                <div class="col-md-9 pull-left">
+                                        <input type="text" id="dni"  class="input-lg form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 20px;">Descripción:</label>
+                                <textarea id="description" rows="3" class="input-lg form-control" readonly></textarea>
+                            </div>	
+
+                            <button class="btn btn-lg btn-danger center-block center"   data-dismiss="modal" >Cerrar</button>					
+                        </div>
+                    </form> 
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -10,7 +10,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     id_faculty: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'faculty',
+        key: 'id_faculty'
+      }
     },
     name: {
       type: DataTypes.STRING,
