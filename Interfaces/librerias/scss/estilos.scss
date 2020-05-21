@@ -282,3 +282,128 @@ table {
     }
 }
 /******/
+
+
+/**********************\
+   #Menu Principal
+\**********************/
+
+.menu-principal{
+    /* @include cl-complemento(0.2); */
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 40px;
+    font: $ft-alterna;
+    font-size: $ft-small;
+    font-weight: 700;
+    letter-spacing: -0.06em;
+    list-style: none;
+    .menu-principal-item{
+        border-left: solid 1px $cl-complemento;
+        width: 100%;
+        text-align: center;
+        white-space: nowrap;
+        &:first-child{
+            border-left: none;
+        }
+    }
+    a {
+        display: inline-block;
+        color: $cl-complemento;
+        text-decoration: none;
+        margin: 0 5px;
+        &:hover{
+            color:$cl-principal;
+            span{
+                background: $cl-principal;
+            }
+        }
+    }
+}
+
+.icon-fnd{
+    @include cl-complemento(0.6);
+    color: #fff;
+    font-size: $ft-small;
+    padding: 5px;
+    margin-right: 5px;
+    border-radius: 10px;
+    &:hover{
+        background: $cl-principal;
+    }
+}
+
+
+
+/**********************\
+ #Tablas de Resultados
+\**********************/
+@mixin tit-resultados{
+    height: 40px;
+    font-size: 14px;
+    font-family: $ft-alterna;
+    text-transform: uppercase;
+    line-height: 3em;
+    padding-left: 10px;
+}
+.tit-tabla-01{
+    @include cl-alternativo1(0.3);
+    @include tit-resultados;
+}
+
+@mixin tabla-conf {
+    margin: 15px auto;
+    width: calc(100% - 20px);
+}
+.tabla-registro{
+@include tabla-conf;
+    tr:first-child{
+        border-bottom: none;
+    }
+    tr:last-child{
+        border-bottom: $cl-complemento solid 3px;
+        }
+    th{
+        font-family: $ft-alterna;
+        font-size: $ft-normal;
+        text-transform: uppercase;
+        @include cl-complemento(0.25);
+        padding:7px;
+    }
+    tr{
+        border-bottom: $cl-principal solid 1px;
+        &:hover{
+            @include cl-complemento(0.05)
+        }
+        td:first-child{
+            text-align: center;
+        }
+        td:last-child{
+            text-align: center;
+        }
+    }
+    td{
+        padding: 7px;
+        a{
+            font-size: $ft-small;
+            display: block;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 5px 3px;
+            margin-bottom: 2px;
+            text-decoration: none;
+        }
+        .btn-edit{
+            @include cl-alternativo2(0.3);
+        }
+        .btn-del{
+            @include cl-alternativo1(0.3);
+        }
+    }
+}
+
+.textos{
+    @include tabla-conf;
+}

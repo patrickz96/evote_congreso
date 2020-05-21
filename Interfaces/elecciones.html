@@ -81,6 +81,25 @@
                 <input id="cierre_votacion" name="cierre_votacion" type="datetime-local" required>
             </fieldset>
             <button class="boton-accion" type="submit" onclick="javascript:llamarasincrono('estadisticas.html', 'center');">Registrar Proceso</button>
+
+            <fieldset>
+                <legend>Lista de Procesos Electorales</legend>
+                <!-- inicio ranking -->
+                  <table class="tabla-registro">
+                      <tr>
+                          <th>PROCESO</th>
+                          <th>APERTURA</th>
+                          <th>CIERRE</th>
+                          <th>Acciones</th>
+                      </tr>
+                      <tr>
+                        <td>Proceso 2020 Junio</td>
+                        <td>13/06/2020 08:00</td>
+                        <td>13/06/2020 15:00</td>
+                        <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                    </tr>
+                  </table>
+            </fieldset>
         </form>
         <!-- fin formulario busqueda -->
 
@@ -97,6 +116,28 @@
                 <input id="tipo_elecciones" name="tipo_elecciones" type="text" placeholder="Ingrese el tipo de elecciones" required autofocus>
             </fieldset>
             <button class="boton-accion" type="submit" onclick="javascript:llamarasincrono('estadisticas.html', 'center');">Registrar Tipo de Elección</button>
+
+            <fieldset>
+              <legend>Lista de Tipo de Elecciones</legend>
+              <!-- inicio ranking -->
+                <table class="tabla-registro">
+                    <tr>
+                        <th>PROCESO</th>
+                        <th>TIPO ELECCIONES</th>
+                        <th>Acciones</th>
+                    </tr>
+                    <tr>
+                      <td>Proceso 2020 Junio</td>
+                      <td>Asamblea Universitaria</td>
+                      <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                  </tr>
+                  <tr>
+                    <td>Proceso 2020 Junio</td>
+                    <td>Consejo de Facultad</td>
+                    <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                </tr>
+                </table>
+          </fieldset>
         </form>
         <!-- fin formulario busqueda -->
 
@@ -120,9 +161,55 @@
                 <input id="nombre_lista" name="nombre_lista" type="text" placeholder="Ingrese el nombre de lista" required autofocus>
             </fieldset>
             <button class="boton-accion" type="submit" onclick="javascript:llamarasincrono('estadisticas.html', 'center');">Registrar Listas Electorales</button>
+
+            <fieldset>
+              <legend>Listas Electorales</legend>
+              <!-- inicio ranking -->
+                <table class="tabla-registro">
+                    <tr>
+                        <th>TIPO ELECCIONES</th>
+                        <th>FACULTAD</th>
+                        <th>LISTA</th>
+                        <th>Acciones</th>
+                    </tr>
+                    <tr>
+                      <td>Asamblea Universitaria</td>
+                      <td>Facultad de Medicina</td>
+                      <td>Lista 001</td>
+                      <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                    </tr>
+                    <tr>
+                      <td>Consejo de Facultad</td>
+                      <td>Facultad de Producción y Servicios</td>
+                      <td>Lista 001</td>
+                      <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                    </tr>
+                    <tr>
+                      <td>Asamblea Universitaria</td>
+                      <td>Facultad de Medicina</td>
+                      <td>Lista 002</td>
+                      <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                    </tr>
+                    <tr>
+                      <td>Consejo de Facultad</td>
+                      <td>Facultad de Producción y Servicios</td>
+                      <td>Lista 002</td>
+                      <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                    </tr>
+                </table>
+          </fieldset>
         </form>
         <!-- fin formulario busqueda -->
 
     </main>
+    
+    <script>
+        $(function () {
+          $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": true,
+          });
+        });
+      </script>
 </body>
 </html>
