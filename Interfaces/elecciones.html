@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="icon/demo.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="librerias/scss/estilos.css">
+    <script language="JavaScript" type="text/javascript" src="librerias/js/codigo.js"></script>
+</head>
+<body>
+    <header>
+        <div class="cabecera">
+        <img src="img/logo-unsa.svg" alt="UNSA" class="logo">
+            <div class="titulo">
+                <h1><span class="text-big">Elecciones 2020</span></h1>
+                <span>Sistema Digital de Votación <b>E-vote</b></span>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- inicio formulario busqueda -->
+        <form action="" class="formulario">
+            <fieldset>
+                <legend>Identificación de Elector</legend>
+                <label for="codigo">Usuario</label>
+                <input id="codigo" name="usuario" type="text" placeholder="Ingrese su usuario" required autofocus>
+                <label for="documento">Contraseña</label>
+                <input id="documento" name="documento" type="password" placeholder="Ingrese su Contraseña" required>
+            </fieldset>
+            <button class="boton-accion" type="submit" onclick="javascript:llamarasincrono('estadisticas.html', 'center');">Ingresar</button>
+        </form>
+        <!-- fin formulario busqueda -->
+
+        <!-- inicio formulario busqueda -->
+        <form action="" class="formulario">
+            <fieldset>
+                <legend>Registro de Asistencia</legend>
+                <label for="codigo">Ingrese su Clave Secreta</label>
+                <input id="codigo" name="usuario" type="text" placeholder="Clave Secreta" required autofocus>
+                <span class="mensaje-atencion"> Usted encontrará su clave secreta en su correo Institucional UNSA</span>
+            </fieldset>
+            <button class="boton-accion" type="submit">Ir a Votar</button>
+        </form>
+        <!-- fin formulario busqueda -->
+
+        <!-- inicio formulario busqueda -->
+        <form action="" class="formulario">
+            <fieldset>
+                <legend>Emisión de Votación</legend>
+                <h1>CONSEJO DE FACULTAD</h1>
+                <H3>FACULTAD DE PRODUCCION Y SERVICIOS</H3>
+                <div class="marcacion-voto"> 
+                    <input type="radio" name="lista" id="lista1">
+                    <label for="lista1">Lista 1</label>
+            
+                    <input type="radio" name="lista" id="lista2">
+                    <label for="lista2">Lista 2</label>
+            
+                    <input type="radio" name="lista" id="lista3">
+                    <label for="lista3">Lista 3</label>
+                </div>
+
+            </fieldset>
+            <button class="boton-accion" type="submit">VOTAR</button>
+        </form>
+        <!-- fin formulario busqueda -->
+
+        <h1>INICIO PANEL ADMINISTRADOR</h1>
+
+        <!-- inicio formulario busqueda -->
+        <form action="" class="formulario">
+            <fieldset>
+                <legend>Proceso Electoral</legend>
+                <label for="nombre_proceso">Nombre Proceso</label>
+                <input id="nombre_proceso" name="nombre_proceso" type="text" placeholder="Ingrese el proceso" required autofocus>
+                <label for="apertura_votacion">Apertura Votación</label>
+                <input id="apertura_votacion" name="apertura_votacion" type="datetime-local" required>
+                <label for="cierre_votacion">Cierre Votación</label>
+                <input id="cierre_votacion" name="cierre_votacion" type="datetime-local" required>
+            </fieldset>
+            <button class="boton-accion" type="submit" onclick="javascript:llamarasincrono('estadisticas.html', 'center');">Registrar Proceso</button>
+
+            <fieldset>
+                <legend>Lista de Procesos Electorales</legend>
+                <!-- inicio ranking -->
+                  <table class="tabla-registro">
+                      <tr>
+                          <th>PROCESO</th>
+                          <th>APERTURA</th>
+                          <th>CIERRE</th>
+                          <th>Acciones</th>
+                      </tr>
+                      <tr>
+                        <td>Proceso 2020 Junio</td>
+                        <td>13/06/2020 08:00</td>
+                        <td>13/06/2020 15:00</td>
+                        <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                    </tr>
+                  </table>
+            </fieldset>
+        </form>
+        <!-- fin formulario busqueda -->
+
+        <!-- inicio formulario busqueda -->
+        <form action="" class="formulario">
+            <fieldset>
+                <legend>Tipos de Elecciones</legend>
+                <label for="proceso_electoral">Proceso Electoral</label>
+                <select id="proceso_electoral" name="proceso_electoral" form="proceso_electoral">
+                    <option value="Seleccione...">Seleccione...</option>
+                    <option value="Proceso Electoral Junio 2020">Proceso Electoral Junio 2020</option>
+                </select>
+                <label for="tipo_elecciones">Tipo de Elecciones</label>
+                <input id="tipo_elecciones" name="tipo_elecciones" type="text" placeholder="Ingrese el tipo de elecciones" required autofocus>
+            </fieldset>
+            <button class="boton-accion" type="submit" onclick="javascript:llamarasincrono('estadisticas.html', 'center');">Registrar Tipo de Elección</button>
+
+            <fieldset>
+              <legend>Lista de Tipo de Elecciones</legend>
+              <!-- inicio ranking -->
+                <table class="tabla-registro">
+                    <tr>
+                        <th>PROCESO</th>
+                        <th>TIPO ELECCIONES</th>
+                        <th>Acciones</th>
+                    </tr>
+                    <tr>
+                      <td>Proceso 2020 Junio</td>
+                      <td>Asamblea Universitaria</td>
+                      <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                  </tr>
+                  <tr>
+                    <td>Proceso 2020 Junio</td>
+                    <td>Consejo de Facultad</td>
+                    <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                </tr>
+                </table>
+          </fieldset>
+        </form>
+        <!-- fin formulario busqueda -->
+
+        <!-- inicio formulario busqueda -->
+        <form action="" class="formulario">
+            <fieldset>
+                <legend>Listas Electorales</legend>
+                <label for="tipo_elecciones">Tipo Elecciónes</label>
+                <select id="tipo_elecciones" name="tipo_elecciones" form="tipo_elecciones">
+                    <option value="Seleccione...">Seleccione...</option>
+                    <option value="Representantes Consejo de Facultad">Representantes Consejo de Facultad</option>
+                    <option value="Representantes Asamblea Universitaria">Representantes Asamblea Universitaria</option>
+                </select>
+                <label for="facultad">Facultad</label>
+                <select id="facultad" name="facultad" form="facultad">
+                    <option value="Seleccione...">Seleccione...</option>
+                    <option value="Facultad de Medicina">Facultad de Medicina</option>
+                    <option value="Facultad de Producción y Servicios">Facultad de Producción y Servicios</option>
+                </select>
+                <label for="nombre_lista">Nombre Lista</label>
+                <input id="nombre_lista" name="nombre_lista" type="text" placeholder="Ingrese el nombre de lista" required autofocus>
+            </fieldset>
+            <button class="boton-accion" type="submit" onclick="javascript:llamarasincrono('estadisticas.html', 'center');">Registrar Listas Electorales</button>
+
+            <fieldset>
+              <legend>Listas Electorales</legend>
+              <!-- inicio ranking -->
+                <table class="tabla-registro">
+                    <tr>
+                        <th>TIPO ELECCIONES</th>
+                        <th>FACULTAD</th>
+                        <th>LISTA</th>
+                        <th>Acciones</th>
+                    </tr>
+                    <tr>
+                      <td>Asamblea Universitaria</td>
+                      <td>Facultad de Medicina</td>
+                      <td>Lista 001</td>
+                      <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                    </tr>
+                    <tr>
+                      <td>Consejo de Facultad</td>
+                      <td>Facultad de Producción y Servicios</td>
+                      <td>Lista 001</td>
+                      <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                    </tr>
+                    <tr>
+                      <td>Asamblea Universitaria</td>
+                      <td>Facultad de Medicina</td>
+                      <td>Lista 002</td>
+                      <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                    </tr>
+                    <tr>
+                      <td>Consejo de Facultad</td>
+                      <td>Facultad de Producción y Servicios</td>
+                      <td>Lista 002</td>
+                      <td><a href="#" class="btn-edit">Editar</a><a href="#" class="btn-del">Eliminar</a></td>
+                    </tr>
+                </table>
+          </fieldset>
+        </form>
+        <!-- fin formulario busqueda -->
+
+    </main>
+    
+    <script>
+        $(function () {
+          $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": true,
+          });
+        });
+      </script>
+</body>
+</html>

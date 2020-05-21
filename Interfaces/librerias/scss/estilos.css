@@ -1,0 +1,441 @@
+*, *:before, *:after {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  background: #333333;
+}
+
+body {
+  letter-spacing: -0.04em;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: black;
+  max-width: 680px;
+  min-height: 680px;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.ft-big {
+  font-size: 18.236px;
+}
+
+.ft-small {
+  font-size: 11.146px;
+}
+
+.ft-alterna {
+  font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/**********************\
+   #Cabecera Principal
+\**********************/
+.cabecera {
+  background: #800337;
+  color: #fff;
+  height: 72px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 15px;
+}
+
+.cabecera .logo {
+  height: 41px;
+}
+
+.cabecera .titulo {
+  text-align: center;
+  font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+}
+
+.cabecera .titulo h1 {
+  font-size: 18.236px;
+  line-height: 18.236px;
+}
+
+/**********************\
+ #Formularios de busqueda
+\**********************/
+.formulario {
+  /* @include tabla-conf() */
+  margin: 20px auto;
+  width: calc(100% - 30px);
+}
+
+.formulario fieldset {
+  border: solid 1px #800337;
+  border-radius: 5px;
+  padding: 0 10px 10px 10px;
+  margin-bottom: 10px;
+}
+
+.formulario fieldset legend {
+  color: #800337;
+  padding: 5px;
+  font-size: 18.236px;
+}
+
+.formulario fieldset label {
+  display: block;
+  font: "Roboto Condensed", Arial, Helvetica, sans-serif;
+  font-size: 11.146px;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 10px 0 5px 0;
+}
+
+.formulario fieldset input {
+  width: calc(100% - 25px);
+  padding: 10px 10px;
+  border: solid black 1px;
+  border-radius: 5px;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  letter-spacing: -0.03em;
+}
+
+.formulario .boton-accion {
+  font: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  border: none;
+  width: 100%;
+  border-radius: 5px;
+  padding: 12px 0;
+  margin: 4px 0;
+  outline: none;
+  background: #800337;
+  color: #fff;
+  cursor: pointer;
+}
+
+.formulario .boton-cancelar {
+  font: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  border: none;
+  width: 100%;
+  border-radius: 5px;
+  padding: 12px 0;
+  margin: 4px 0;
+  outline: none;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.formulario select {
+  font: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  border: none;
+  width: 100%;
+  border-radius: 5px;
+  padding: 12px 0;
+  margin: 4px 0;
+  outline: none;
+  background: rgba(0, 0, 0, 0.3);
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  padding: 12px 10px;
+}
+
+.formulario select option {
+  /* @include cl-complemento(0.3);  */
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+}
+
+.formulario select option:first-child {
+  font-weight: 700;
+}
+
+.formulario select option:hover {
+  background: #ccc;
+}
+
+/**********************\
+  #Resultado Busqueda
+\**********************/
+.resultado-busqueda {
+  text-align: center;
+  text-transform: uppercase;
+  width: calc(100% - 40px);
+  margin: 0 auto;
+}
+
+.resultado-busqueda .img-postulante {
+  width: 180px;
+  height: 180px;
+  border: solid 4px #800337;
+  border-radius: 250px;
+  background-position: center;
+  margin: 20px auto;
+}
+
+.resultado-busqueda .img-postulante img {
+  position: relative;
+  right: -70px;
+  bottom: -120px;
+}
+
+.resultado-busqueda h1 {
+  line-height: 28px;
+  padding-bottom: 15px;
+}
+
+.resultado-busqueda h2 {
+  text-transform: none;
+  font-size: 32px;
+  padding: 10px 0;
+  color: #fff;
+}
+
+.resultado-busqueda .ingresante {
+  background: #800337;
+}
+
+.resultado-busqueda .no-ingresante {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.resultado-busqueda span, .resultado-busqueda a {
+  font-weight: 700;
+  font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+  padding-top: 5px;
+  display: inline-block;
+}
+
+.resultado-busqueda h3 {
+  font-size: 22px;
+  line-height: 22px;
+  padding: 5px;
+}
+
+.resultado-busqueda .puntaje {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.resultado-busqueda .puntaje h3 {
+  font-weight: 300;
+}
+
+.resultado-busqueda .programa {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.resultado-busqueda a {
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-decoration: none;
+  padding: 5px;
+  width: calc(100% - 10px);
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+/** CAMBIOS - ELECCIONES***/
+.text-big {
+  font-size: 1.5em;
+}
+
+.mensaje-atencion {
+  display: block;
+  background: rgba(240, 191, 143, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.marcacion-voto {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.marcacion-voto input[type=radio] {
+  display: none;
+}
+
+.marcacion-voto input[type=radio]:checked + label {
+  background: #f0bf8f;
+}
+
+.marcacion-voto input[type=radio]:checked + label::before {
+  background: #76374a;
+}
+
+.marcacion-voto label {
+  color: #76374a;
+  font-size: 2em !important;
+  text-transform: none !important;
+  border-bottom: 1px #800337 solid;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  /*position: relative;*/
+}
+
+.marcacion-voto label::before {
+  content: "";
+  width: 17px;
+  height: 17px;
+  display: inline-block;
+  background: none;
+  border: 3px #76374a solid;
+  border-radius: 50%;
+  margin-right: 15px;
+  /*position: absolute;*/
+}
+
+.marcacion-voto label:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/******/
+/**********************\
+   #Menu Principal
+\**********************/
+.menu-principal {
+  /* @include cl-complemento(0.2); */
+  background-color: #ccc;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  height: 40px;
+  font: "Roboto Condensed", Arial, Helvetica, sans-serif;
+  font-size: 11.146px;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  list-style: none;
+}
+
+.menu-principal .menu-principal-item {
+  border-left: solid 1px black;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.menu-principal .menu-principal-item:first-child {
+  border-left: none;
+}
+
+.menu-principal a {
+  display: inline-block;
+  color: black;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.menu-principal a:hover {
+  color: #800337;
+}
+
+.menu-principal a:hover span {
+  background: #800337;
+}
+
+.icon-fnd {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 11.146px;
+  padding: 5px;
+  margin-right: 5px;
+  border-radius: 10px;
+}
+
+.icon-fnd:hover {
+  background: #800337;
+}
+
+/**********************\
+ #Tablas de Resultados
+\**********************/
+.tit-tabla-01 {
+  background: rgba(118, 55, 74, 0.3);
+  height: 40px;
+  font-size: 14px;
+  font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  line-height: 3em;
+  padding-left: 10px;
+}
+.tabla-registro {
+  margin: 15px auto;
+  width: calc(100% - 20px);
+}
+
+.tabla-registro tr:first-child {
+  border-bottom: none;
+}
+
+.tabla-registro tr:last-child {
+  border-bottom: black solid 3px;
+}
+
+.tabla-registro th {
+  font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 7px;
+}
+
+.tabla-registro tr {
+  border-bottom: #800337 solid 1px;
+}
+
+.tabla-registro tr:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.tabla-registro tr td:first-child {
+  text-align: center;
+}
+
+.tabla-registro tr td:last-child {
+  text-align: center;
+}
+
+.tabla-registro td {
+  padding: 7px;
+}
+
+.tabla-registro td a {
+  font-size: 11.146px;
+  display: block;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 5px 3px;
+  margin-bottom: 2px;
+  text-decoration: none;
+}
+
+.tabla-registro td .btn-edit {
+  background: rgba(49, 56, 129, 0.3);
+}
+
+.tabla-registro td .btn-del {
+  background: rgba(118, 55, 74, 0.3);
+}
+
+/******/
+.textos {
+  margin: 15px auto;
+  width: calc(100% - 20px);
+}
+/*# sourceMappingURL=estilos.css.map */
