@@ -171,5 +171,10 @@ router.post('/login', function(req, res) {
 });
 */
 
+// Muestra el padron del proceso activo, accion generar claves y la accion para enviar las claves.
+router.get('/padron-activo', VerifyToken, function(req, res){
+    res.render('./admin/padron-activo');
+});
+
 
 module.exports = router;
