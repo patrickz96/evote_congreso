@@ -132,9 +132,8 @@ router.post('/electoral-list', function (req, res) {
     .catch(err => {
         req.session.status = "error"; req.session.msg = ""+err;
         res.redirect('/admin/electoral-list');
-    });
-    
-  });
+    });    
+});
 
 router.get('/electoral-list/all', VerifyToken, function (req, res) {
     models.electoral_list.findAll({
@@ -176,5 +175,28 @@ router.get('/padron-activo', VerifyToken, function(req, res){
     res.render('./admin/padron-activo');
 });
 
+//router.post('/generate-keys', VerifyToken, function(req, res)){
+    //Encontrar el padron segun req.id
+    //Por cada elector en el padron:
+    //Hashear su nombre-dni-correo / Encriptar con clave en el sistema
+    //Tomar los primeros 8 digitos del hash -> clave secreta
+    //Guardar esta clave en la base de datos para este elector
+    //Enviar un json con la lista de claves y id via HTTPS
+    //En el front-end actualizar cada row con las claves obtenidas
+//}
+
+//router.post('/send_keys', VerifyToken, function(req, res)){
+    //Encontrar el padron segun req.id
+    //Por cada elector en el padron de forma asincrona:
+    //Generar un mail template
+    //Agregar el template y correo a una cola en la base de datos
+    //Establecer un trabajador que vaya enviando los correos uno a uno
+    //Cada ves que se termine de enviar el trabajado emite un evento
+    //Actualizar un campo de la tabla electores con el status de correoEnviado = true
+    //Enviar este evento al front-end con el id elector
+    //Actualizar el estado del row con id elector enviado de una X a un Check
+    //En el front end establecer un contador que vaya sumando cada enviado y actualice un grafico porcentual
+    //Al 100% se emite un evento de completo
+//}
 
 module.exports = router;
