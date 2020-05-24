@@ -2,7 +2,6 @@
 
 # Electronic Vote (evote)
 
-
 ## Get started
 
 1) Clone repository<br/>
@@ -35,5 +34,12 @@ All set!!!
 3) To restore an specific model from a table:<br/>
 * `npx sequelize-auto -h localhost -d evote -t 'table_name' -u postgres -x 'your_password' -p 5432 -e postgres`
 
+## Troubleshooting
 
+```bash
+npm cache clean --force
+rm -rf node_modules
+npm install
+npm start
+```
 
