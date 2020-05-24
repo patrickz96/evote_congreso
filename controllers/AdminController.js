@@ -4,6 +4,7 @@ var router = express.Router();
 const models = require("../models");
 const db = require("../models").sequelize;
 const VerifyToken = require('../auth/VerifyToken');
+const nodemailer = require('nodemailer');
 
 /*
 router.get('/', function(req, res) {
@@ -198,5 +199,63 @@ router.get('/padron-activo', VerifyToken, function(req, res){
     //En el front end establecer un contador que vaya sumando cada enviado y actualice un grafico porcentual
     //Al 100% se emite un evento de completo
 //}
+
+// Send message to user_mail
+// Wont work on global scope!
+async function send_single_msg(user_mail, message){
+    // Create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+        pool: true,
+        maxConnections: 20,
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        auth: {
+            user: 'tramiteunsa.soporte@unsa.edu.pe',
+            pass: 'tramitedUnsa2020!'
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
+
+    // setup email data
+    let mailOptions = {
+        from: '"Evote" <tramiteunsa.soporte@unsa.edu.pe>',
+        to: user_mail,
+        subject: 'Credenciales Elecciones Unsa',
+        text: 'Hello world',
+        html: message,
+        attachments: [
+            {   // utf-8 string as an attachment
+                filename: 'text1.txt',
+                content: 'hello world!'
+            },
+        ]
+    };
+
+    // Actuallly send mail with defined transport object
+    let info = await transporter.sendMail(mailOptions);
+
+    console.log("Message sent: %s", info.messageId);
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info))
+}
+
+router.post('/send',VerifyToken, (req, res)=> {
+    let user_key = 'dbasdfasdf34';
+    let user_mail = 'rhualla@unsa.edu.pe';
+    const message = `
+        <h1>Evote credenciales</h1>
+        <p>La siguiente informacion le servira para ingresar al sistema de votacion electronica.<p>
+        <ul>
+            <li>Usuario: Utilizar su correo institucional</li>
+            <li>Clave: ${user_key}</li>
+        </ul>
+        <h3>No comparta esta informacion con nadie!</h3>
+    `;
+
+    send_single_msg(user_mail, message).catch(console.error)
+    return res.status(200).send("Se ha enviado el correo");
+});
 
 module.exports = router;

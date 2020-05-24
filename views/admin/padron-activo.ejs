@@ -158,6 +158,7 @@ function confirm_send_keys(){
   reverseButtons: true
   }).then((result) => {
     if (result.value) {
+      send_keys();
       swalWithBootstrapButtons.fire(
         'Enviando!',
         'Las claves se estan enviado por correo, espere...',
@@ -174,6 +175,12 @@ function confirm_send_keys(){
       )
     }
   })
+}
+
+function send_keys(){
+  $.post("/admin/send", function(routes, status){
+    console.log("finished post");
+  });
 }
 </script>
 
