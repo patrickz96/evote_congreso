@@ -1,41 +1,42 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('supervisor', {
-    id_supervisor: {
+  return sequelize.define('departamento_academico', {
+    id_dpto_aca: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    name: {
+    id_facultad: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'facultad',
+        key: 'id_facultad'
+      }
+    },
+    codigo: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    username: {
+    nombre: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    password: {
-      type: DataTypes.STRING,
+    estado: {
+      type: DataTypes.BOOLEAN,
       allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: '2020-01-01 00:00:00'
+      allowNull: false
     },
-    updatedAt: {
+    updatedat: {
       type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: '2020-01-01 00:00:00'
-    },
-    rol: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: '0'
+      allowNull: false
     }
   }, {
-    tableName: 'supervisor'
+    tableName: 'departamento_academico'
   });
 };

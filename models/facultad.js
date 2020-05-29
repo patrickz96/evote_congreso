@@ -1,41 +1,38 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('supervisor', {
-    id_supervisor: {
+  return sequelize.define('facultad', {
+    id_facultad: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    name: {
+    codigo: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: '02301'
     },
-    username: {
+    nombre: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
+    estado: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
     },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: '2020-01-01 00:00:00'
     },
-    updatedAt: {
+    updatedat: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: '2020-01-01 00:00:00'
-    },
-    rol: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: '0'
     }
   }, {
-    tableName: 'supervisor'
+    tableName: 'facultad'
   });
 };

@@ -5,22 +5,33 @@ const models = require("../models");
 const db = require("../models").sequelize;
 
 
+/****************LOGIN*******************/
 router.get('/', function(req, res) {
-    res.render('index', { title: 'Ingreso' });
+    res.render('index');
 });
-
-router.get('/index2', function(req, res) {
-    res.render('index2', { title: 'Ingreso' });
-});
-
-
 router.post('/login', function(req, res) {
-    //validate user and password
-    //res.redirect('vote');
     res.redirect('assistance');
-    //res.render('vote', { title: 'Ingreso' });
 });
 
+/***************ASISTENCIA***************/
+router.get('/assistance',function(req,res){
+    res.render('assistance');
+});
+router.post('/assistance',function(req,res){
+    res.redirect('/vote');
+});
 
+/****************VOTE*****************/
+router.get('/vote',function(req,res){
+    res.render('vote');
+});
+
+router.post('/vote',function(req,res){
+    res.redirect('/finish');
+});
+/***************FINISH-VOTE**********/
+router.get('/finish',function(req,res){
+    res.render('vote-finish');
+});
 
 module.exports = router;

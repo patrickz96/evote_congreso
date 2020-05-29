@@ -7,11 +7,15 @@ var logger = require('morgan');
 
 //Controllers
 var AuthController = require('./auth/AuthController');
-var ElectoralCensusController = require('./controllers/ElectoralCensusController');
 var AdminController = require('./controllers/AdminController');
-var UserController = require('./controllers/UserController');
+var ProcesoElectoralController = require('./controllers/admin/ProcesoElectoralController');
+
+/*
+var ElectoralCensusController = require('./controllers/ElectoralCensusController');
 var VoteController = require('./controllers/VoteController');
 var AssistanceController = require('./controllers/AssistanceController');
+*/
+var UserController = require('./controllers/UserController');
 
 //var indexRouter = require('./routes/index');
 //var usersRouter = require('./routes/users');
@@ -35,13 +39,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', indexRouter);
 //app.use('/users', usersRouter);
-app.use('/admin',AuthController);
+
 app.use('/', UserController);
+app.use('/admin',AuthController);
 app.use('/admin', AdminController);
+app.use('/admin', ProcesoElectoralController);
+
+/*
 app.use('/vote', VoteController);
 app.use('/test', ElectoralCensusController);
 app.use('/assistance',AssistanceController);
-
+*/
 
 
 // catch 404 and forward to error handler

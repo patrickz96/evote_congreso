@@ -1,35 +1,26 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('school', {
-    id_school: {
+  return sequelize.define('administrativo', {
+    id_administrativo: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    id_faculty: {
+    id_dependencia: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'faculty',
-        key: 'id_faculty'
+        model: 'dependencia',
+        key: 'id_dependencia'
       }
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    state: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true
-    },
-    nues: {
+    codigo: {
       type: DataTypes.STRING,
       allowNull: true
     }
   }, {
-    tableName: 'school'
+    tableName: 'administrativo'
   });
 };

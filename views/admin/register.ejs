@@ -69,21 +69,23 @@
 
 	<form method="post" action="/admin/register">
 
-            <!--div class="input-group mb-3 mt-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-building"></i> </span>
-                    </div>
-                    <select class="form-control">
-                        <option selected=""> Seleccionar Tipo de Cargo</option>
-                        <option>Administrador</option>
-                        <option>Conductor</option>
-                    </select>
-            </div--> 
 
-            <!--div class="form-group">
-                <label>Your email</label>
-                <input name="" class="form-control" placeholder="Email" type="email">
-            </div-->
+            <div class="form-group row ">
+                <label for="email_address" class="col-md-3 col-form-label text-md-center">Cargo:</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <select class="form-control" name='rol'>
+                                <option value=0>Administrador</option>
+                                <option value=1>Controlador</option>
+                            </select>
+
+                    </div>
+                </div>
+            </div>
 
             <div class="form-group row ">
                 <label for="email_address" class="col-md-3 col-form-label text-md-center">Nombre:</label>
@@ -121,49 +123,10 @@
                 </div>
             </div>
 
-
-            <div class="form-group row ">
-                    <label for="email_address" class="col-md-3 col-form-label text-md-center">RContraseña:</label>
-                    <div class="col-md-9">
-                        <div class="input-group">
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                </div>
-                                <input type="text" name="rpassword" class="form-control" value="" placeholder="Repetir Contraseña">
-                        </div>
-                    </div>
-                </div>
-
-            
-                <!--div class="form-group row">
-                    <label for="email_address" class="col-md-3 col-form-label text-md-center">Empresa:</label>
-                    <div class="col-md-9">
-                        <div class="input-group">
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="fa fa-building"></i></span>
-                                </div>
-                                <input type="text" name="company_name" class="form-control" value="" placeholder="Empresa">
-                        </div>
-                    </div>
-                </div-->
-
-    
-            
             <div class="d-flex justify-content-center mt-5 login_container mb-2">
             <button type="submit" class="btn login_btn">Registrarse</button>
             </div>
-
-            <!--p class="text-center" style="color:white" >Regresar al -> <a class="f_white" href="/"> Login</a> </p--> 
-
-            <!--div class="user-footer" style="padding-top: 30px">
-                <div align=center>
-                  <a href="/logout" class="btn btn-danger btn-flat">Cerrar Sesión</a>
-                </div>
-            </div-->
-
     </form>
-<!--/div-->
-<!--/article-->
 </div>
 </div>
 </div>
