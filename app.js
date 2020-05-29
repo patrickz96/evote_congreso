@@ -5,6 +5,26 @@ var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session')
 var logger = require('morgan');
 
+var passport = require('passport');
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+
+passport.use(new GoogleStrategy({
+    clientID: "809514991769-abanc2gec860blavphoji94ivfl8c6s3.apps.googleusercontent.com",
+    clientSecret: "OcSr-m6Wky1WZ9HwqU3OVE_n",
+    callbackURL: "https://evote.unsa.edu.pe/assistance"
+  },
+  function(accessToken, refreshToken, profile, done) {
+       User.findOrCreate({ googleId: profile.id }, function (err, user) {
+         return done(err, user);
+       });
+  }
+));
+
+
+//Security and performance
+var compression = require('compression');
+var helmet = require('helmet');
+
 //Controllers
 var AuthController = require('./auth/AuthController');
 var AdminController = require('./controllers/AdminController');
@@ -34,6 +54,22 @@ app.use(cookieSession({
   name: 'session',
   keys: ['status', 'msg']
 }));
+
+
+// Security and Performance
+app.use(compression()); //Compress all routes
+app.use(helmet());
+
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+         res.redirect('/');
+       });
 
 app.use(express.static(path.join(__dirname, 'public')));
 

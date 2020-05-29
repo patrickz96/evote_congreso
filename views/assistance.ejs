@@ -6,6 +6,7 @@
     <title>Evote</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="librerias/scss/estilos.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <header>
@@ -29,6 +30,8 @@
                     <label for="codigo">Ingrese su Clave Secreta</label>
                     <input id="codigo" name="usuario" type="text" placeholder="Clave Secreta" required autofocus>
                     <span class="mensaje-atencion"> Usted encontrará su clave secreta en su correo Institucional UNSA</span>
+		<br>
+                <div class="g-recaptcha" data-sitekey="6LcVif0UAAAAAAG2ZhCH5-IAnBhfIMkJgZ4xgl5K"></div>
                 </fieldset>
                 <button class="boton-accion" type="submit">Ir a Votar</button>
             </form>
