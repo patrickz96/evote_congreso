@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start:dev": "node ./bin/www",
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "stop": "kill -9 $(lsof -t -i:3000)"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

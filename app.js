@@ -5,6 +5,10 @@ var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session')
 var logger = require('morgan');
 
+//Security and performance
+var compression = require('compression');
+var helmet = require('helmet');
+
 //Controllers
 var AuthController = require('./auth/AuthController');
 var ElectoralCensusController = require('./controllers/ElectoralCensusController');
@@ -30,6 +34,11 @@ app.use(cookieSession({
   name: 'session',
   keys: ['status', 'msg']
 }));
+
+
+// Security and Performance
+app.use(compression()); //Compress all routes
+app.use(helmet());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
