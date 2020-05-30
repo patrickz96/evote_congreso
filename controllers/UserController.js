@@ -23,14 +23,41 @@ router.post('/assistance',function(req,res){
 
 /****************VOTE*****************/
 router.get('/vote',function(req,res){
+    console.log('redirecting vote');
     res.render('vote');
 });
 
-router.post('/vote',function(req,res){
+router.post('/vote',async function(req,res){
     
     console.log(req.body);
-    //res.redirect('/finish');
+    var lista_asamblea = await db.query("select id_lista_electoral,nombre from lista_electoral where id_lista_electoral="+req.body.lista_asamblea);
+    var lista_consejo = await db.query("select id_lista_electoral,nombre from lista_electoral where id_lista_electoral="+req.body.lista_consejo);
+
+    json_lista_asamblea = JSON.parse(JSON.stringify(lista_asamblea))[0][0];
+    json_lista_consejo = JSON.parse(JSON.stringify(lista_consejo))[0][0];
+
+    req.session.status = "ok"; req.session.msg = {lista_asamblea:json_lista_asamblea,lista_consejo:json_lista_consejo};
+    res.redirect('/confirm-vote');
 });
+
+/***************CONFIRM-VOTE**********/
+router.get('/confirm-vote',function(req,res){
+    var status = req.session.status;
+    var msg = req.session.msg ;
+    req.session = null;
+    if(status==undefined){
+        res.redirect('/vote');
+    }else{
+        res.render('vote-confirm',{status: status, lista_asamblea: msg.lista_asamblea,lista_consejo: msg.lista_consejo });
+    }
+});
+
+
+router.post('/confirm-vote', function (req, res) {
+    console.log("confirming vote");
+    console.log(req.body);
+});
+
 /***************FINISH-VOTE**********/
 router.get('/finish',function(req,res){
     res.render('vote-finish');
