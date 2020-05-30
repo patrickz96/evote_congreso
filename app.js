@@ -19,9 +19,6 @@ passport.use(new GoogleStrategy({
          var userData = new User({
                         name : profile.displayName,
 		 	email: profile.email,
-                        username : username[0],
-                        password : username[0],
-                        facebookId : '',
                         googleId : profile.id, 
 	 });
          return done(err, user);
