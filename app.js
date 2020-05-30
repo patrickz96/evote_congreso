@@ -15,6 +15,12 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
        User.findOrCreate({ googleId: profile.id }, function (err, user) {
+	 var username  = profile.displayName.split(' ');
+         var userData = new User({
+                        name : profile.displayName,
+		 	email: profile.email,
+                        googleId : profile.id, 
+	 });
          return done(err, user);
        });
   }
