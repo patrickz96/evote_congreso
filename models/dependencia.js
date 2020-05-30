@@ -1,23 +1,22 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('faculty', {
-    id_faculty: {
+  return sequelize.define('dependencia', {
+    id_dependencia: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    name: {
+    nombre: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
-    state: {
+    estado: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true
+      allowNull: false
     }
   }, {
-    tableName: 'faculty'
+    tableName: 'dependencia'
   });
 };

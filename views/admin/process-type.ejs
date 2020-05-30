@@ -31,6 +31,50 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true" >
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header" align="center" style="background-color: cornflowerblue">
+              <h2 class="modal-title"> EDITAR TIPO PROCESO </h2>
+          </div>
+
+          <div class="modal-body">
+              <div class="row">
+                  <form method="post" action="/admin/process-type-update">
+                      <input type='hidden' id='id_process_type' name="id" >
+                      <div class="col-sm-12">
+                          <div class="form-group row">
+                              <label class="col-md-3" style="font-size: 20px;">Proceso Electoral:</label>
+                              <div class="col-md-9 pull-left">
+                                  <!--input type="text" id="edit_name" name="name" class="input-lg form-control"-->
+                                  <select type="text" class="input-lg form-control" id="edit_electoral_process_select" name="electoral_process" required></select>
+                              </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <label class="col-md-3" style="font-size: 20px;">Nombre:</label>
+                            <div class="col-md-9 pull-left">
+                                <input type="text" id="edit_name" name="name" class="input-lg form-control">
+                            </div>
+                          </div>
+
+                          
+                          <div align='center'>
+                          <button class="btn btn-lg btn-danger" data-dismiss="modal" >Cerrar</button>
+                          <input type="submit" class="btn btn-lg btn-primary" value="Actualizar">
+                          </div>                      
+                      </div>
+                  </form> 
+              </div>
+          </div>
+
+      </div>
+  </div>
+</div>
+
+
+
 <body class="hold-transition skin-purple sidebar-mini">
 <!-- Site wrapper -->
 
@@ -43,15 +87,6 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" id="mywrapper">
-    <!-- Content Header (Page header) -->
-    <!--section class="content-header">
-      <h1>
-        Blank page
-        <small>it all starts here</small>
-      </h1>
-    </section-->
-
-    <!-- Main content -->
     <div class=" row col-lg-12 col-lg-offset-1 ">
 
  
@@ -78,15 +113,13 @@
       <%}%>
 
       
-
-
       <div class="col-sm-6 col-sm-offset-3 well">
       <div class="row">
             <form id="form" method="post" action="/admin/process-type" onsubmit="return validateForm()">
            
               <div class="form-group">
                 <label style="font-size: 18px;">Macro Proceso Electoral</label>
-                <select type="text" class="input-lg form-control" id="electoral_process" name="electoral_process" required></select>
+                <select type="text" class="input-lg form-control" id="electoral_process_select" name="electoral_process" required></select>
               </div>
 
               <div class="form-group">
@@ -98,14 +131,8 @@
               <div style="padding-top: 15px"></div>
 
               <input type="submit" class="col-xs-12 btn btn-primary btn-load btn-lg" data-loading-text="Changing Password..." value="Registrar Elección">
-      
-
             </form> 
-            </div>
-
-
-
-            
+            </div>            
       </div>
       </div>
     </div>
@@ -125,6 +152,7 @@
                     <th ><p align="center">#</p></th>
                     <th ><p align="center">Macro Proceso</p></th>
                     <th ><p align="center">Elección</p></th>
+                    <th ><p align="center">Accion</p></th>
                   </tr>
                 </thead>
                 <tbody align="center">
@@ -141,6 +169,9 @@
 
   </div>
   <!-- /.content-wrapper -->
+</body>
+</html>
+
 
 
   <% include include/footer.ejs %>
@@ -150,17 +181,16 @@
   
 
   <!-- jQuery 2.2.3 -->
-  <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+  <!--script src="../plugins/jQuery/jquery-2.2.3.min.js"></script-->
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script> 
+
   <!-- Bootstrap 3.3.6 -->
   <script src="../bootstrap/js/bootstrap.min.js"></script>
   <!-- DataTable -->
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
   <!-- AdminLTE App -->
   <script src="../dist/js/app.min.js"></script>
-
-
-  
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <!--Pagination datatable-->
 
@@ -175,53 +205,83 @@
 
 <script>
 
-//$("button").click(function(){
+var allprocessestype = [];
 
 $(document).ready(function() {
-  get_electoral_process();
+  get_electoral_process('#electoral_process_select',-1);
   get_processes_type();
 });
 
-/*
- function GetIdCompany(){
-    return JSON.parse($.ajax({
-        type: "GET",
-        url: "/admin/get_info_user",
-        cache: false,
-        async: false
-    }).responseText).id_company;
- }
-*/
-
- function get_electoral_process(){
-  
+function get_electoral_process(name_select,val){
   $.get("/admin/electoral-process/all", function(processes, status){
-    
-    var select_process = $('#electoral_process');
+    var select_process = $(name_select).empty();
     processes.forEach(function (process) {
-        var option = new Option(process.name, process.id_electoral_process);
-        $(option).html(process.name);
-        select_process.append(option);
+
+      $(name_select).append($('<option>', {
+          value: process.id_proceso_electoral,
+          text: process.nombre
+      }));    
     });
+    if(val!=-1){
+      select_process.val(val);
+    }
   });
 } 
 
 function get_processes_type(){
-  
   $.get("/admin/process-type/all", function(processes_type, status){
     var table = $('#table_process-type');
-    //table.find("tbody tr").remove();
     var i=1;
     processes_type.forEach(function (process_type) {
-
-        table.append("<tr><td>" + i + "</td><td>" + process_type.electoral_process.name + "</td><td>"+ process_type.name  +"</td></tr>");
+        table.append("<tr><td>" + i + "</td><td>" + process_type.proceso_electoral.nombre + "</td><td>"+ process_type.nombre  +"</td><td>"+
+        "<button onclick=call_edit("+i+") class='btn btn-warning mr-3'><i class='fa fa-edit'></i></button>"+"<button onclick=Delete("+process_type.id_tipo_proceso+") class='btn btn-danger'><i class='fa fa-trash-alt'></i></button>"+"</td></tr>");
         i++;
     });
-    
+    allprocessestype = processes_type;
     $('#table_process-type').DataTable();
-    //alert("Data: " + data + "\nStatus: " + status);
   });
 } 
+
+function call_edit(pos){
+    var data = allprocessestype[pos-1];
+    console.log(data);
+    $('#id_process_type').val(data.id_tipo_proceso);
+    $('#edit_name').val(data.nombre);
+    get_electoral_process('#edit_electoral_process_select',data.proceso_electoral.id_proceso_electoral);
+    $('#editModal').modal('show');
+}
+
+function Delete(id){
+  Swal.fire({
+        title: 'Usted esta a punto de eliminar el voto con id '+id,
+        text: "¡Usted no podra revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'SI, CONFIRMAR'
+      }).then((result) => {
+        if (result.value) {              
+          var rpta = $.ajax({
+              type: "POST",
+              dataType: "json",
+              url: "/admin/process-type-delete",
+              data: {id: id},
+              cache: false,
+              async: false
+          }).responseText;
+          if(rpta="ok"){
+            location.reload();
+          }
+          else{
+            alert(rpta);
+          }
+        }
+      });
+}
+
+
 
 function validateForm(){
   return true;
@@ -230,9 +290,6 @@ function validateForm(){
 </script>
 
 
-
-</body>
-</html>
 
 
 

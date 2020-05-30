@@ -38,6 +38,56 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
+
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true" >
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header" align="center" style="background-color: cornflowerblue">
+              <h2 class="modal-title"> EDITAR PROCESO ELECTORAL </h2>
+          </div>
+
+          <div class="modal-body">
+              <div class="row">
+                  <form method="post" action="/admin/electoral-process-update">
+                      <input type='hidden' id='id_electoral_process' name="id" >
+                      <div class="col-sm-12">
+                          <div class="form-group row">
+                              <label class="col-md-3" style="font-size: 20px;">Nombre del Proceso:</label>
+                              <div class="col-md-9 pull-left">
+                                      <input type="text" id="edit_name" name="name" class="input-lg form-control">
+                              </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-md-3" style="font-size: 20px;">Apertura de la Votación:</label>
+                            <div class="col-md-9 pull-left">
+                                <input type="text" id="edit_init_date" name="init_date" class="input-lg form-control">
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <label class="col-md-3" style="font-size: 20px;">Cierre de la Votación:</label>
+                            <div class="col-md-9 pull-left">
+                                <input type="text" id="edit_end_date" name="end_date" class="input-lg form-control">
+                            </div>
+                          </div>
+                          
+                          <div align='center'>
+                          <button class="btn btn-lg btn-danger" data-dismiss="modal" >Cerrar</button>
+                          <input type="submit" class="btn btn-lg btn-primary" value="Actualizar">
+                          </div>                      
+                      </div>
+                  </form> 
+              </div>
+          </div>
+
+      </div>
+  </div>
+</div>
+
+
+
+
 <body class="hold-transition skin-purple sidebar-mini">
 <!-- Site wrapper -->
 
@@ -82,6 +132,14 @@
           </div>
 
       <%}%>
+
+
+
+<!-- Button trigger modal -->
+<!--button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal">
+  Launch demo modal
+</button-->
+
 
       <div class="col-sm-6 col-sm-offset-3 well">
       <div class="row">
@@ -139,6 +197,7 @@
                   <th ><p align="center">Nombre del Proceso</p></th>
                   <th ><p align="center">Apertura</p></th>
                   <th ><p align="center">Cierre</p></th>
+                  <th ><p align="center">Accion</p></th>
                 </tr>
               </thead>
               <tbody align="center">
@@ -172,8 +231,15 @@
 <script src="https://rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/js/bootstrap-datetimepicker.min.js"></script>
 <!-- Timezone-->
 <!--script src= ".../js/moment-timezone-withdata.js" ></script-->
-
+<script src= "../js/moment-timezone-withdata.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script>
+
+var allprocesses = [];
+
+function validateForm(){
+  return true;
+}
 
 function init_dates(){
 
@@ -211,26 +277,73 @@ function GetIdCompany(){
  }
 */
 
+function TimetoZone(time) {
+    var format = 'YYYY/MM/DD HH:mm:ss';
+    //return moment(time, format).tz(zone).format(format);
+    //return moment(time).tz('America/Lima').format(format);
+    //return moment(time).format(format);
+    //return moment(time).tz('UTC').format(format);
+    //return moment(time, 'YYYY-MM-DD HH:mm:ss').tz('UTC').format(); // "2018-07-18T00:00:00Z"
+    return moment(time).utcOffset(-600).format('YYYY-MM-DD HH:mm:ss');
+}
+
 function get_electoral_process(){
   
   $.get("/admin/electoral-process/all", function(processes, status){
     
+
+
     var table = $('#table_process');
     //table.find("tbody tr").remove();
     var i=1
     processes.forEach(function (process) {
-        table.append("<tr><td>" + i + "</td><td>" + process.name + "</td><td>"+ process.date_init  +"</td><td>"+ process.date_end+"</td></tr>");
+        table.append("<tr><td>" + i + "</td><td>" + process.nombre + "</td><td>"+ TimetoZone(process.apertura)  +"</td><td>"+ TimetoZone(process.cierre)+"</td><td>"+ 
+          "<button onclick=call_edit("+i+") class='btn btn-warning mr-3'><i class='fa fa-edit'></i></button>"+"<button onclick=Delete("+process.id_proceso_electoral+") class='btn btn-danger'><i class='fa fa-trash-alt'></i></button>" +"</td></tr>");
         i++;
     });
-    
+    allprocesses = processes;
     $('#table_process').DataTable();
     //alert("Data: " + data + "\nStatus: " + status);
   });
-} 
+}
+ 
+function call_edit(pos){
+    data = allprocesses[pos-1];
+    $('#id_electoral_process').val(data.id_proceso_electoral);
+    $('#edit_name').val(data.nombre);
+    $('#edit_init_date').val(TimetoZone(data.apertura));
+    $('#edit_end_date').val(TimetoZone(data.cierre));
+    $('#editModal').modal('show');
+}
 
-var v_8digits = false;
-function validateForm(){
-  return true;
+function Delete(id){
+  Swal.fire({
+        title: 'Usted esta a punto de eliminar el voto con id '+id,
+        text: "¡Usted no podra revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'SI, CONFIRMAR'
+      }).then((result) => {
+        if (result.value) {              
+          var rpta = $.ajax({
+              type: "POST",
+              dataType: "json",
+              url: "/admin/electoral-process-delete",
+              data: {id: id},
+              cache: false,
+              async: false
+          }).responseText;
+          if(rpta="ok"){
+            location.reload();
+          }
+          else{
+            alert(rpta);
+          }
+        }
+      });
 }
 
 </script>
