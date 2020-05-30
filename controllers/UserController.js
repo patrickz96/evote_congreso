@@ -27,11 +27,36 @@ router.get('/vote',function(req,res){
 });
 
 router.post('/vote',function(req,res){
-    res.redirect('/finish');
+    
+    console.log(req.body);
+    //res.redirect('/finish');
 });
 /***************FINISH-VOTE**********/
 router.get('/finish',function(req,res){
     res.render('vote-finish');
 });
+
+router.post('/get-electoral-list', function (req, res) {
+
+    //console.log("llego");
+    //console.log(req.body);
+    if(req.body.id_facultad==''){
+        id_facultad=null
+    }else{
+        id_facultad=req.body.id_facultad;
+    }
+    
+    models.lista_electoral.findAll({
+    where:{id_tipo_proceso:req.body.id_tipo_proceso,id_facultad:id_facultad},
+    order: [
+        ['nombre', 'ASC']
+    ]
+    }).then(data => {
+        res.status(200).send(data);
+    })    .catch(err => {
+        return res.status(500).send("There was a problem finding supervisor. "+err);
+    });
+});
+
 
 module.exports = router;

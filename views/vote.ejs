@@ -6,6 +6,7 @@
     <title>Evote</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="librerias/scss/estilos.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
 </head>
 <body>
     <header>
@@ -26,10 +27,10 @@
             <form class="formulario" method="post" action="/vote" onsubmit="return validateForm()">
                 <fieldset>
                     <legend>Emisión de Votación</legend>
-                    <h1>CONSEJO DE FACULTAD</h1>
+                    <h1>ASAMBLEA UNIVERSITARIA</h1>
                     <H3>FACULTAD DE PRODUCCION Y SERVICIOS</H3>
-                    <div class="marcacion-voto"> 
-                        <input type="radio" name="lista" id="lista1">
+                    <div class="marcacion-voto" id="lista_asamblea"> 
+                        <!--input type="radio" name="lista" id="lista1">
                         <label for="lista1">Lista 1</label>
                 
                         <input type="radio" name="lista" id="lista2">
@@ -39,17 +40,17 @@
                         <label for="lista3">Lista 3</label>
 
                         <input type="radio" name="lista" id="lista4">
-                        <label for="lista4">Nulo/Blanco</label>
+                        <label for="lista4">Nulo/Blanco</label-->
                     </div>
 
                 </fieldset>
 
                 <fieldset>
                     <legend>Emisión de Votación</legend>
-                    <h1>ASAMBLEA UNIVERSITARIA</h1>
+                    <h1>CONSEJO DE FACULTAD</h1>
                     <H3>FACULTAD DE PRODUCCION Y SERVICIOS</H3>
-                    <div class="marcacion-voto"> 
-                        <input type="radio" name="lista_asamblea" id="lista_asam1">
+                    <div class="marcacion-voto" id="lista_consejo"> 
+                        <!--input type="radio" name="lista_asamblea" id="lista_asam1">
                         <label for="lista_asam1">Lista 1</label>
                 
                         <input type="radio" name="lista_asamblea" id="lista_asam2">
@@ -59,7 +60,7 @@
                         <label for="lista_asam3">Lista 3</label>
 
                         <input type="radio" name="lista_asamblea" id="lista_asam4">
-                        <label for="lista_asam4">Nulo/Blanco</label>
+                        <label for="lista_asam4">Nulo/Blanco</label-->
                     </div>
 
                 </fieldset>
@@ -73,8 +74,41 @@
 </html>
 
 <script>
+
+
+
+    $(document).ready(function() {
+        //alert("hello");
+        init_list('lista_asamblea',1,null);
+        init_list('lista_consejo',2,1);
+    });
+
+    function init_list(id_list,id_tipo_proceso,id_facultad){
+        var mylist = $('#'+id_list);
+
+        var data = JSON.parse($.ajax({
+              type: "POST",
+              dataType: "json",
+              url: "/get-electoral-list",
+              data: {id_tipo_proceso: id_tipo_proceso,id_facultad:id_facultad},
+              cache: false,
+              async: false
+        }).responseText);
+        
+        data.forEach(function (list) {
+            console.log(list);
+            var opt = 
+            "<input type='radio' name='"+id_list+"' id='"+id_list+"-"+list.nombre+"'>"+
+            "<label for='"+id_list+"-"+list.nombre+"'>"+list.nombre+ "</label>";
+
+            mylist.append(opt);
+        });
+    }
+
     function validateForm(){
       console.log("validating form");
       return true;
     }
+
+
 </script>

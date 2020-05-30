@@ -66,6 +66,18 @@ router.get('/electoral-list/all', VerifyToken, function (req, res) {
     });
 });
 
+router.post('/get-electoral-list', VerifyToken, function (req, res) {
+
+    console.log("llego");
+    models.lista_electoral.findAll({
+    where:{id_tipo_proceso:req.body.id_tipo_proceso,id_facultad:req.body.id_facultad}
+    }).then(data => {
+        res.status(200).send(data);
+    })    .catch(err => {
+        return res.status(500).send("There was a problem finding supervisor. "+err);
+    });
+});
+
 
 router.post('/electoral-list-delete', function (req, res) {
 
