@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('lista_electoral', {
+  Lista_Electoral = sequelize.define('lista_electoral', {
     id_lista_electoral: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -61,4 +61,10 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     tableName: 'lista_electoral'
   });
+
+  Lista_Electoral.associate = function(models) {
+    models.lista_electoral.belongsTo(models.tipo_proceso, {foreignKey: 'id_tipo_proceso'});
+    models.lista_electoral.belongsTo(models.facultad, {foreignKey: 'id_facultad'});
+  };
+  return Lista_Electoral;
 };

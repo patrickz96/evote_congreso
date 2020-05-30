@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('tipo_proceso', {
+  Tipo_Proceso = sequelize.define('tipo_proceso', {
     id_tipo_proceso: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: '2020-01-01 00:00:00'
     },
-    updatedat: {
+    updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: '2020-01-01 00:00:00'
@@ -38,4 +38,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     tableName: 'tipo_proceso'
   });
+
+  Tipo_Proceso.associate = function(models) {
+    models.tipo_proceso.belongsTo(models.proceso_electoral, {foreignKey: 'id_proceso_electoral'});
+  };
+  return Tipo_Proceso;
 };

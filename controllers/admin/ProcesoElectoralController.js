@@ -2,9 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 const models = require(process.cwd()+"/models");
-
-//const models = require(__dirname +"/.../models");
-
 const db = require(process.cwd()+"/models").sequelize;
 const VerifyToken = require(process.cwd()+'/auth/VerifyToken');
 

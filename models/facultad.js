@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: '2020-01-01 00:00:00'
     },
-    updatedat: {
+    updatedAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: '2020-01-01 00:00:00'

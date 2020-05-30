@@ -29,6 +29,10 @@ var helmet = require('helmet');
 var AuthController = require('./auth/AuthController');
 var AdminController = require('./controllers/AdminController');
 var ProcesoElectoralController = require('./controllers/admin/ProcesoElectoralController');
+var TipoProcesoController = require('./controllers/admin/TipoProcesoController');
+var ListaElectoralController = require('./controllers/admin/ListaElectoralController');
+
+
 
 /*
 var ElectoralCensusController = require('./controllers/ElectoralCensusController');
@@ -80,6 +84,9 @@ app.use('/', UserController);
 app.use('/admin',AuthController);
 app.use('/admin', AdminController);
 app.use('/admin', ProcesoElectoralController);
+app.use('/admin', TipoProcesoController);
+app.use('/admin', ListaElectoralController);
+
 
 /*
 app.use('/vote', VoteController);
