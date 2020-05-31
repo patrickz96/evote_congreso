@@ -61,10 +61,10 @@ npm start
 ```
 
 ## Ignore config.json locally in git
-# Exclude from the management of Git 
+### Exclude from the management of Git 
 git update-index --assume-unchanged config/config.json
-# How to confirm 
+### How to confirm 
 git ls-files -v | grep ^h
-# Restore to the management of Git 
+### Restore to the management of Git 
 git update-index --no-assume-unchanged path/to/file
 
