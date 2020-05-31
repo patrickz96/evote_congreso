@@ -11,16 +11,19 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 passport.use(new GoogleStrategy({
     clientID: "809514991769-abanc2gec860blavphoji94ivfl8c6s3.apps.googleusercontent.com",
     clientSecret: "OcSr-m6Wky1WZ9HwqU3OVE_n",
-    callbackURL: "https://evote.unsa.edu.pe/assistance"
+    callbackURL: "https://evote.unsa.edu.pe/assistance",
+    //passReqToCallback   : true,
+    //callbackURL: "/assistance"
   },
   function(accessToken, refreshToken, profile, done) {
        User.findOrCreate({ googleId: profile.id }, function (err, user) {
-	 var username  = profile.displayName.split(' ');
+	       var username  = profile.displayName.split(' ');
          var userData = new User({
-                        name : profile.displayName,
-		 	email: profile.email,
-                        googleId : profile.id, 
-	 });
+              name : profile.displayName,
+              email: profile.email,
+              googleId : profile.id, 
+          });
+          console.log(userData);
          return done(err, user);
        });
   }
@@ -37,8 +40,6 @@ var AdminController = require('./controllers/AdminController');
 var ProcesoElectoralController = require('./controllers/admin/ProcesoElectoralController');
 var TipoProcesoController = require('./controllers/admin/TipoProcesoController');
 var ListaElectoralController = require('./controllers/admin/ListaElectoralController');
-
-
 
 /*
 var ElectoralCensusController = require('./controllers/ElectoralCensusController');
@@ -73,13 +74,13 @@ app.use(compression()); //Compress all routes
 app.use(helmet());
 
 
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }));
+app.get('/auth/google',passport.authenticate('google', { scope: ['profile'] }));
 
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
+         console.log("dentro");
          res.redirect('/');
        });
 
