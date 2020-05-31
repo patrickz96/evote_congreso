@@ -60,3 +60,6 @@ npm install
 npm start
 ```
 
+## Ignore config.json locally in git
+git update-index --assume-unchanged config/config.json
+
