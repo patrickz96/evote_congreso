@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evote</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="librerias/scss/estilos.css">
+    <link rel="stylesheet" href="librerias/scss/estilos2.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body>
     <header>
@@ -17,54 +19,36 @@
                 <h1><span class="text-big">Elecciones 2020</span></h1>
                 <span>Sistema Digital de Votación <b>E-vote</b></span>
             </div>
+            <button class="cerrar_sesion" onclick=cerrar_sesion() style="background: #c22014;" >CERRAR SESIÓN</button>
         </div>
     </header>
     <main>
         <!-- inicio formulario busqueda -->
         <div class="container">
 
+            <!--div class="formulario"-->
             <form class="formulario" method="post" action="/vote" onsubmit="return validateForm()">
-                <fieldset>
-                    <legend>Emisión de Votación</legend>
-                    <h1>CONSEJO DE FACULTAD</h1>
-                    <H3>FACULTAD DE PRODUCCION Y SERVICIOS</H3>
-                    <div class="marcacion-voto"> 
-                        <input type="radio" name="lista" id="lista1">
-                        <label for="lista1">Lista 1</label>
-                
-                        <input type="radio" name="lista" id="lista2">
-                        <label for="lista2">Lista 2</label>
-                
-                        <input type="radio" name="lista" id="lista3">
-                        <label for="lista3">Lista 3</label>
-
-                        <input type="radio" name="lista" id="lista4">
-                        <label for="lista4">Nulo/Blanco</label>
-                    </div>
-
-                </fieldset>
-
+                <div align="center" style="display: inline;">
+                    <h2><strong>Usuario :</strong> <%= name %> </h2> 
+                </div>
+                <input type="hidden" name="id_asistencia" value=<%= id_asistencia %> >
                 <fieldset>
                     <legend>Emisión de Votación</legend>
                     <h1>ASAMBLEA UNIVERSITARIA</h1>
                     <H3>FACULTAD DE PRODUCCION Y SERVICIOS</H3>
-                    <div class="marcacion-voto"> 
-                        <input type="radio" name="lista_asamblea" id="lista_asam1">
-                        <label for="lista_asam1">Lista 1</label>
-                
-                        <input type="radio" name="lista_asamblea" id="lista_asam2">
-                        <label for="lista_asam2">Lista 2</label>
-                
-                        <input type="radio" name="lista_asamblea" id="lista_asam3">
-                        <label for="lista_asam3">Lista 3</label>
-
-                        <input type="radio" name="lista_asamblea" id="lista_asam4">
-                        <label for="lista_asam4">Nulo/Blanco</label>
-                    </div>
+                    <div class="marcacion-voto" id="lista_asamblea"></div>
 
                 </fieldset>
 
-                <button class="boton-accion" type="submit">VOTAR</button>
+                <fieldset>
+                    <legend>Emisión de Votación</legend>
+                    <h1>CONSEJO DE FACULTAD</h1>
+                    <H3>FACULTAD DE PRODUCCION Y SERVICIOS</H3>
+                    <div class="marcacion-voto" id="lista_consejo"> </div>
+
+                </fieldset>
+
+                <button class="boton-accion" type="submit" >SIGUIENTE</button>
             </form>
 
         </div>
@@ -73,8 +57,90 @@
 </html>
 
 <script>
-    function validateForm(){
-      console.log("validating form");
-      return true;
+
+    $(document).ready(function() {
+        init_list('lista_asamblea',1,null);
+        init_list('lista_consejo',2,23);
+    });
+
+    function init_list(id_list,id_tipo_proceso,id_facultad){
+        var mylist = $('#'+id_list);
+
+        var data = JSON.parse($.ajax({
+              type: "POST",
+              dataType: "json",
+              url: "/get-electoral-list",
+              data: {id_tipo_proceso: id_tipo_proceso,id_facultad:id_facultad},
+              cache: false,
+              async: false
+        }).responseText);
+        
+        console.log(data);
+        data.forEach(function (list) {
+            var opt = 
+            "<input type='radio' value="+list.id_lista_electoral +" name='"+id_list+"' id='"+id_list+"-"+list.nombre+"'>"+
+            "<label for='"+id_list+"-"+list.nombre+"'>"+list.nombre+ "</label>";
+
+            mylist.append(opt);
+        });
+
+        var opt = 
+            "<input type='radio' value="+-1+" name='"+id_list+"' id='"+id_list+"-nulo'>"+
+            "<label for='"+id_list+"-nulo'>"+"VOTO NULO"+ "</label>";
+            mylist.append(opt);
+
     }
+
+
+    function validateForm(){  
+      //console.log("validating form");
+      var asam_vote = $('input[name="lista_asamblea"]:checked').val();
+      var consejo_vote = $('input[name="lista_consejo"]:checked').val();
+
+      console.log("LISTA ASAM",$('input[name="lista_asamblea"]:checked').val());
+      console.log("LISTA CONSEJO",$('input[name="lista_consejo"]:checked').val());
+      if(asam_vote!=undefined && consejo_vote!=undefined){
+        return true;
+      }
+      else{
+       
+            Swal.fire({
+            title: '<strong> LISTA NO SELECCIONADA </strong>',
+            icon: 'info',
+            html:
+                'Es necesario seleccionar alguna opción en las 2 listas para emitir su voto'
+            });
+         
+
+        return false;
+      } 
+    }
+
+    function cerrar_sesion(){
+        //alert("seguro que desea cerrar sesion");
+
+        Swal.fire({
+        title: 'Cerrar Sesión',
+        text: "¿Esta usted seguro que desea cerrar sesion?",
+        icon: 'warning',
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'SI, CONFIRMAR'
+      }).then((result) => {
+        window.location.href = '/logout';
+        /*
+        if (result.value) {
+          Swal.fire(
+            '¡Emitido!',
+            'Usted a emitido correctamente su voto.',
+            'success'
+          )
+        }*/
+
+      });
+
+    }
+
 </script>

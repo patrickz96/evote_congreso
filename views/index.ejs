@@ -6,6 +6,7 @@
     <title>Evote</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="librerias/scss/estilos.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <header>
@@ -13,7 +14,7 @@
         <img src="images/logo-unsa.svg" alt="UNSA" class="logo">
             <div class="titulo">
                 <h1><span class="text-big">Elecciones 2020</span></h1>
-                <span>Sistema Digital de Votación <b>E-vote</b></span>
+                <span>Sistema Digital de Votación<b>E-vote</b></span>
             </div>
         </div>
     </header>
@@ -23,13 +24,18 @@
         <div class="vertical-center">
         <form class="formulario" method="post" action="/login" onsubmit="return validateForm()">
             <fieldset>
-                <legend>Identificación de Elector</legend>
-                <label for="codigo">Usuario</label>
+                <legend>Identificación del Elector</legend>
+                <!--label for="codigo">Usuario</label>
                 <input id="codigo" name="usuario" type="text" placeholder="Ingrese su usuario" required autofocus>
                 <label for="documento">Contraseña</label>
-                <input id="documento" name="documento" type="password" placeholder="Ingrese su Contraseña" required>
+                <input id="documento" name="documento" type="password" placeholder="Ingrese su Contraseña" required-->
+                <div align="center">
+                    <a href="/auth/google"><img src="images/login_unsa.png"  class="img-fluid"/></a>
+                </div>	
             </fieldset>
-            <button class="boton-accion" >Ingresar</button>
+            <!--button class="boton-accion" >Ingresar</button-->
+
+
         </form>
         </div>
         </div>

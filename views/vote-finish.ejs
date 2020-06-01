@@ -6,6 +6,8 @@
     <title>Evote</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../librerias/scss/estilos.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body>
     <header>
@@ -17,23 +19,24 @@
                 <h1><span class="text-big">Elecciones 2020</span></h1>
                 <span>Sistema Digital de Votación <b>E-vote</b></span>
             </div>
+            <button class="cerrar_sesion" onclick=cerrar_sesion() style="background: #c22014;" >CERRAR SESIÓN</button>
         </div>
     </header>
     <main>
         <!-- inicio formulario busqueda -->
         <div class="container">
         <div class="vertical-center">
+            <div align="center" style="display: inline;">
+                <h2><strong>Usuario :</strong> <%= name %> </h2> 
+            </div>
             <form class="formulario">
                 <fieldset>
                     <legend>Emisión de Votación</legend>
-                    <h1>GRACIAS POR EMITIR SU VOTO</h1>
-                    <H3> USTED PUEDE DESCARGAR SU COMPROBANTE PULSANDO DESCARGAR</H3>
-                 
+             
+                    <div align="center">
+                        <h1> USTED A EMITIDO SU VOTO CORRECTAMENTE</h1>
+                    </div>
                 </fieldset>
-                <div align="center" style="margin-top: 10px;">
-                <a  target="_blank" class="boton-accion" type="submit" href="/voto-emitido.pdf" >DESCARGAR </a>
-                </div>
-    
             </form>
         </div>
         </div>
@@ -45,5 +48,31 @@
     function validateForm(){
       console.log("validating form");
       return true;
+    }
+
+    function cerrar_sesion(){
+        //alert("seguro que desea cerrar sesion");
+
+        Swal.fire({
+        title: 'Cerrar Sesión',
+        text: "¿Esta usted seguro que desea cerrar sesion?",
+        icon: 'warning',
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'SI, CONFIRMAR'
+      }).then((result) => {
+        window.location.href = '/logout';
+        /*
+        if (result.value) {
+          Swal.fire(
+            '¡Emitido!',
+            'Usted a emitido correctamente su voto.',
+            'success'
+          )
+        }*/
+
+      });
     }
 </script>

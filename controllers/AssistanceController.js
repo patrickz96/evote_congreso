@@ -8,7 +8,7 @@ const db = require("../models").sequelize;
 
 router.get('/',function(req,res){
 
-    res.render('assistance', { title: 'Ingreso' });
+    res.render('assistance');
 });
 
 

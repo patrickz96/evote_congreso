@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evote</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="librerias/scss/estilos.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+</head>
+<body>
+
+
+    <header>
+        <div class="cabecera">
+            <a href="/">
+                <img src="../images/logo-unsa.svg" alt="UNSA" class="logo" href="/">
+            </a>
+            <div class="titulo">
+                <h1><span class="text-big">Elecciones 2020</span></h1>
+                <span>Sistema Digital de Votación <b>E-vote</b></span>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- inicio formulario busqueda -->
+        <div class="container">
+
+
+            <!--div class="formulario"-->
+            <form class="formulario" method="post" action="/confirm-vote" onsubmit="return validateForm()">
+        
+                <input type="hidden" name="id_asistencia" value='<%= data.id_asistencia %>' />
+
+                <fieldset>
+                    <legend>Emisión de Votación</legend>
+                    <h1>ASAMBLEA UNIVERSITARIA</h1>
+                    <div class="marcacion-voto" id="lista_asamblea"> 
+                        <% var status; %>
+                        <%if(status == "confirm-vote"){%>
+                            <input type="hidden" name="id_lista_asamblea" value='<%= data.lista_asamblea.id_lista_electoral %>' />
+                            <input type="text" name="lista_asamblea" value='<%= data.lista_asamblea.nombre %>' disabled />
+                        <%}%>
+                        
+                        
+
+                    </div>
+
+                </fieldset>
+
+                <fieldset>
+                    <legend>Emisión de Votación</legend>
+                    <h1>CONSEJO DE FACULTAD</h1>
+                    <H3>FACULTAD DE PRODUCCION Y SERVICIOS</H3>
+                    <div class="marcacion-voto" id="lista_consejo"> 
+                        <% var status; %>
+                        <%if(status == "confirm-vote"){%>
+                            <input type="hidden" name="id_lista_consejo" value='<%= data.lista_consejo.id_lista_electoral %>'  />
+                            <input type="text" name="lista_consejo" value='<%= data.lista_consejo.nombre %>' disabled />
+                        <%}%>
+                    </div>
+
+                </fieldset>
+                    <div align="center">
+                        
+                        <a href='#' onclick='location.reload(true); return false;'>
+                            <button class="boton-accion2" style="background: #c22014;" >CAMBIAR VOTO</button>
+                        </a>
+                        
+                        <button type="submit" class="boton-accion2" style="background: rgb(13, 129, 17);" >VOTAR</button>
+                    </div>    
+            </form>
+
+        </div>
+    </main>
+</body>
+</html>
+
+<script>
+
+    function enviar(){
+        //console.log("VAL CONSEJO: ",$('#lista_consejo').val());
+        //console.log($('input[name="lista_consejo"]:checked').val());
+        //$('input[name="name_of_your_radiobutton"]:checked').val()
+    }
+
+    $(document).ready(function() {
+        //alert("hello");
+        //init_list('lista_asamblea',1,null);
+        //init_list('lista_consejo',2,1);
+    });
+
+    function validateForm(){  
+      //console.log("validating form");
+      
+      return true;
+
+      /*
+      var asam_vote = $('input[name="lista_asamblea"]:checked').val();
+      var consejo_vote = $('input[name="lista_consejo"]:checked').val();
+
+      console.log("LISTA ASAM",$('input[name="lista_asamblea"]:checked').val());
+      console.log("LISTA CONSEJO",$('input[name="lista_consejo"]:checked').val());
+      if(asam_vote!=undefined && consejo_vote!=undefined){
+        return true;
+      }
+      else{
+       
+            Swal.fire({
+            title: '<strong> LISTA NO SELECCIONADA </strong>',
+            icon: 'info',
+            html:
+                'Es necesario seleccionar alguna opción en las 2 listas para emitir su voto'
+            });
+         
+
+        return false;
+      }*/
+      
+    }
+
+</script>

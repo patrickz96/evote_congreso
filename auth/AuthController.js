@@ -4,8 +4,6 @@ var bodyParser = require('body-parser');
 
 var VerifyToken = require('./VerifyToken');
 
-//router.use(bodyParser.urlencoded({ extended: false }));
-//router.use(bodyParser.json());
 var User = require('../models');
 const models = require('../models');
 
@@ -16,16 +14,6 @@ var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var bcrypt = require('bcryptjs');
 var config = require('../config/config.js'); // get config file
 
-/*
-router.get('/', function(req, res){
-  console.log("DENTRANDO A REGISTRO");
-  var status = req.session.status;
-  var msg = req.session.msg ;
-  req.session = null;
-  res.render('/admin/index', {status: status, message: msg });
-});
-*/
-
 router.get('/', function(req, res) {
   var status = req.session.status;
   var msg = req.session.msg ;
@@ -35,140 +23,94 @@ router.get('/', function(req, res) {
 
 
 router.post('/login', function(req, res) {
-
-  console.log("BODY LOGIN");
-  console.log(req.body);
-
-  
   models.supervisor.findOne({
     where: {
       username: req.body.username
     }, returning: true,
     plain: true
   }).then(data =>{
-      console.log("DATA");
-      console.log(data);
-      //if(data.length==0) return res.status(404).send("No supervisor found.");
       if(data==undefined){
-        //console.log("error1");
         req.session.status = "error";req.session.msg = "LOS DATOS INGRESADOS SON INCORRECTOS";
         return res.redirect("/admin");
       } 
-
-      
-      //console.log(data.password);
-      //console.log(data.username);
-      // check if the password is valid
       var passwordIsValid = bcrypt.compareSync(req.body.password, data.password);
       if (!passwordIsValid){
         req.session.status = "error";req.session.msg = "LOS DATOS INGRESADOS SON INCORRECTOS";
         return res.redirect("/admin");
       }
-      //return res.status(401).send({ auth: false, token: null });
-
-      var token = jwt.sign({ id: data.id,username:data.username }, config.secret, {
+      var token = jwt.sign({ name: data.name,username: data.username,rol: data.rol }, config.secret, {
         expiresIn: 86400 // expires in 24 hours
       });
-  
       //for my browser
       res.header('x-access-token', [token]);
       res.cookie('EvoteToken', token);
-      //res.status(200).send({ auth: true, token: token });
       res.redirect("/admin/panel");
 
   }).catch(err=>{
     return res.status(500).send("There was a problem finding supervisor. "+err);
   });
-  
-
 });
-
-
-
-router.get('/logout', function(req, res) {
-  res.clearCookie("EvoteToken");
-  //res.status(200).send({ auth: false, token: null });
-  res.redirect("/admin");
-});
-
 
 router.get('/register', function(req, res){
-
-    console.log("DENTRANDO A REGISTRO");
     var status = req.session.status;
     var msg = req.session.msg ;
     req.session = null;
     res.render('./admin/register', {status: status, message: msg });   
 });
 
-
-
-
 router.post('/register', function(req, res) {
-
+  console.log(req.body);
+  
   var hashedPassword = bcrypt.hashSync(req.body.password, 8);
-  //var hashedPassword = bcrypt.hashSync("12345", 8);
-
-  console.log("saving new supervisor");
   models.supervisor
   .create({
       name: req.body.name,
       username: req.body.username,
       password: hashedPassword,
-    
+      rol: req.body.rol
   })
   .then(data => {
-      console.log("GUARDANDO USUARIO");
-      console.log(data);
-      /*
-      var token = jwt.sign({ id: data.id,name:data.name }, config.secret, {
-        expiresIn: 86400 // expires in 24 hours
-      });
-      */
-      //res.header('x-access-token', [token]);
-      
-      //res.cookie('EvoteToken', token)
-      //res.status(200).send({ auth: true, token: token });
-
       req.session.status = "ok";
       req.session.msg =  "USUARIO: "+data.username+" REGISTRADO COMO "+data.name;
       res.redirect('/admin/register');
-
-
-      //res.status(200).send(data);
   })
   .catch(err => {
       return res.status(500).send("There was a problem adding the information to the database. "+err);
   });
-  
-  /*
-  User.create({
-    name : req.body.name,
-    email : req.body.email,
-    password : hashedPassword
-  },*/
-
-  /*
-  User.create({
-    name : "juan",
-    email : "juan@mail.com",
-    password : hashedPassword
-  }, 
-  function (err, user) {
-    if (err) return res.status(500).send("There was a problem registering the user`.");
-
-    // if user is registered without errors
-    // create a token
-    var token = jwt.sign({ id: user._id }, config.secret, {
-      expiresIn: 86400 // expires in 24 hours
-    });
-
-    //res.header('x-access-token', [token]);
-    res.cookie('mytoken', token)
-    res.status(200).send({ auth: true, token: token });
-  });*/
-
 });
+
+router.get('/logout', function(req, res) {
+  res.clearCookie("EvoteToken");
+  res.redirect("/admin");
+});
+
+
+router.get('/get_info_user',VerifyToken,  function(req,res){
+
+  var token = req.cookies['EvoteToken'];
+    // verifies secret and checks exp
+  jwt.verify(token, config.secret, async function(err, decoded) {      
+  if (err) 
+    return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });    
+  else{
+    res.status(200).send({name: decoded.name, username: decoded.username,rol: decoded.rol });
+      /*          
+      var company  = await models.company.findOne({where:{id:decoded.id_company}}).then(obj=>{if(obj){return obj;}else{return null;}});
+      if(company==null){
+        //req.session.status = "error";req.session.msg = "LOS DATOS INGRESADOS SON INCORRECTOS";
+        //return res.redirect("/");
+        res.status(200).send({username: decoded.username, id_company: decoded.id_company});
+      }
+      else{
+        res.status(200).send({username: decoded.username, id_company: decoded.id_company,company_name:company.name});
+      }*/
+  }
+   
+  // if everything is good, save to request for use in other routes
+  //next();
+  });
+});
+
 
 /*
 router.get('/me', VerifyToken, function(req, res, next) {

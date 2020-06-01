@@ -30,7 +30,7 @@
       <ul class="sidebar-menu">
         <li class="header" align="center" style="color:#3c8dbc; font-size: 14px"> OPCIONES</li>
         <li class="treeview">
-        <a href="/admin/panel">
+        <a href="/admin/panel" id='resume'>
             <i class="fa fa-chart-line"></i> <span>RESUMEN</span>
             <span class="pull-right-container">
               <!--i class="fa fa-angle-left pull-right"></i-->
@@ -38,7 +38,7 @@
           </a>
         </li>
          
-        <li class="treeview">
+        <li class="treeview" id='electoral_process'>
         <a href="/admin/electoral-process">
             <i class="fa fa-clock"></i> <span> PROCESO ELECTORAL </span>
             <span class="pull-right-container">
@@ -47,7 +47,7 @@
             </a>
         </li> 
 
-        <li class="treeview">
+        <li class="treeview" id='election_type'>
           <a href="/admin/process-type">
             <i class="fa fa-person-booth"></i> <span> TIPO ELECCION </span>
               <span class="pull-right-container">
@@ -56,7 +56,7 @@
               </a>
           </li> 
           
-        <li class="treeview">
+        <li class="treeview" id='electoral_list'>
           <a href="/admin/electoral-list">
               <i class="fa fa-list-ol"></i> <span> LISTA ELECTORAL </span>
               <span class="pull-right-container">
@@ -65,75 +65,33 @@
               </a>
           </li> 
 
+          <li class="treeview">
+            <a href="/admin/padron-activo">
+                <i class="fa fa-paper-plane"></i> <span> PADRON ACTIVO </span>
+                <span class="pull-right-container">
+                    <!--i class="fa fa-angle-left pull-right"></i-->
+                </span>
+                </a>
+          </li> 
 
-          <!--li class="treeview">
-            <a href="/admin/historical">
-                <i class="fa fa-history"></i> <span> HISTORIAL </span>
+          <li class="treeview">
+            <a href="/admin/logout">
+                <i class="fa fa-power-off"></i> <span> CERRAR SESION </span>
                 <span class="pull-right-container">
                    
                 </span>
-                </a>
-            </li--> 
-
-
-
-        <!--li class="treeview">
-            <a href="#">
-              <i class="fa fa-dashboard"></i> <span>Conductores Registro</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
             </a>
-            <ul class="treeview-menu">
-              <li><a href="index.html"><i class="fa fa-circle-o"></i> Nuevo Conductor</a></li>
-              <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-            </ul>
-          </li-->
-
-
-        <!--li class="treeview">
-          <a href="#">
-            <i class="fa fa-share"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-            <li>
-              <a href="#"><i class="fa fa-circle-o"></i> Level One
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                <li>
-                  <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-          </ul>
-        </li-->
-
+          </li>
       </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
 
 <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+
 <script>
 
-/*
+
 function GetIdCompany(){
     return JSON.parse($.ajax({
         type: "GET",
@@ -141,10 +99,17 @@ function GetIdCompany(){
         cache: false,
         async: false
     }).responseText);
- }*/
+ }
 
- //console.log("Changing name left panel");
-  //var data = GetIdCompany();
+//console.log("Changing name left panel");
+var data = GetIdCompany();
+//console.log(data)
+/*
+var data = {};
+data.username = "juan";
+data.company_name = "juanito";
+*/
+
 
   /*
   function GetIdCompany(){
@@ -154,18 +119,27 @@ function GetIdCompany(){
         cache: false,
         async: false
     }).responseText);
- }
-
+  }
   //console.log("Changing name supervisor");
   var data = GetIdCompany();
   //console.log(data);
+  */
 
+  //console.log(data);
+  
   $('#name_header1').text(data.username);
   $('#name_header2').text(data.username);
-  $('#name_header_company').text(data.company_name);
+  $('#name_header_company').text(data.name);
+
   $('#name_panel_left').text(data.username);
-  $('#name_company_panel_left').text(data.company_name);
-  */
+  if(data.rol == '0'){
+    $('#name_company_panel_left').text('ADMIN');
+  }else{
+    $('#name_company_panel_left').text('CONTROLADOR');
+    $('#electoral_process').hide();
+    $('#election_type').hide();
+  }
+
 
 
 </script>
