@@ -87,6 +87,18 @@ router.get('/padron-activo', VerifyToken, function(req, res){
     res.render('./admin/padron-activo');
 });
 
+router.get('/padron-electoral/all', VerifyToken, function (req, res) {
+    models.padron_electoral.findAll({
+        include:[
+            {model: models.elector, attributes: ['id_elector','apn','email']},
+        ]
+    }).then(data => {
+        res.status(200).send(data);
+    }).catch(err => {
+        return res.status(500).send("There was a problem finding supervisor. "+err);
+    });
+});
+
 //router.post('/generate-keys', VerifyToken, function(req, res)){
     //Encontrar el padron segun req.id
     //Por cada elector en el padron:
@@ -153,7 +165,7 @@ async function send_single_msg(user_mail, message){
 }
 
 router.post('/send',VerifyToken, (req, res)=> {
-    let user_key = 'dbasdfasdf34';
+    /*let user_key = 'dbasdfasdf34';
     let user_mail = 'rhualla@unsa.edu.pe';
     const message = `
         <h1>Evote credenciales</h1>
@@ -165,8 +177,26 @@ router.post('/send',VerifyToken, (req, res)=> {
         <h3>No comparta esta informacion con nadie!</h3>
     `;
 
-    send_single_msg(user_mail, message).catch(console.error)
-    return res.status(200).send("Se ha enviado el correo");
+    send_single_msg(user_mail, message).catch(console.error)*/
+    /*const shell = require('shelljs')
+    shell.exec('/var/www/html/evote/scripts/send_secret_keys.sh', function(code, stdout, stderr) {
+        console.log('Exit code:', code);
+        console.log('Program output:', stdout);
+        console.log('Program stderr:', stderr);
+      });*/
+
+    var exec = require('child_process').exec;
+    exec('php -f ./scripts/send_keys.php', function(code, stdout, stderr) {
+        console.log('Exit code:', code);
+        console.log('Program output:', stdout);
+        console.log('Program stderr:', stderr);
+      });
+    return res.status(200).send("Se ha enviado los correos");
 });
 
+router.post('/generate_keys',VerifyToken, (req, res)=> {
+    const shell = require('shelljs')
+    shell.exec('/var/www/html/evote/scripts/set_secret_keys.sh');
+    return res.status(200).send("Se han generado las claves");
+});
 module.exports = router;

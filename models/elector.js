@@ -12,15 +12,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    ap_paterno: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    ap_materno: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    nombres: {
+    apn: {
       type: DataTypes.STRING,
       allowNull: false
     },

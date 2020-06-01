@@ -10,7 +10,7 @@ require "PHPMailer/src/SMTP.php";
 date_default_timezone_set("America/Lima");
 
 // Variables
-$file_padron = "padron_claves.csv";
+$file_padron = "/root/evote_bk/padron_claves.csv";
 $nombre_proceso = "Proceso electoral 2020";
 $list = [];
 $email_user = "notificacion@unsa.edu.pe";
@@ -91,7 +91,6 @@ $list = read_file($file_padron);
 $mailer = get_mailer_layout($email_user, $email_pwd, $email_name, $email_subject);
 $conn = get_db_connection($connStr);
 $result = pg_query($conn, "select id_elector, enviado from padron_electoral where id_proceso_electoral = ".$id_active_process);
-//var_dump(pg_fetch_all($result));
 send_keys($list, $nombre_proceso, $mailer, $conn);
 pg_close($conn);
 ?>

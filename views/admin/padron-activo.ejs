@@ -50,14 +50,12 @@
                   <tr>
                     <th ><p align="center">#</p></th>
                     <th ><p align="center">Elector</p></th>
-                    <th ><p align="center">Facultad</p></th>
+                    <!--<th ><p align="center">Facultad</p></th>-->
                     <th ><p align="center">Clave generada</p></th>
                     <th ><p align="center">Correo enviado</p></th>
                   </tr>
                 </thead>
                 <tbody align="center">
-                  <tr><td>3</td><td>Ruben Edwin Hualla Quispe</td><td>Ciencia de la Computacion</td><td>-</td><td><i class="text-danger fas fa-times"></i></td></tr>
-                  <tr><td>4</td><td>Edwin Ruben Hualla</td><td>Agronomia</td><td>-</td><td><i class="text-danger fas fa-times"></i></td></tr>
                 </tbody>
               </table>
             </div>
@@ -86,7 +84,7 @@
 <script>
 
 $(document).ready(function() {
-  get_routes();
+  initialize_table();
   $('#generate_keys').click(function(){
     confirm_generate_keys();
   })
@@ -95,25 +93,42 @@ $(document).ready(function() {
   })
 });
 
+function initialize_table(){
+  get_routes();
+
+}
+
 function get_routes(){
-  
-  $.get("/admin/electoral-list/all", function(routes, status){
+  $.get("/admin/padron-electoral/all", function(routes, status){
+    /*console.log(routes);
+    console.log(status);*/
     var table = $('#tabla_route');
     //table.find("tbody tr").remove();
     var i=1;
-    /*routes.forEach(function (route) {
-      table.append("<tr><td>" + i + "</td><td>" + route.process_type.name + "</td><td>"+ route.faculty.name+ '</td><td>-</td><td><i class="text-danger fas fa-times"></i></td></tr>');
+    routes.forEach(function (route) {
+      let icon = route.enviado === true ? '<i class="text-success fas fa-check"></i>' : '<i class="text-danger fas fa-times"></i>';
+      table.append("<tr><td>" + i + "</td><td>" + route.elector.apn + "</td><td>"+ route.clave_secreta+ '</td><td>'+
+         icon + '</td></tr>');
       i++;
-    });*/
-    $('#tabla_route').DataTable({    
+    });
+    $('#tabla_route').DataTable({
       "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
       },
       "order": [[ 0, "asc" ]],
       "responsive": true
-    });
+  });
   });
 } 
+
+function refresh_table(){
+  var table = $('#tabla_route');
+  //table.destroy();
+  table.DataTable().destroy();
+  //table.empty();
+  table.find("tbody tr").remove();
+  get_routes();
+}
 
 function validateForm(){
   return true;
@@ -138,11 +153,15 @@ function confirm_generate_keys(){
   confirmButtonText: 'Si, generalas!'
   }).then((result) => {
     if (result.value) {
+      generate_keys();
       Swal.fire(
         'Generadas!',
         'Las claves han sido generadas y estan listas para ser enviadas.',
         'success'
       )
+      sleep_5();
+      refresh_table();
+      //location.reload();
     }
   })
 }
@@ -181,6 +200,21 @@ function send_keys(){
   $.post("/admin/send", function(routes, status){
     console.log("finished post");
   });
+}
+
+function generate_keys(){
+  $.post("/admin/generate_keys", function(routes, status){
+    console.log(status);
+    console.log("se generaron las claves");
+  });
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function sleep_5() {
+  await sleep(5000);
 }
 </script>
 
