@@ -30,7 +30,7 @@
       <ul class="sidebar-menu">
         <li class="header" align="center" style="color:#3c8dbc; font-size: 14px"> OPCIONES</li>
         <li class="treeview">
-        <a href="/admin/panel">
+        <a href="/admin/panel" id='resume'>
             <i class="fa fa-chart-line"></i> <span>RESUMEN</span>
             <span class="pull-right-container">
               <!--i class="fa fa-angle-left pull-right"></i-->
@@ -38,7 +38,7 @@
           </a>
         </li>
          
-        <li class="treeview">
+        <li class="treeview" id='electoral_process'>
         <a href="/admin/electoral-process">
             <i class="fa fa-clock"></i> <span> PROCESO ELECTORAL </span>
             <span class="pull-right-container">
@@ -47,7 +47,7 @@
             </a>
         </li> 
 
-        <li class="treeview">
+        <li class="treeview" id='election_type'>
           <a href="/admin/process-type">
             <i class="fa fa-person-booth"></i> <span> TIPO ELECCION </span>
               <span class="pull-right-container">
@@ -56,7 +56,7 @@
               </a>
           </li> 
           
-        <li class="treeview">
+        <li class="treeview" id='electoral_list'>
           <a href="/admin/electoral-list">
               <i class="fa fa-list-ol"></i> <span> LISTA ELECTORAL </span>
               <span class="pull-right-container">
@@ -88,3 +88,58 @@
   </aside>
 
 <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+<script>
+
+
+function GetIdCompany(){
+    return JSON.parse($.ajax({
+        type: "GET",
+        url: "/admin/get_info_user",
+        cache: false,
+        async: false
+    }).responseText);
+ }
+
+//console.log("Changing name left panel");
+var data = GetIdCompany();
+//console.log(data)
+/*
+var data = {};
+data.username = "juan";
+data.company_name = "juanito";
+*/
+
+
+  /*
+  function GetIdCompany(){
+    return JSON.parse($.ajax({
+        type: "GET",
+        url: "/admin/get_info_user",
+        cache: false,
+        async: false
+    }).responseText);
+  }
+  //console.log("Changing name supervisor");
+  var data = GetIdCompany();
+  //console.log(data);
+  */
+
+  //console.log(data);
+  
+  $('#name_header1').text(data.username);
+  $('#name_header2').text(data.username);
+  $('#name_header_company').text(data.name);
+
+  $('#name_panel_left').text(data.username);
+  if(data.rol == '0'){
+    $('#name_company_panel_left').text('ADMIN');
+  }else{
+    $('#name_company_panel_left').text('CONTROLADOR');
+    $('#electoral_process').hide();
+    $('#election_type').hide();
+  }
+
+
+
+</script>

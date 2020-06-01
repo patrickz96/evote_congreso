@@ -1,21 +1,3 @@
-.container {
-  position: relative;
-  height: 680px;
-  /*border: 3px solid black;*/
-}
-
-.vertical-center {
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-  top: 40%;
-  left: 5%;
-  width: 90%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
 *, *:before, *:after {
   padding: 0;
   margin: 0;
@@ -30,10 +12,8 @@ body {
   font-family: "Roboto", Arial, Helvetica, sans-serif;
   font-size: 14px;
   color: black;
-  
   max-width: 680px;
-  min-height: 600px;
-  
+  min-height: 680px;
   margin: 0 auto;
   background: #fff;
 }
@@ -142,31 +122,6 @@ table {
   color: #fff;
   cursor: pointer;
 }
-
-.formulario .boton-accion2 {
-  font: "Roboto", Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  border: none;
-  width: 50%;
-  border-radius: 5px;
-  padding: 12px 0;
-  margin: 4px 0;
-  color: #fff;
-  cursor: pointer;
-}
-
-.cerrar_sesion {
-  font: "Roboto", Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  border: none;
-  width: 20%;
-  border-radius: 5px;
-  padding: 12px 0;
-  margin: 4px 0;
-  color: #fff;
-  cursor: pointer;
-}
-
 
 .formulario .boton-cancelar {
   font: "Roboto", Arial, Helvetica, sans-serif;

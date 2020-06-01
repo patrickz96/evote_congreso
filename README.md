@@ -2,7 +2,6 @@
 
 # Electronic Vote (evote)
 
-
 ## Get started
 
 1) Clone repository<br/>
@@ -35,5 +34,37 @@ All set!!!
 3) To restore an specific model from a table:<br/>
 * `npx sequelize-auto -h localhost -d evote -t 'table_name' -u postgres -x 'your_password' -p 5432 -e postgres`
 
+## Developing in evote.unsa.edu.pe
 
+```bash
+https://github.com/UNSA-OUIS/elecciones-virtuales
+cd elecciones-virtuales
+npm install
+npm audit fix
+pm2 start ./bin/www # start the app in background
+pm2 list # to retrieve its ID
+pm2 stop ID 
+pm2 delete ID 
+```
+
+## Running in production
+
+1. `NODE_ENV` must be set from 'development' to 'production'
+
+## Troubleshooting
+
+```bash
+npm cache clean --force
+rm -rf node_modules
+npm install
+npm start
+```
+
+## Ignore config.json locally in git
+### Exclude from the management of Git 
+git update-index --assume-unchanged config/config.json
+### How to confirm 
+git ls-files -v | grep ^h
+### Restore to the management of Git 
+git update-index --no-assume-unchanged path/to/file
 

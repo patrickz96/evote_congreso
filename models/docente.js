@@ -1,31 +1,30 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('academic_department', {
-    id_academic_department: {
+  return sequelize.define('docente', {
+    id_docente: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    id_faculty: {
+    id_dpto_aca: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'faculty',
-        key: 'id_faculty'
+        model: 'departamento_academico',
+        key: 'id_dpto_aca'
       }
     },
-    name: {
+    codigo: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
-    state: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true
+    id_elector: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
-    tableName: 'academic_department'
+    tableName: 'docente'
   });
 };
