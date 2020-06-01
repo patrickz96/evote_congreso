@@ -5,26 +5,19 @@ module.exports = function(sequelize, DataTypes) {
     id_asistencia: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
+      primaryKey: true
     },
     id_padron_electoral: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'padron_electoral',
-        key: 'id_padron_electoral'
-      }
+      allowNull: false,
+      primaryKey: true
     },
-    clave_ingreso: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    created_At: {
+    createdAt: {
       type: DataTypes.DATE,
       allowNull: false
     },
-    updated_At: {
+    updatedAt: {
       type: DataTypes.DATE,
       allowNull: false
     }

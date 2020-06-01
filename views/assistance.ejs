@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="librerias/scss/estilos.css">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body>
     <header>
@@ -18,20 +20,44 @@
                 <h1><span class="text-big">Elecciones 2020</span></h1>
                 <span>Sistema Digital de Votación <b>E-vote</b></span>
             </div>
+            <button class="cerrar_sesion" onclick=cerrar_sesion() style="background: #c22014;" >CERRAR SESIÓN</button>
         </div>
     </header>
     <main>
+
         <!-- inicio formulario busqueda -->
         <div class="container">
         <div class="vertical-center">
+
+            <div class="col-md-6" style="float:none;margin:auto;">
+                <% var status; %>
+                <% if(status=="error"){%>
+                    
+                    <div align="center" style="font-size:large; color:#c22014">
+                    <strong>¡ERROR! : </strong> <%= message %>
+                    </div>    
+                    <!--div class="col-md-6" style="position: fixed;">
+                            <div class="alert alert-danger alert-dismissible" role="alert" align="center">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>¡ERROR! : </strong> <%= message %>
+                            </div>
+                    </div-->
+                <%}%>
+        </div>
+
+
             <form class="formulario" method="post" action="/assistance" onsubmit="return validateForm()">
+                <div align="center" style="display: inline;">
+                    <h2><strong>Bienvenido :</strong> <%= name %> </h2> 
+                </div>
                 <fieldset>
                     <legend>Registro de Asistencia</legend>
+                    <input type="hidden" name="id_padron_electoral" value=<%= id_padron_electoral %> >
                     <label for="codigo">Ingrese su Clave Secreta</label>
-                    <input id="codigo" name="usuario" type="text" placeholder="Clave Secreta" required autofocus>
+                    <input id="codigo" name="secret_key" type="text" placeholder="Clave Secreta" required autofocus>
                     <span class="mensaje-atencion"> Usted encontrará su clave secreta en su correo Institucional UNSA</span>
 		<br>
-                <div class="g-recaptcha" data-sitekey="6LcVif0UAAAAAAG2ZhCH5-IAnBhfIMkJgZ4xgl5K"></div>
+                <div align="center" class="g-recaptcha" data-sitekey="6LcVif0UAAAAAAG2ZhCH5-IAnBhfIMkJgZ4xgl5K"></div>
                 </fieldset>
                 <button class="boton-accion" type="submit">Ir a Votar</button>
             </form>
@@ -46,4 +72,33 @@
       console.log("validating form");
       return true;
     }
+
+    function cerrar_sesion(){
+        //alert("seguro que desea cerrar sesion");
+
+        Swal.fire({
+        title: 'Cerrar Sesión',
+        text: "¿Esta usted seguro que desea cerrar sesion?",
+        icon: 'warning',
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'SI, CONFIRMAR'
+      }).then((result) => {
+        window.location.href = '/logout';
+        /*
+        if (result.value) {
+          Swal.fire(
+            '¡Emitido!',
+            'Usted a emitido correctamente su voto.',
+            'success'
+          )
+        }*/
+
+      });
+
+    }
+
 </script>
+

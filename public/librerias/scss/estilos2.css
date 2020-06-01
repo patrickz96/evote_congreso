@@ -143,7 +143,17 @@ table {
   cursor: pointer;
 }
 
-
+.cerrar_sesion {
+  font: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  border: none;
+  width: 20%;
+  border-radius: 5px;
+  padding: 12px 0;
+  margin: 4px 0;
+  color: #fff;
+  cursor: pointer;
+}
 
 
 .formulario .boton-cancelar {

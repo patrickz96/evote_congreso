@@ -5,24 +5,18 @@ module.exports = function(sequelize, DataTypes) {
     id_padron_electoral: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+      defaultValue: 'nextval(padron_electoral_id_padron_electoral_seq::regclass)',
+      primaryKey: true
     },
     id_proceso_electoral: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'proceso_electoral',
-        key: 'id_proceso_electoral'
-      }
+      primaryKey: true
     },
     id_elector: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'elector',
-        key: 'id_elector'
-      }
+      primaryKey: true
     },
     enviado: {
       type: DataTypes.BOOLEAN,
@@ -33,16 +27,18 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     clave_secreta: {
-      type: DataTypes.STRING,
+      type: DataTypes.CHAR,
       allowNull: false
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
-    updatedat: {
+    updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     tableName: 'padron_electoral'
