@@ -38,7 +38,7 @@
                     <h1>ASAMBLEA UNIVERSITARIA</h1>
                     <div class="marcacion-voto" id="lista_asamblea"> 
                         <% var status; %>
-                        <%if(status == "ok"){%>
+                        <%if(status == "confirm-vote"){%>
                             <input type="hidden" name="id_lista_asamblea" value='<%= data.lista_asamblea.id_lista_electoral %>' />
                             <input type="text" name="lista_asamblea" value='<%= data.lista_asamblea.nombre %>' disabled />
                         <%}%>
@@ -55,7 +55,7 @@
                     <H3>FACULTAD DE PRODUCCION Y SERVICIOS</H3>
                     <div class="marcacion-voto" id="lista_consejo"> 
                         <% var status; %>
-                        <%if(status == "ok"){%>
+                        <%if(status == "confirm-vote"){%>
                             <input type="hidden" name="id_lista_consejo" value='<%= data.lista_consejo.id_lista_electoral %>'  />
                             <input type="text" name="lista_consejo" value='<%= data.lista_consejo.nombre %>' disabled />
                         <%}%>

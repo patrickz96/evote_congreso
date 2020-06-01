@@ -63,7 +63,7 @@ router.get('/assistance',VerifySession,async function(req,res){
                     res.redirect("/vote");
                 }else{
                     console.log("marco voto");
-                    //res.redirect("/finish");
+                    //res.redirect("/finish-vote");
                     res.render('vote-finish',{name:req.google_profile.name});
                 }
             }
@@ -207,6 +207,14 @@ router.get('/finish',VerifySession,function(req,res){
     //res.render('vote-finish',{name:req.google_profile.name});
     //res.render('vote-finish',{name:'PATRICK LAZOO'});
 });
+
+/*
+router.get('/finish-vote',VerifySession,function(req,res){
+    //res.redirect('/assistance');
+    res.render('vote-finish',{name:req.google_profile.name});
+    //res.render('vote-finish',{name:'PATRICK LAZOO'});
+});
+*/
 
 router.post('/get-electoral-list',VerifySession,function (req, res) {
 
