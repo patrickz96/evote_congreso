@@ -7,17 +7,6 @@ const VerifyToken = require('../auth/VerifyToken');
 const nodemailer = require('nodemailer');
 
 
-router.get('/panel',VerifyToken,function(req, res) {
-    //console.log("enter");
-    res.render('./admin/admin');
-});
-
-router.get('/register', function(req, res) {
-    res.render('./admin/register');
-});
-
-
-
 /******************* For send secret-key to users *****************************/
 
 // Muestra el padron del proceso activo, accion generar claves y la accion para enviar las claves.
