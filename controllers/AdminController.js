@@ -7,8 +7,6 @@ const VerifyToken = require('../auth/VerifyToken');
 const nodemailer = require('nodemailer');
 
 
-
-
 router.get('/panel',VerifyToken,function(req, res) {
     //console.log("enter");
     res.render('./admin/admin');
@@ -18,69 +16,9 @@ router.get('/register', function(req, res) {
     res.render('./admin/register');
 });
 
-router.get('/electoral-list',VerifyToken,function(req, res){
-    var status = req.session.status;
-    var msg = req.session.msg ;
-    req.session = null;
-    res.render('./admin/electoral-list',{status: status, message: msg });
-});
 
 
-//CREATE NEW DRIVER
-router.post('/electoral-list', function (req, res) {
-    //console.log("saving new driver");
-    console.log(req.body);    
-    
-    models.electoral_list
-    .create({
-        id_faculty:req.body.faculty,
-        id_process_type:req.body.process_type, 
-        name:req.body.name
-    })
-    .then(data => {
-        req.session.status = "ok"; req.session.msg =  "PROCESO ELECTORAL: "+data.name+" REGISTRADO CORRECTAMENTE";
-        res.redirect('/admin/electoral-list');
-    })
-    .catch(err => {
-        req.session.status = "error"; req.session.msg = ""+err;
-        res.redirect('/admin/electoral-list');
-    });    
-});
-
-router.get('/electoral-list/all', VerifyToken, function (req, res) {
-    models.electoral_list.findAll({
-    include:[
-        {model: models.faculty,attributes: ['name']},
-        {model: models.process_type,attributes: ['name']},
-    ]
-    }).then(data => {
-        //console.log(data);
-        res.status(200).send(data);
-    })    .catch(err => {
-        return res.status(500).send("There was a problem finding supervisor. "+err);
-    });
-});
-
-router.get('/faculty/all', VerifyToken, function (req, res) {
-    models.faculty.findAll().then(data => {
-        //console.log(data);
-        res.status(200).send(data);
-    })    .catch(err => {
-        return res.status(500).send("There was a problem finding supervisor. "+err);
-    });
-});
-
-
-
-router.get('/historical',VerifyToken,function(req,res){
-    res.render('./admin/historical');
-});
-
-/*
-router.post('/login', function(req, res) {
-    res.redirect("/admin/panel");
-});
-*/
+/******************* For send secret-key to users *****************************/
 
 // Muestra el padron del proceso activo, accion generar claves y la accion para enviar las claves.
 router.get('/padron-activo', VerifyToken, function(req, res){
