@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('padron_electoral', {
+  Tipo_padron_electoral = sequelize.define('padron_electoral', {
     id_padron_electoral: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -43,4 +43,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     tableName: 'padron_electoral'
   });
+
+  Tipo_padron_electoral.associate = function(models) {
+    models.padron_electoral.belongsTo(models.elector, {foreignKey: 'id_elector'});
+  };
+  return Tipo_padron_electoral;
 };

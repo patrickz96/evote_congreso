@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Admin Panel</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link href="../fontsv5/css/fontawesome.min.css" rel="stylesheet">
+  <link href="../fontsv5/css/brands.min.css" rel="stylesheet">
+  <link href="../fontsv5/css/solid.min.css" rel="stylesheet">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="../dist/css/skins/_all-skins.css">
+  <!-- DataTable -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">  
+  <!-- header fixed-->
+  <link rel="stylesheet" href="../stylesheets/utils.css">
+</head>
+<body class="hold-transition skin-purple sidebar-mini">
+<!-- Site wrapper -->
+
+    <!-- Header -->
+    <% include include/header.ejs %>
+    <!-- Left Panel -->
+    <% include include/leftpanel.ejs %>
+
+  <!-- =============================================== -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" id="mywrapper" style="overflow-y: auto; overflow-x: hidden;">
+
+
+    <!-- Main content -->
+    <div class=" row col-lg-12 col-lg-offset-1">
+        <div class=" container col-lg-10   ">
+
+            <h1 class="well" align="center">Padron Electoral Activo</h1>
+            <table class="table table-striped table-condensed " id="tabla_route"  > <!--table-condensed-->
+                <div class="buttons m-2">
+                <button type="button" class="btn btn-success" id="generate_keys">Generar claves</button>
+                <button type="button" class="btn btn-danger" id="send_keys">Enviar claves</button>
+                </div>
+                <thead  class="bg-primary" >
+                  <tr>
+                    <th ><p align="center">#</p></th>
+                    <th ><p align="center">Elector</p></th>
+                    <!--<th ><p align="center">Facultad</p></th>-->
+                    <th ><p align="center">Clave generada</p></th>
+                    <th ><p align="center">Correo enviado</p></th>
+                  </tr>
+                </thead>
+                <tbody align="center">
+                </tbody>
+              </table>
+            </div>
+  	</div>
+  <!-- /.content-wrapper -->
+
+
+  <% include include/footer.ejs %>
+
+  
+
+
+  <!-- jQuery 2.2.3 -->
+  <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+  <!-- Bootstrap 3.3.6 -->
+  <script src="../bootstrap/js/bootstrap.min.js"></script>
+  <!-- DataTable -->
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../dist/js/app.min.js"></script>
+  <!-- Color Picker -->
+  
+  <script src="../js/jscolor.js"></script>
+  <!-- Swal -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script>
+
+$(document).ready(function() {
+  initialize_table();
+  $('#generate_keys').click(function(){
+    confirm_generate_keys();
+  })
+  $('#send_keys').click(function(){
+    confirm_send_keys();
+  })
+});
+
+function initialize_table(){
+  get_routes();
+
+}
+
+function get_routes(){
+  $.get("/admin/padron-electoral/all", function(routes, status){
+    /*console.log(routes);
+    console.log(status);*/
+    var table = $('#tabla_route');
+    //table.find("tbody tr").remove();
+    var i=1;
+    routes.forEach(function (route) {
+      let icon = route.enviado === true ? '<i class="text-success fas fa-check"></i>' : '<i class="text-danger fas fa-times"></i>';
+      table.append("<tr><td>" + i + "</td><td>" + route.elector.apn + "</td><td>"+ route.clave_secreta+ '</td><td>'+
+         icon + '</td></tr>');
+      i++;
+    });
+    $('#tabla_route').DataTable({
+      "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+      },
+      "order": [[ 0, "asc" ]],
+      "responsive": true
+  });
+  });
+} 
+
+function refresh_table(){
+  var table = $('#tabla_route');
+  //table.destroy();
+  table.DataTable().destroy();
+  //table.empty();
+  table.find("tbody tr").remove();
+  get_routes();
+}
+
+function validateForm(){
+  return true;
+}
+
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+
+function confirm_generate_keys(){
+  Swal.fire({
+  title: '¿Esta seguro?',
+  text: "Siempre puedes volver a generarlas...",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Si, generalas!'
+  }).then((result) => {
+    if (result.value) {
+      generate_keys();
+      Swal.fire(
+        'Generadas!',
+        'Las claves han sido generadas y estan listas para ser enviadas.',
+        'success'
+      )
+      sleep_5();
+      refresh_table();
+      //location.reload();
+    }
+  })
+}
+
+function confirm_send_keys(){
+  swalWithBootstrapButtons.fire({
+  title: '¿Esta seguro?',
+  text: "No podras revertir esto!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Si, envialas!',
+  cancelButtonText: 'No, cancela!',
+  reverseButtons: true
+  }).then((result) => {
+    if (result.value) {
+      send_keys();
+      swalWithBootstrapButtons.fire(
+        'Enviando!',
+        'Las claves se estan enviado por correo, espere...',
+        'success'
+      )
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Cancelado',
+        'No se ha enviado nada',
+        'error'
+      )
+    }
+  })
+}
+
+function send_keys(){
+  $.post("/admin/send", function(routes, status){
+    console.log("finished post");
+  });
+}
+
+function generate_keys(){
+  $.post("/admin/generate_keys", function(routes, status){
+    console.log(status);
+    console.log("se generaron las claves");
+  });
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function sleep_5() {
+  await sleep(5000);
+}
+</script>
+
+</body>
+</html>
+
+
+
+

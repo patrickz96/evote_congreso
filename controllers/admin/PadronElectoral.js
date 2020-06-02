@@ -5,13 +5,12 @@ const models = require(process.cwd()+"/models");
 const db = require(process.cwd()+"/models").sequelize;
 const VerifyToken = require(process.cwd()+'/auth/VerifyToken');
 
-/*router.get('/electoral-list',VerifyToken,function(req, res){
+router.get('/padron-electoral',VerifyToken,function(req, res){
     var status = req.session.status;
     var msg = req.session.msg ;
-    req.session.status = undefined;
-    req.session.msg = undefined;
+    req.session = null;
     res.render('./admin/electoral-list',{status: status, message: msg });
-});*/
+});
 
 router.post('/electoral-list',VerifyToken,function (req, res) {
     console.log(req.body);    
@@ -19,37 +18,24 @@ router.post('/electoral-list',VerifyToken,function (req, res) {
     .create({
         id_facultad:req.body.faculty,
         id_tipo_proceso:req.body.process_type, 
-        nombre:req.body.name,
-        representacion:req.body.representation
+        nombre:req.body.name
     })
     .then(data => {
         req.session.status = "ok"; req.session.msg =  "PROCESO ELECTORAL: "+data.nombre+" REGISTRADO CORRECTAMENTE";
         res.redirect('/admin/electoral-list');
     })
     .catch(err => {
-
-        if(err.name == "SequelizeUniqueConstraintError"){
-            console.log("ERROR DUPLICADO");
-            if(err.parent.code == 23505){
-              req.session.status = "error"; req.session.msg = "LA LISTA: YA SE ENCUENTRA REGISTRADA";
-              res.redirect('/admin/electoral-list');
-            }
-        }
-        if(err.name == "SequelizeValidationError"){
-            req.session.status = "error"; req.session.msg = ""+err;
-            res.redirect('/admin/electoral-list');
-        }
-
-
+        req.session.status = "error"; req.session.msg = ""+err;
+        res.redirect('/admin/electoral-list');
     });
     
   });
 
   router.post('/electoral-list-update',VerifyToken, function (req, res) {
-    //console.log(req.body);
+    console.log(req.body);
     
     models.lista_electoral.update(
-        { nombre:req.body.name,id_tipo_proceso:req.body.type_process, id_facultad:req.body.faculty,representacion:req.body.representation}, 
+        { nombre:req.body.name,id_tipo_proceso:req.body.type_process, id_facultad:req.body.faculty}, 
         {where: { id_lista_electoral: req.body.id },returning: true,plain:true},)  
       .then(obj => {
         req.session.status = "ok"; req.session.msg =  "PROCESO ELECTORAL: "+obj[1].nombre+" ACTUALIZADO CORRECTAMENTE";
@@ -69,20 +55,17 @@ router.get('/electoral-list/all', VerifyToken, function (req, res) {
     include:[
         {model: models.facultad,attributes: ['id_facultad','nombre']},
         {model: models.tipo_proceso,attributes: ['id_tipo_proceso','nombre']},
-    ],
-    order: [
-        [models.tipo_proceso, 'nombre', 'ASC'],
-        [models.facultad, 'nombre', 'ASC']
-    ]}).then(data => {
+    ]
+    }).then(data => {
         res.status(200).send(data);
     })    .catch(err => {
-        return res.status(500).send("Hubo un problema cargando la lista padron." + err);
+        return res.status(500).send("There was a problem finding supervisor. "+err);
     });
 });
 
 router.post('/get-electoral-list', VerifyToken, function (req, res) {
 
-    //console.log("llego");
+    console.log("llego");
     models.lista_electoral.findAll({
     where:{id_tipo_proceso:req.body.id_tipo_proceso,id_facultad:req.body.id_facultad}
     }).then(data => {

@@ -28,7 +28,8 @@
    <!-- Datepicker-->
   <link rel="stylesheet" href="https://rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/css/bootstrap-datetimepicker.min.css">
 
-
+  <!-- Bootstrap toogle -->
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -197,7 +198,7 @@
                   <th ><p align="center">Nombre del Proceso</p></th>
                   <th ><p align="center">Apertura</p></th>
                   <th ><p align="center">Cierre</p></th>
-                  <th ><p align="center">Accion</p></th>
+                  <th ><p align="center">Activar</p></th>
                 </tr>
               </thead>
               <tbody align="center">
@@ -231,6 +232,8 @@
 <script src="https://rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/js/bootstrap-datetimepicker.min.js"></script>
 <!-- Timezone-->
 <!--script src= ".../js/moment-timezone-withdata.js" ></script-->
+<!-- Bootstrap toogle -->
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <script src= "../js/moment-timezone-withdata.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script>
@@ -297,8 +300,10 @@ function get_electoral_process(){
     //table.find("tbody tr").remove();
     var i=1
     processes.forEach(function (process) {
-        table.append("<tr><td>" + i + "</td><td>" + process.nombre + "</td><td>"+ TimetoZone(process.apertura)  +"</td><td>"+ TimetoZone(process.cierre)+"</td><td>"+ 
+        table.append("<tr><td>" + i + "</td><td>" + process.name + "</td><td>"+ process.date_init  +"</td><td>"+ process.date_end+'</td><td><input type="checkbox" checked data-toggle="toggle"></td></tr>');
+        /*table.append("<tr><td>" + i + "</td><td>" + process.nombre + "</td><td>"+ TimetoZone(process.apertura)  +"</td><td>"+ TimetoZone(process.cierre)+"</td><td>"+ 
           "<button onclick=call_edit("+i+") class='btn btn-warning mr-3'><i class='fa fa-edit'></i></button>"+"<button onclick=Delete("+process.id_proceso_electoral+") class='btn btn-danger'><i class='fa fa-trash-alt'></i></button>" +"</td></tr>");
+        */
         i++;
     });
     allprocesses = processes;
