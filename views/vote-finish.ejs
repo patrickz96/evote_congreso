@@ -51,8 +51,6 @@
     }
 
     function cerrar_sesion(){
-        //alert("seguro que desea cerrar sesion");
-
         Swal.fire({
         title: 'Cerrar Sesión',
         text: "¿Esta usted seguro que desea cerrar sesion?",
@@ -63,16 +61,9 @@
         cancelButtonColor: '#d33',
         confirmButtonText: 'SI, CONFIRMAR'
       }).then((result) => {
-        window.location.href = '/logout';
-        /*
         if (result.value) {
-          Swal.fire(
-            '¡Emitido!',
-            'Usted a emitido correctamente su voto.',
-            'success'
-          )
-        }*/
-
+            window.location.href = '/logout';
+        }
       });
     }
 </script>

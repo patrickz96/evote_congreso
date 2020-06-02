@@ -67,7 +67,14 @@
                           <div class="form-group row">
                             <label class="col-md-3" style="font-size: 20px;">Nombre:</label>
                             <div class="col-md-9 pull-left">
-                                <input type="text" id="edit_name" name="name" class="input-lg form-control">
+                                <select type="text" id="edit_select_name" name="name" class="input-lg form-control" required></select>
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <label class="col-md-3" style="font-size: 20px;">Representacion:</label>
+                            <div class="col-md-9 pull-left">
+                                <input type="text" id="edit_representation" name="representation" class="input-lg form-control" required></select>
                             </div>
                           </div>
 
@@ -151,7 +158,12 @@
 
               <div class="form-group">
                 <label style="font-size: 18px;">Nombre de la Lista </label>
-                <input type="text" class="input-lg form-control" id="name" maxlength="45" onkeyup="this.value = this.value.toUpperCase();" name="name" placeholder="Nombre de la elección" autocomplete="off" required>
+                <select type="text" class="input-lg form-control" id="select_name" name="name" required></select>
+              </div>
+
+              <div class="form-group">
+                <label style="font-size: 18px;">Representación </label>
+                <input type="text" class="input-lg form-control" id="representation" maxlength="45" onkeyup="this.value = this.value.toUpperCase();" name="representation" placeholder="Representación de la lista" autocomplete="off" required>
               </div>
 
                        
@@ -185,6 +197,7 @@
                     <th ><p align="center">Tipo de elección</p></th>
                     <th ><p align="center">Facultad</p></th>
                     <th ><p align="center">Lista Electoral</p></th>
+                    <th ><p align="center">Representación</p></th>
                     <th ><p align="center">Accion</p></th>
                   </tr>
                 </thead>
@@ -241,26 +254,42 @@
 
 
 var all_electoral_list = [];
+var eleccion_asamblea_opciones = ['LISTA A','LISTA B','LISTA C','LISTA D','LISTA E','LSITA F','LISTA G','VOTO NULO','VOTO BLANCO'];
+var eleccion_consejo_opciones = ['LISTA 1','LISTA 2','LISTA 3','LISTA 4','LISTA 5','LISTA 6','VOTO NULO','VOTO BLANCO'];
+
+
 //var select_process;
 $(document).ready(function() {
 
   //get_processes_type('#process_type',-1);
-  get_processes_type('#process_type',2);
-  get_faculties('#faculty',-1);
+  get_processes_type('#process_type',2); //2 -> eleccion consejo
+  get_faculties('#faculty',-1);// -1 para editar facultad
   get_electoral_lists();
 
-
   check_process('#process_type');
-  
-  //check_process(select_process);
-  
-  
-
   $('#process_type').on('change', function() {
       check_process(this);
   });
 
+  //FILL NAMES LIST
+  //fill_lists_options(eleccion_asamblea_opciones);
+
 });
+
+
+
+function fill_lists_options(options,selector){
+    
+    //var i=0;
+    var select_name = $(selector).empty();
+    options.forEach(function(option_name){
+      //console.log(option_name);
+      var option = new Option(option_name, option_name);
+      $(option).html(option_name);
+      select_name.append(option);
+      //i++;
+    });
+} 
 
 
 function load_table(){
@@ -295,8 +324,10 @@ function check_process(selector){
   actual_option = $(selector).find('option:selected').text();
      if(actual_option == "CONSEJO DE FACULTAD"){
       $('#faculty').removeAttr('disabled');
+      fill_lists_options(eleccion_consejo_opciones,'#select_name');
      }else{
       $('#faculty').attr('disabled', 'disabled');
+      fill_lists_options(eleccion_asamblea_opciones,'#select_name');
      }
 }
 
@@ -357,7 +388,7 @@ function get_electoral_lists(){
       }else{
         nombre_facultad = electoral_list.facultad.nombre;
       }
-      table.append("<tr><td>" + i + "</td><td>" + electoral_list.tipo_proceso.nombre + "</td><td>"+ nombre_facultad + "</td><td>"+ electoral_list.nombre +"</td><td>"+
+      table.append("<tr><td>" + i + "</td><td>" + electoral_list.tipo_proceso.nombre + "</td><td>"+ nombre_facultad + "</td><td>"+ electoral_list.nombre +"</td><td>"+ electoral_list.representacion +"</td><td>"+
       "<button onclick=call_edit("+i+") class='btn btn-warning mr-3'><i class='fa fa-edit'></i></button>"+"<button onclick=Delete("+electoral_list.id_lista_electoral+") class='btn btn-danger'><i class='fa fa-trash-alt'></i></button>" +"</td></tr>");
       i++;
     });
@@ -373,7 +404,21 @@ function call_edit(pos){
     
     data = all_electoral_list[pos-1];
     $('#id_electoral_list').val(data.id_lista_electoral);
-    $('#edit_name').val(data.nombre);
+
+    //console.log(data.nombre);
+    //$('#edit_name').val(data.nombre);
+    if(data.id_tipo_proceso==1){
+      fill_lists_options(eleccion_asamblea_opciones,'#edit_select_name');
+    }
+    if(data.id_tipo_proceso==2){
+      fill_lists_options(eleccion_consejo_opciones,'#edit_select_name');
+    }
+
+
+
+    $('#edit_select_name').val(data.nombre);
+    $('#edit_representation').val(data.representacion);
+    
     
     $('#edit_type_process').val(data.tipo_proceso.nombre);
     $('#edit_type_process').attr('disabled', 'disabled');
@@ -386,7 +431,7 @@ function call_edit(pos){
     $('#edit_type_process').attr('disabled', 'disabled');
     */
 
-    console.log(data);
+    //console.log(data);
 
     if(data.facultad == null){
       $('#edit_faculty').empty();

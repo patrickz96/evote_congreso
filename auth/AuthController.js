@@ -17,7 +17,8 @@ var config = require('../config/config.js'); // get config file
 router.get('/', function(req, res) {
   var status = req.session.status;
   var msg = req.session.msg ;
-  req.session = null;
+  req.session.status = undefined;
+  req.session.msg = undefined;
   res.render('./admin/index', { title: 'EvotePanel', status: status, message: msg });
 });
 
@@ -54,7 +55,8 @@ router.post('/login', function(req, res) {
 router.get('/register', function(req, res){
     var status = req.session.status;
     var msg = req.session.msg ;
-    req.session = null;
+    req.session.status = undefined;
+    req.session.msg = undefined;
     res.render('./admin/register', {status: status, message: msg });   
 });
 

@@ -1,32 +1,27 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  Lista_Electoral = sequelize.define('lista_electoral', {
+  var Lista_Electoral = sequelize.define('lista_electoral', {
     id_lista_electoral: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
+      primaryKey: true
     },
     id_tipo_proceso: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'tipo_proceso',
-        key: 'id_tipo_proceso'
-      }
+      primaryKey: true
     },
     id_facultad: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      references: {
-        model: 'facultad',
-        key: 'id_facultad'
-      }
+      primaryKey: true
     },
     nombre: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      primaryKey: true
     },
     logo: {
       type: DataTypes.STRING,
@@ -36,12 +31,12 @@ module.exports = function(sequelize, DataTypes) {
     representacion: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'NO IDEA'
+      defaultValue: 'NO DEFINIDA'
     },
     tipo_representacion: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'NO IDEA'
+      defaultValue: 'NO DEFINIDA'
     },
     estado: {
       type: DataTypes.BOOLEAN,
@@ -50,18 +45,15 @@ module.exports = function(sequelize, DataTypes) {
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: '2020-01-01 00:00:00'
+      allowNull: false
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: '2020-01-01 00:00:00'
+      allowNull: false
     }
   }, {
     tableName: 'lista_electoral'
   });
-
   Lista_Electoral.associate = function(models) {
     models.lista_electoral.belongsTo(models.tipo_proceso, {foreignKey: 'id_tipo_proceso'});
     models.lista_electoral.belongsTo(models.facultad, {foreignKey: 'id_facultad'});

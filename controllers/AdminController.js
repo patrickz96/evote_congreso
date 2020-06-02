@@ -9,7 +9,7 @@ const VerifyToken = require('../auth/VerifyToken');
 
 
 router.get('/panel',VerifyToken,function(req, res) {
-    console.log("enter");
+    //console.log("enter");
     res.render('./admin/admin');
 });
 

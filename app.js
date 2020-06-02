@@ -33,21 +33,32 @@ app.use(cookieParser());
 app.use(cookieSession(
 {
   name: 'session',
-  keys: ['status', 'msg']
+  keys: ['status', 'msg','google','status2']
 }
 ));
+
 
 const session = require('express-session');
 var passport = require('passport');
 
 var google_profile;
 
+/*
 app.use(function(req, res, next) {
   //console.log("PASO POR AQUI",google_profile);
-  req.google_profile = google_profile;
+  //req.google_profile = google_profile;
+  //req.session.google = google_profile;
+  //google_profile = undefined;
+
+  //req.google.data = google_profile;
+  //req.session.status = "ok"; req.session.msg =  "PROCESO ELECTORAL: "+data.nombre+" REGISTRADO CORRECTAMENTE";
+  
+  //  var status = req.session.status;
+  //  var msg = req.session.msg ;
+  
   next();
 });
-
+*/
 
 
 app.use(session({
@@ -87,12 +98,15 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 function(req, res) {
   // Successful authentication, redirect success.
   //res.redirect('/success');
+  //console.log()
+  req.session.google = google_profile;
   res.redirect('/assistance');
 });
 
 
 app.get('/logout', function(req, res) {
-  google_profile = undefined;
+  //google_profile = undefined;
+  req.session.google = undefined;
   res.redirect("/");
 });
 
@@ -123,8 +137,6 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-
-
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

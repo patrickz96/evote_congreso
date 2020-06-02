@@ -23,10 +23,8 @@
         </div>
     </header>
     <main>
-        <!-- inicio formulario busqueda -->
         <div class="container">
 
-            <!--div class="formulario"-->
             <form class="formulario" method="post" action="/vote" onsubmit="return validateForm()">
                 <div align="center" style="display: inline;">
                     <h2><strong>Usuario :</strong> <%= name %> </h2> 
@@ -35,16 +33,36 @@
                 <fieldset>
                     <legend>Emisión de Votación</legend>
                     <h1>ASAMBLEA UNIVERSITARIA</h1>
-                    <H3>FACULTAD DE PRODUCCION Y SERVICIOS</H3>
-                    <div class="marcacion-voto" id="lista_asamblea"></div>
+                    <div class="marcacion-voto" id="lista_asamblea">
+
+                        
+                        <% lista_asamblea.forEach(function(lista) { %>
+                           
+                                <input type='radio' value='<%=lista.id_lista_electoral%>'  name='lista_asamblea' id='<%="lista_asamblea-"+lista.id_lista_electoral%>'>
+                                <label for= '<%="lista_asamblea-"+lista.id_lista_electoral%>'> <%=lista.nombre%> 
+                                    <h5 style="color:black"> <%=lista.representacion%> </h5>
+                                </label>
+                          
+                        <% }); %>
+                    </div>
 
                 </fieldset>
 
                 <fieldset>
                     <legend>Emisión de Votación</legend>
                     <h1>CONSEJO DE FACULTAD</h1>
-                    <H3>FACULTAD DE PRODUCCION Y SERVICIOS</H3>
-                    <div class="marcacion-voto" id="lista_consejo"> </div>
+                    <H3> <%= facultad_nombre %> </H3>
+                    <input type="hidden" name="facultad_nombre" value='<%= facultad_nombre %>'>
+
+                    <div class="marcacion-voto" id="lista_consejo"> 
+                        
+                        <% lista_consejo.forEach(function(lista) { %>
+                            <input type='radio' value='<%=lista.id_lista_electoral%>'  name='lista_consejo' id='<%= "lista_consejo-"+lista.id_lista_electoral%>'>
+                            <label for= '<%= "lista_consejo-"+lista.id_lista_electoral%>' > <%=lista.nombre%> 
+                                <h5 style="color:black"> <%=lista.representacion%> </h5>
+                            </label>
+                        <% }); %>
+                    </div>
 
                 </fieldset>
 
@@ -58,67 +76,25 @@
 
 <script>
 
-    $(document).ready(function() {
-        init_list('lista_asamblea',1,null);
-        init_list('lista_consejo',2,23);
-    });
-
-    function init_list(id_list,id_tipo_proceso,id_facultad){
-        var mylist = $('#'+id_list);
-
-        var data = JSON.parse($.ajax({
-              type: "POST",
-              dataType: "json",
-              url: "/get-electoral-list",
-              data: {id_tipo_proceso: id_tipo_proceso,id_facultad:id_facultad},
-              cache: false,
-              async: false
-        }).responseText);
-        
-        console.log(data);
-        data.forEach(function (list) {
-            var opt = 
-            "<input type='radio' value="+list.id_lista_electoral +" name='"+id_list+"' id='"+id_list+"-"+list.nombre+"'>"+
-            "<label for='"+id_list+"-"+list.nombre+"'>"+list.nombre+ "</label>";
-
-            mylist.append(opt);
-        });
-
-        var opt = 
-            "<input type='radio' value="+-1+" name='"+id_list+"' id='"+id_list+"-nulo'>"+
-            "<label for='"+id_list+"-nulo'>"+"VOTO NULO"+ "</label>";
-            mylist.append(opt);
-
-    }
-
-
     function validateForm(){  
-      //console.log("validating form");
       var asam_vote = $('input[name="lista_asamblea"]:checked').val();
       var consejo_vote = $('input[name="lista_consejo"]:checked').val();
 
-      console.log("LISTA ASAM",$('input[name="lista_asamblea"]:checked').val());
-      console.log("LISTA CONSEJO",$('input[name="lista_consejo"]:checked').val());
       if(asam_vote!=undefined && consejo_vote!=undefined){
         return true;
       }
       else{
-       
             Swal.fire({
             title: '<strong> LISTA NO SELECCIONADA </strong>',
             icon: 'info',
             html:
                 'Es necesario seleccionar alguna opción en las 2 listas para emitir su voto'
             });
-         
-
         return false;
       } 
     }
 
     function cerrar_sesion(){
-        //alert("seguro que desea cerrar sesion");
-
         Swal.fire({
         title: 'Cerrar Sesión',
         text: "¿Esta usted seguro que desea cerrar sesion?",
@@ -129,16 +105,9 @@
         cancelButtonColor: '#d33',
         confirmButtonText: 'SI, CONFIRMAR'
       }).then((result) => {
-        window.location.href = '/logout';
-        /*
         if (result.value) {
-          Swal.fire(
-            '¡Emitido!',
-            'Usted a emitido correctamente su voto.',
-            'success'
-          )
-        }*/
-
+            window.location.href = '/logout';
+        }
       });
 
     }

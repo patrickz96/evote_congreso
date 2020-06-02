@@ -1,6 +1,6 @@
 function verifySession(req, res, next) {
 
-  if(req.google_profile!=undefined){
+  if(req.session.google!=undefined){
     next();
   }else{
     res.redirect("/");

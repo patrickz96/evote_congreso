@@ -9,7 +9,8 @@ const VerifyToken = require(process.cwd()+'/auth/VerifyToken');
 router.get('/process-type',VerifyToken,function(req, res) {
     var status = req.session.status;
     var msg = req.session.msg ;
-    req.session = null;
+    req.session.status = undefined;
+    req.session.msg = undefined;
     res.render('./admin/process-type',{status: status, message: msg });
 });
 
