@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evote</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="librerias/scss/estilos.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <header>
+        <div class="cabecera">
+        <img src="images/logo-unsa.svg" alt="UNSA" class="logo">
+            <div class="titulo">
+                <h1><span class="text-big">Elecciones 2020</span></h1>
+                <span>Sistema Digital de Votación<b>E-vote</b></span>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- inicio formulario busqueda -->
+        <div class="container">
+        <div class="vertical-center">
+        <form class="formulario" onsubmit="return validateForm()">
+            <fieldset>
+                <legend>Sistema de Votacion No Aperturado</legend>
+                <div align="center">
+                    <h1> EL SISTEMA ELECTORAL NO SE ENCUENTRA APERTURADO PARA REALIZAR SU VOTO INGRESE EN EL HORARIO DE 9:00 AM A 11:00 AM DEL DIA 05/06/2020. </h1>
+                </div>
+            </fieldset>
+        </form>
+        </div>
+        </div>
+    </main>
+</body>
+</html>
+
+<script>
+    function validateForm(){
+      console.log("validating form");
+      return true;
+    }
+</script>

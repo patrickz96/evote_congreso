@@ -6,16 +6,43 @@ const db = require("../models").sequelize;
 
 const VerifySession = require('../auth/VerifySession');
 
+
+
+
+
 /****************LOGIN*******************/
-router.get('/', function(req, res) {
-    
-    if(req.session.google == undefined){
-        res.render('index');
+/****** APERTURA Y CIERRE DEL PROCESO ELECTORAL ******/
+router.get('/', async function(req, res) {
+    var data= await models.proceso_electoral.findOne({where:{id_proceso_electoral: 3},attributes: ['nombre','activo']});
+    if(data.activo==true){
+        //console.log("DENTRO");
+        if(req.session.google == undefined){
+            res.render('index');
+        }
+        else{
+            res.redirect('assistance');
+        }
     }
     else{
-        res.redirect('assistance');
+        console.log("NO DENTRO");
+        res.redirect('/apertura');
+        //res.render('no-apertura');
+    }
+    
+});
+
+
+router.get('/apertura',async function(req,res){
+    
+    var data= await models.proceso_electoral.findOne({where:{id_proceso_electoral: 3},attributes: ['nombre','activo']});
+    if(data.activo==true){
+        res.redirect('/');
+    }else{
+        res.render('no-apertura');
     }
 });
+
+
 router.post('/login', function(req, res) {
     res.redirect('assistance');
 });
@@ -23,6 +50,7 @@ router.post('/login', function(req, res) {
 /***************ASISTENCIA***************/
 
 router.get('/assistance',VerifySession,async function(req,res){
+
     //Verify if google user is an elector and if he is in the electoral padron 
     var query = "select pe.id_padron_electoral from elector e inner join padron_electoral pe "+
     "on e.id_elector = pe.id_elector where email='"+req.session.google.email+"'";
@@ -175,8 +203,8 @@ router.get('/vote',VerifySession,async function(req,res){
 
 router.post('/vote',VerifySession,async function(req,res){
     //console.log(req.body);
-    var lista_asamblea = await db.query("select id_lista_electoral,nombre from lista_electoral where id_lista_electoral="+req.body.lista_asamblea);
-    var lista_consejo = await db.query("select id_lista_electoral,nombre from lista_electoral where id_lista_electoral="+req.body.lista_consejo);
+    var lista_asamblea = await db.query("select id_lista_electoral,nombre,representacion from lista_electoral where id_lista_electoral="+req.body.lista_asamblea);
+    var lista_consejo = await db.query("select id_lista_electoral,nombre,representacion from lista_electoral where id_lista_electoral="+req.body.lista_consejo);
     req.session.status2 = "confirm-vote"; 
     
     req.session.msg = {facultad_nombre:req.body.facultad_nombre,id_asistencia:req.body.id_asistencia,lista_asamblea:lista_asamblea[0][0],lista_consejo:lista_consejo[0][0]};

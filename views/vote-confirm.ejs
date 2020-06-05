@@ -39,8 +39,9 @@
                     <div class="marcacion-voto" id="lista_asamblea"> 
                         <% var status; %>
                         <%if(status == "confirm-vote"){%>
-                            <input type="hidden" name="id_lista_asamblea" value='<%= data.lista_asamblea.id_lista_electoral %>' />
-                            <input type="text" name="lista_asamblea" value='<%= data.lista_asamblea.nombre %>' disabled />
+                            <input  type="hidden" name="id_lista_asamblea" value='<%= data.lista_asamblea.id_lista_electoral %>' />
+                            <input style="font-size:24px;text-align:center;" type="text" name="lista_asamblea" value='<%= data.lista_asamblea.nombre %>' disabled />
+                            <h2 style="color:black"> <%=data.lista_asamblea.representacion%> </h2>
                         <%}%>
                     </div>
                 </fieldset>
@@ -53,7 +54,8 @@
                         <% var status; %>
                         <%if(status == "confirm-vote"){%>
                             <input type="hidden" name="id_lista_consejo" value='<%= data.lista_consejo.id_lista_electoral %>'  />
-                            <input type="text" name="lista_consejo" value='<%= data.lista_consejo.nombre %>' disabled />
+                            <input style="font-size:24px;text-align:center;" type="text" name="lista_consejo" value='<%= data.lista_consejo.nombre %>' disabled />
+                            <h2 style="color:black"> <%=data.lista_consejo.representacion%> </h2>
                         <%}%>
                     </div>
 

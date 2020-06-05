@@ -4,7 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 
 var logger = require('morgan');
-var cookieSession = require('cookie-session')
+//var cookieSession = require('cookie-session')
+
 
 //Security and performance
 //var compression = require('compression');
@@ -30,12 +31,14 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+/*
 app.use(cookieSession(
 {
   name: 'session',
-  keys: ['status', 'msg','google','status2']
+  keys: ['status', 'msg','status2'] //google
 }
 ));
+*/
 
 
 const session = require('express-session');
@@ -64,8 +67,10 @@ app.use(function(req, res, next) {
 app.use(session({
   resave: false,
   saveUninitialized: true,
-  secret: 'SECRET' 
+  secret: 'ouis-0123',
+  cookie: { maxAge: 15*60*1000 } 
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -100,6 +105,8 @@ function(req, res) {
   //res.redirect('/success');
   //console.log()
   req.session.google = google_profile;
+  
+
   res.redirect('/assistance');
 });
 

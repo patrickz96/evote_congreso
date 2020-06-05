@@ -3,7 +3,7 @@
     "username": "postgres",
     "password": "infounsadbmaster2020evote",
     "database": "evote",
-    "host": "127.0.0.1",
+    "host": "10.100.100.206",
     "dialect": "postgres",
     "define": {
       "timestamps": true

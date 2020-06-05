@@ -5,13 +5,13 @@ const models = require(process.cwd()+"/models");
 const db = require(process.cwd()+"/models").sequelize;
 const VerifyToken = require(process.cwd()+'/auth/VerifyToken');
 
-/*router.get('/electoral-list',VerifyToken,function(req, res){
+router.get('/electoral-list',VerifyToken,function(req, res){
     var status = req.session.status;
     var msg = req.session.msg ;
     req.session.status = undefined;
     req.session.msg = undefined;
     res.render('./admin/electoral-list',{status: status, message: msg });
-});*/
+});
 
 router.post('/electoral-list',VerifyToken,function (req, res) {
     console.log(req.body);    
@@ -72,7 +72,8 @@ router.get('/electoral-list/all', VerifyToken, function (req, res) {
     ],
     order: [
         [models.tipo_proceso, 'nombre', 'ASC'],
-        [models.facultad, 'nombre', 'ASC']
+        [models.facultad, 'nombre', 'ASC'],
+        ['nombre', 'ASC']
     ]}).then(data => {
         res.status(200).send(data);
     })    .catch(err => {
