@@ -11,9 +11,11 @@ router.get('/panel',VerifyToken,function(req, res) {
     res.render('./admin/admin');
 });
 
+/*
 router.get('/register', function(req, res) {
     res.render('./admin/register');
 });
+*/
 
 /******* CLEAN ASISTENCE AND VOTATION *******/
 

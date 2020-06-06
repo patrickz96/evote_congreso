@@ -52,6 +52,7 @@ router.post('/login', function(req, res) {
   });
 });
 
+/*
 router.get('/register', function(req, res){
     var status = req.session.status;
     var msg = req.session.msg ;
@@ -80,6 +81,7 @@ router.post('/register', function(req, res) {
       return res.status(500).send("There was a problem adding the information to the database. "+err);
   });
 });
+*/
 
 router.get('/logout', function(req, res) {
   res.clearCookie("EvoteToken");

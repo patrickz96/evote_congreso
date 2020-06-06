@@ -98,8 +98,14 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-app.get('/auth/google',passport.authenticate('google', { scope : ['profile', 'email'] })); 
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/error' }),
+app.get('/auth/google',passport.authenticate('google', {
+	scope : ['profile', 'email'],
+	hostedDomain: ['unsa.edu.pe']
+}));
+ 
+app.get('/auth/google/callback', passport.authenticate('google', {
+	failureRedirect: '/error',
+	hostedDomain: ['unsa.edu.pe'] }),
 function(req, res) {
   // Successful authentication, redirect success.
   //res.redirect('/success');
