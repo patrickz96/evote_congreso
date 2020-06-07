@@ -15,9 +15,9 @@ $nombre_proceso = "Proceso electoral 2020";
 $list = [];
 $email_user = "notificacion@unsa.edu.pe";
 $email_pwd = "Temporal2000$";
-$email_name = "EVOTE - ENVIO DE CLAVES (TEST NO RESPONDER)";
+$email_name = "EVOTE - ENVIO DE CLAVES (PARA PRUEBA DEL SISTEMA)";
 $email_subject = "CLAVES DE INGRESO A ELECCIONES VIRTUALES - ".$nombre_proceso;
-$connStr = "host=localhost port=5432 dbname=evote user=postgres password=infounsadbmaster2020evote";
+$connStr = "host=10.100.100.206 port=5432 dbname=evote user=postgres password=infounsadbmaster2020evote";
 $id_active_process = 3;
 
 // Funciones
@@ -42,15 +42,27 @@ function read_file($filename){
 function send_keys($list, $process_name, $mailer, $conn){
 	echo "Preparing to send...".count($list)." keys in total\n";
 	$total = 0;
-	echo "<strong>la fecha inicio es:</strong> " . date("d") . " del " . date("m") . " de " . date("Y").", Hora: ".date("G").":".date("i").":".date("s")."<br>";
+	echo "<strong>la fecha inicio es:</strong> " . date("d") . " del " . date("m") . " de " . date("Y").", Hora: ".date("G").":".date("i").":".date("s")."<br>\n";
 	for($i = 0; $i < count($list); $i++){
 		$id = $list[$i][0];
 		$apn = utf8_decode($list[$i][1]);
 		$email = $list[$i][2];
 		$key = $list[$i][3];
 		$message = "<html>
-			Estimado(a) elector ".$apn.":<br/>
-			Es grato dirigirnos a usted para hacerle entrega de su clave para la eleccion virtual - ".$process_name.":<br/><br/><strong>Clave:</strong> <mark>".$key."</mark><br/><br/>No compartir esta clave con nadie, bajo su responsabilidad.<br/>No responder a este correo.<br> Gracias</html>";
+			Estimado(a) elector ".$apn.":<br/><br/>
+			Es grato dirigirnos a usted, para hacerle una invitación cordial para participar en los comisios electorales de Junio del 2020 de nuestra Universidad.<br/>
+			Este proceso electoral se realizará por primera vez de forma electrónica y deberá emitir su voto para los siguientes procesos:<br/><br/>
+			- Representantes docentes para Asamblea Universitaria<br/>
+			- Representantes docentes para Consejo de Facultad<br/><br/>
+			Por su seguridad le enviamos una clave secreta que es totalmente confidencial:<br/><br/>
+			<strong>Clave Secreta:</strong> <mark>".$key.'</mark><br/><br/>
+			El registro para ingresar a la aplicación informática: Voto Electrónico es únicamente con su correo institucional de la UNSA.<br/><br/>
+			Para efectuar su voto, debe ingresar el dia 05/06/2020 en el horario de 9:00 AM a 11:00 AM al siguiente Link:<br><br/>
+			Link: <a href="https://evote.unsa.edu.pe/">https://evote.unsa.edu.pe</a> <br/><br/>
+			Ante algun incidente, puede comunicarse al correo: ouisdesarrollo@unsa.edu.pe.<br/><br/>
+			<strong>Atte,<br/><br/>
+			Oficina Universitaria de Informática y Sistemas.</strong><br/>
+			</html>';
 		$mailer->msgHtml($message);
 		$mailer->addAddress($email, $apn);
 		if(!$mailer->send()){

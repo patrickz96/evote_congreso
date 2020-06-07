@@ -299,8 +299,9 @@ table {
 }
 
 .marcacion-voto input[type=radio]:checked + label {
-  background: #f0bf8f;
+  background: #fcd7d9;
 }
+
 
 .marcacion-voto input[type=radio]:checked + label::before {
   background: #76374a;
@@ -332,6 +333,56 @@ table {
 .marcacion-voto label:hover {
   background: rgba(0, 0, 0, 0.1);
 }
+
+/* FOR ADD OTHER COLOR */
+
+.marcacion-voto2 {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.marcacion-voto2 input[type=radio] {
+  display: none;
+}
+
+/*COLOR SELECT*/
+.marcacion-voto2 input[type=radio]:checked + label {
+  background: #d4fefb;
+}
+
+
+.marcacion-voto2 input[type=radio]:checked + label::before {
+  background: #76374a;
+}
+
+.marcacion-voto2 label {
+  color: #76374a;
+  font-size: 2em !important;
+  text-transform: none !important;
+  border-bottom: 1px #800337 solid;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  /*position: relative;*/
+}
+
+.marcacion-voto2 label::before {
+  content: "";
+  width: 17px;
+  height: 17px;
+  display: inline-block;
+  background: none;
+  border: 3px #76374a solid;
+  border-radius: 50%;
+  margin-right: 15px;
+  /*position: absolute;*/
+}
+
+.marcacion-voto2 label:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+
 
 /******/
 /*# sourceMappingURL=estilos.css.map */

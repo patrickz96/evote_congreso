@@ -30,7 +30,7 @@
                     <h2><strong>Usuario :</strong> <%= name %> </h2> 
                 </div>
                 <input type="hidden" name="id_asistencia" value=<%= id_asistencia %> >
-                <fieldset style="background-color: #ece0e0;">
+                <fieldset style="background-color: #edece2;">
                     <legend>Emisión de Votación</legend>
                     <h1>ASAMBLEA UNIVERSITARIA</h1>
                     <div class="marcacion-voto" id="lista_asamblea">
@@ -47,14 +47,17 @@
                     </div>
 
                 </fieldset>
+                <div style="padding-top: 30px;">
+                    <hr style="border-top: 1px dashed red;">
+                <div style="padding-top: 30px;">
 
-                <fieldset style="background-color: #ece9d4;"> 
+                <fieldset style="background-color: #fff6ff;"> 
                     <legend>Emisión de Votación</legend>
                     <h1>CONSEJO DE FACULTAD</h1>
                     <H3> <%= facultad_nombre %> </H3>
                     <input type="hidden" name="facultad_nombre" value='<%= facultad_nombre %>'>
 
-                    <div class="marcacion-voto" id="lista_consejo"> 
+                    <div class="marcacion-voto2" id="lista_consejo"> 
                         
                         <% lista_consejo.forEach(function(lista) { %>
                             <input type='radio' value='<%=lista.id_lista_electoral%>'  name='lista_consejo' id='<%= "lista_consejo-"+lista.id_lista_electoral%>'>
@@ -85,7 +88,7 @@
       }
       else{
             Swal.fire({
-            title: '<strong> LISTA NO SELECCIONADA </strong>',
+            title: '<strong> CÉDULA NO SELECCIONADA </strong>',
             icon: 'info',
             html:
                 'Es necesario seleccionar alguna opción en las 2 cédulas para emitir su voto'
