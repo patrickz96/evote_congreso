@@ -117,5 +117,17 @@ router.get('/faculty/all', VerifyToken, function (req, res) {
     });
 });
 
+router.get('/padron-list/all', VerifyToken, function (req, res) {
+    models.padron_electoral.findAll({
+    /*include:[
+        {model: models.facultad,attributes: ['id_facultad','nombre']},
+        {model: models.tipo_proceso,attributes: ['id_tipo_proceso','nombre']},
+    ]*/
+    }).then(data => {
+        res.status(200).send(data);
+    })    .catch(err => {
+        return res.status(500).send("Hubo un problema cargando la lista padron." + err);
+    });
+});
 
 module.exports = router;

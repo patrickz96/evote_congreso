@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     clave_secreta: {
       type: DataTypes.CHAR,
-      allowNull: false
+      allowNull: true
     },
     createdAt: {
       type: DataTypes.DATE,

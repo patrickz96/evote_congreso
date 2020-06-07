@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 
 var logger = require('morgan');
+const models = require("./models");
+const db = require("./models").sequelize;
+
 //var cookieSession = require('cookie-session')
 
 
@@ -93,8 +96,7 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
       //userProfile=profile;
-      google_profile= {email:profile.emails[0].value,name:profile.displayName};
-      return done(null, google_profile);
+      return done(null, {email:profile.emails[0].value,name:profile.displayName});
   }
 ));
 
@@ -105,15 +107,19 @@ app.get('/auth/google',passport.authenticate('google', {
  
 app.get('/auth/google/callback', passport.authenticate('google', {
 	failureRedirect: '/error',
-	hostedDomain: ['unsa.edu.pe'] }),
-function(req, res) {
-  // Successful authentication, redirect success.
-  //res.redirect('/success');
-  //console.log()
-  req.session.google = google_profile;
-  
+	hostedDomain: ['unsa.edu.pe'] }), async function(req, res) {
+    // Successful authentication, redirect success.
+    //res.redirect('/success');
+    //verify if the election is active
+    var data= await models.proceso_electoral.findOne({where:{id_proceso_electoral: 3},attributes: ['nombre','activo']});
+    if(data.activo==true){
+      req.session.google = req.user;
+      res.redirect('/assistance');
+    }
+    else{
+      res.redirect('/apertura');
+    }
 
-  res.redirect('/assistance');
 });
 
 

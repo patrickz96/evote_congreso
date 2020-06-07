@@ -5,24 +5,18 @@ module.exports = function(sequelize, DataTypes) {
     id_votacion: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
+      primaryKey: true
     },
     id_lista_electoral: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'lista_electoral',
-        key: 'id_lista_electoral'
-      }
+      primaryKey: true
     },
     id_asistencia: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'asistencia',
-        key: 'id_asistencia'
-      }
+      primaryKey: true
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -31,6 +25,11 @@ module.exports = function(sequelize, DataTypes) {
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false
+    },
+    id_tipo_proceso: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
     }
   }, {
     tableName: 'votacion'

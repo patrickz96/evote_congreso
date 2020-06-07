@@ -10,7 +10,6 @@ require "PHPMailer/src/SMTP.php";
 date_default_timezone_set("America/Lima");
 
 // Variables
-$file_padron = "/root/evote_bk/padron_claves.csv";
 $nombre_proceso = "Proceso electoral 2020";
 $list = [];
 $email_user = "notificacion@unsa.edu.pe";
@@ -18,7 +17,6 @@ $email_pwd = "Temporal2000$";
 $email_name = "EVOTE - ENVIO DE CLAVES (PARA PRUEBA DEL SISTEMA)";
 $email_subject = "CLAVES DE INGRESO A ELECCIONES VIRTUALES - ".$nombre_proceso;
 $connStr = "host=10.100.100.206 port=5432 dbname=evote user=postgres password=infounsadbmaster2020evote";
-$id_active_process = 3;
 
 // Funciones
 function get_db_connection($parameters){
@@ -26,17 +24,11 @@ function get_db_connection($parameters){
 	return $conn;
 }
 
-function read_file($filename){
-	$list = [];
-	echo "reading file ".$filename."\n";
-	if(($f = fopen($filename, "r")) !== FALSE){
-		fgetcsv($f, 1000, ","); # skip header
-		while(($data = fgetcsv($f, 1000, ",")) !== FALSE){
-			$list[] = $data;
-		}
-	}
-	fclose($f);
-	return $list;
+function get_id_active_process($conn){
+	$result = pg_query($conn, "select id_proceso_electoral as id from proceso_electoral order by id desc limit 1");
+	if(!$result) exit;
+	$line = pg_fetch_assoc($result);
+	return $line['id'];
 }
 
 function send_keys($list, $process_name, $mailer, $conn){
@@ -44,10 +36,10 @@ function send_keys($list, $process_name, $mailer, $conn){
 	$total = 0;
 	echo "<strong>la fecha inicio es:</strong> " . date("d") . " del " . date("m") . " de " . date("Y").", Hora: ".date("G").":".date("i").":".date("s")."<br>\n";
 	for($i = 0; $i < count($list); $i++){
-		$id = $list[$i][0];
-		$apn = utf8_decode($list[$i][1]);
-		$email = $list[$i][2];
-		$key = $list[$i][3];
+		$id = $list[$i]['id'];
+		$apn = utf8_decode($list[$i]['apn']);
+		$email = $list[$i]['email'];
+		$key = $list[$i]['clave_secreta'];
 		$message = "<html>
 			Estimado(a) elector ".$apn.":<br/><br/>
 			Es grato dirigirnos a usted, para hacerle una invitación cordial para participar en los comicios electorales de Junio del 2020 de nuestra Universidad.<br/>
@@ -99,10 +91,24 @@ function get_mailer_layout($email_user, $email_pwd, $email_name, $email_subject)
 	return $mail;
 }
 
-$list = read_file($file_padron);
-$mailer = get_mailer_layout($email_user, $email_pwd, $email_name, $email_subject);
+// Obtiene el padron de electores activos en el proceso electoral activo, a los que no se envio la clave secreta
+function get_padron_electoral($conn, $id_active_process){
+	$list = [];
+	$result = pg_query($conn, "select p.id_padron_electoral as id, e.apn, e.email, p.clave_secreta from elector e inner join padron_electoral p on e.id_elector = p.id_elector where e.estado = true and p.enviado = false and id_proceso_electoral = ".$id_active_process);
+
+	if(!$result){
+		echo "An error ocurred.\n";
+		exit;
+	}
+
+	$list = pg_fetch_all($result);
+	return $list;
+}
+
 $conn = get_db_connection($connStr);
-$result = pg_query($conn, "select id_elector, enviado from padron_electoral where id_proceso_electoral = ".$id_active_process);
+$id_active_process = get_id_active_process($conn);
+$list = get_padron_electoral($conn, $id_active_process);
+$mailer = get_mailer_layout($email_user, $email_pwd, $email_name, $email_subject);
 send_keys($list, $nombre_proceso, $mailer, $conn);
 pg_close($conn);
 ?>

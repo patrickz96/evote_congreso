@@ -67,5 +67,61 @@ router.post('/asistencia-clean',VerifyToken, function (req, res) {
 
 });
 
+// Muestra el padron del proceso activo, accion generar claves y la accion para enviar las claves.
+router.get('/padron-activo', VerifyToken, function(req, res){
+    res.render('./admin/padron-activo');
+});
+
+router.get('/padron-electoral/all', VerifyToken, function (req, res) {
+    models.padron_electoral.findAll({
+        include:[
+            {model: models.elector, attributes: ['id_elector','apn','email']},
+        ]
+    }).then(data => {
+        res.status(200).send(data);
+    }).catch(err => {
+        return res.status(500).send("There was a problem finding supervisor. "+err);
+    });
+});
+
+router.post('/send',VerifyToken, (req, res)=> {
+    var exec = require('child_process').exec;
+    exec('php -f ./scripts/send_keys.php', function(code, stdout, stderr) {
+        console.log('Exit code:', code);
+        console.log('Program output:', stdout);
+        console.log('Program stderr:', stderr);
+      });
+    return res.status(200).send("Se ha enviado los correos");
+});
+
+router.post('/generate_keys',VerifyToken, (req, res)=> {
+    const shell = require('shelljs')
+    shell.exec('/var/www/html/elecciones-virtuales/scripts/set_secret_keys.sh');
+    return res.status(200).send("Se han generado las claves");
+});
+
+router.post('/clean_keys',VerifyToken, (req, res)=> {
+    models.padron_electoral.update(
+        { enviado:false, clave_secreta: null},
+        {where: {}, plain:true})
+      .then(data => {
+        req.session.status = "ok"; req.session.msg =  "PADRON ELECTORAL ACTUALIZADO CORRECTAMENTE";
+        res.status(200).send(data);
+      }).catch(err=>{
+          req.session.status = "error";
+          req.session.msg = ""+err;
+          res.redirect('/admin/padron-activo');
+      });
+});
+
+router.post('/retry_send',VerifyToken, (req, res)=> {
+    var exec = require('child_process').exec;
+    exec('php -f ./scripts/retry_send.php', function(code, stdout, stderr) {
+        console.log('Exit code:', code);
+        console.log('Program output:', stdout);
+        console.log('Program stderr:', stderr);
+      });
+    return res.status(200).send("Se ha enviado los correos que faltaban");
+});
 
 module.exports = router;

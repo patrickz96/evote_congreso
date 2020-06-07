@@ -42,10 +42,12 @@
 
             <h1 class="well" align="center">Padron Electoral Activo</h1>
             <table class="table table-striped table-condensed " id="tabla_route"  > <!--table-condensed-->
-                <div class="buttons m-2">
+              <div class="buttons m-2">
+                <button type="button" class="btn btn-info" id="clean_keys">Limpiar Claves</button>
                 <button type="button" class="btn btn-success" id="generate_keys">Generar claves</button>
                 <button type="button" class="btn btn-danger" id="send_keys">Enviar claves</button>
-                </div>
+                <button type="button" class="btn btn-warning" id="retry_send">Reintentar faltantes</button>
+              </div>
                 <thead  class="bg-primary" >
                   <tr>
                     <th ><p align="center">#</p></th>
@@ -85,20 +87,26 @@
 
 $(document).ready(function() {
   initialize_table();
+  $('#clean_keys').click(function(){
+    confirm_clean_keys();
+  })
   $('#generate_keys').click(function(){
     confirm_generate_keys();
   })
   $('#send_keys').click(function(){
     confirm_send_keys();
   })
+  $('#retry_send').click(function(){
+    confirm_retry_send();
+  })
 });
 
 function initialize_table(){
-  get_routes();
+  get_padron();
 
 }
 
-function get_routes(){
+function get_padron(){
   $.get("/admin/padron-electoral/all", function(routes, status){
     /*console.log(routes);
     console.log(status);*/
@@ -107,7 +115,8 @@ function get_routes(){
     var i=1;
     routes.forEach(function (route) {
       let icon = route.enviado === true ? '<i class="text-success fas fa-check"></i>' : '<i class="text-danger fas fa-times"></i>';
-      table.append("<tr><td>" + i + "</td><td>" + route.elector.apn + "</td><td>"+ route.clave_secreta+ '</td><td>'+
+      let secret_key = route.clave_secreta == null ? '' : route.clave_secreta;
+      table.append("<tr><td>" + i + "</td><td>" + route.elector.apn + "</td><td>"+ secret_key + '</td><td>'+
          icon + '</td></tr>');
       i++;
     });
@@ -127,7 +136,7 @@ function refresh_table(){
   table.DataTable().destroy();
   //table.empty();
   table.find("tbody tr").remove();
-  get_routes();
+  get_padron();
 }
 
 function validateForm(){
@@ -141,6 +150,30 @@ const swalWithBootstrapButtons = Swal.mixin({
   },
   buttonsStyling: false
 })
+
+function confirm_clean_keys(){
+  Swal.fire({
+  title: '¿Esta seguro?',
+  text: "Se limpiaran todas las claves y nadie podra ingresar...",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Si, limpia!'
+  }).then((result) => {
+    if (result.value) {
+      clean_keys();
+      Swal.fire(
+        'Limpiado!',
+        'Las claves han sido borradas.',
+        'success'
+      )
+      sleep_5();
+      refresh_table();
+      //location.reload();
+    }
+  })
+}
 
 function confirm_generate_keys(){
   Swal.fire({
@@ -196,16 +229,58 @@ function confirm_send_keys(){
   })
 }
 
-function send_keys(){
-  $.post("/admin/send", function(routes, status){
-    console.log("finished post");
-  });
+function confirm_retry_send(){
+  swalWithBootstrapButtons.fire({
+  title: '¿Esta seguro?',
+  text: "Se tratara de enviar las claves que aun no son enviadas!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Si, envialas!',
+  cancelButtonText: 'No, cancela!',
+  reverseButtons: true
+  }).then((result) => {
+    if (result.value) {
+      retry_send();
+      swalWithBootstrapButtons.fire(
+        'Enviando!',
+        'Las claves se estan enviado por correo a los que faltan, espere...',
+        'success'
+      )
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Cancelado',
+        'No se ha enviado nada',
+        'error'
+      )
+    }
+  })
 }
 
+function clean_keys(){
+  $.post("/admin/clean_keys", function(routes, status){
+    console.log("se limpio las claves");
+  });
+}
 function generate_keys(){
   $.post("/admin/generate_keys", function(routes, status){
     console.log(status);
     console.log("se generaron las claves");
+  });
+}
+
+function send_keys(){
+  $.post("/admin/send", function(routes, status){
+    console.log("se envio las claves");
+  });
+}
+
+
+function retry_send(){
+  $.post("/admin/retry_send", function(routes, status){
+    console.log("se envio las claves a los que faltaban");
   });
 }
 
@@ -220,7 +295,3 @@ async function sleep_5() {
 
 </body>
 </html>
-
-
-
-

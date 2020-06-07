@@ -15,7 +15,6 @@ const VerifySession = require('../auth/VerifySession');
 router.get('/', async function(req, res) {
     var data= await models.proceso_electoral.findOne({where:{id_proceso_electoral: 3},attributes: ['nombre','activo']});
     if(data.activo==true){
-        //console.log("DENTRO");
         if(req.session.google == undefined){
             res.render('index');
         }
@@ -24,11 +23,8 @@ router.get('/', async function(req, res) {
         }
     }
     else{
-        console.log("NO DENTRO");
         res.redirect('/apertura');
-        //res.render('no-apertura');
     }
-    
 });
 
 
@@ -278,13 +274,15 @@ router.post('/confirm-vote',VerifySession,async function (req, res) {
                   // save vote lista_asamblea
                   await models.votacion.create({
                     id_lista_electoral:req.body.id_lista_asamblea,
-                    id_asistencia:req.body.id_asistencia
+                    id_asistencia:req.body.id_asistencia,
+                    id_tipo_proceso:1
                   },{transaction});
                   
                   // save vote lista_consejo
                   await models.votacion.create({
                       id_lista_electoral:req.body.id_lista_consejo,
-                      id_asistencia:req.body.id_asistencia
+                      id_asistencia:req.body.id_asistencia,
+                      id_tipo_proceso:2
                   },{transaction});
             
                   // commit
