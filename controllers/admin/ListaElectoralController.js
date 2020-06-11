@@ -8,8 +8,11 @@ const VerifyToken = require(process.cwd()+'/auth/VerifyToken');
 router.get('/electoral-list',VerifyToken,function(req, res){
     var status = req.session.status;
     var msg = req.session.msg ;
+    console.log("STATUS: ",status);
+    console.log("MSG: ",msg);
     req.session.status = undefined;
     req.session.msg = undefined;
+
     res.render('./admin/electoral-list',{status: status, message: msg });
 });
 
@@ -57,7 +60,7 @@ router.post('/electoral-list',VerifyToken,function (req, res) {
       }).catch(err=>{
           req.session.status = "error"; req.session.msg = ""+err;
           res.redirect('/admin/electoral-list');
-      });
+      });   
     
 });
 

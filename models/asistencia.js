@@ -20,6 +20,16 @@ module.exports = function(sequelize, DataTypes) {
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false
+    },
+    url_pdf: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'URL'
+    },
+    voto: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {
     tableName: 'asistencia'

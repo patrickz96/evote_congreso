@@ -20,8 +20,10 @@ var AdminController = require('./controllers/AdminController');
 var ProcesoElectoralController = require('./controllers/admin/ProcesoElectoralController');
 var TipoProcesoController = require('./controllers/admin/TipoProcesoController');
 var ListaElectoralController = require('./controllers/admin/ListaElectoralController');
+var ReportController = require('./controllers/admin/ReportController');
 //User Controllers
 var UserController = require('./controllers/UserController');
+
 
 
 var app = express();
@@ -34,20 +36,20 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 /*
 app.use(cookieSession(
 {
-  name: 'session',
-  keys: ['status', 'msg','status2'] //google
+  name: 'session_admin',
+  keys: ['status', 'msg'] //google
 }
 ));
 */
 
-
 const session = require('express-session');
 var passport = require('passport');
 
-var google_profile;
+//var google_profile;
 
 /*
 app.use(function(req, res, next) {
@@ -146,6 +148,9 @@ app.use('/admin', AdminController);
 app.use('/admin', ProcesoElectoralController);
 app.use('/admin', TipoProcesoController);
 app.use('/admin', ListaElectoralController);
+app.use('/admin', ReportController);
+
+
 
 
 // catch 404 and forward to error handler

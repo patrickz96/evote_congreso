@@ -14,7 +14,7 @@ $nombre_proceso = "Proceso electoral 2020";
 $list = [];
 $email_user = "notificacion@unsa.edu.pe";
 $email_pwd = "Temporal2000$";
-$email_name = "EVOTE - ENVIO DE CLAVES (PARA PRUEBA DEL SISTEMA)";
+$email_name = "EVOTE - ENVIO DE CLAVES (PARA PRUEBA FINAL DEL SISTEMA)";
 $email_subject = "CLAVES DE INGRESO A ELECCIONES VIRTUALES - ".$nombre_proceso;
 $connStr = "host=10.100.100.206 port=5432 dbname=evote user=postgres password=infounsadbmaster2020evote";
 
@@ -42,17 +42,17 @@ function send_keys($list, $process_name, $mailer, $conn){
 		$key = $list[$i]['clave_secreta'];
 		$message = "<html>
 			Estimado(a) elector ".$apn.":<br/><br/>
-			Es grato dirigirnos a usted, para hacerle una invitación cordial para participar en los comicios electorales de Junio del 2020 de nuestra Universidad.<br/>
+			Es grato dirigirnos a usted, para hacerle una invitación cordial para participar en los comicios electorales de Junio del 2020 en nuestra Universidad.<br/>
 			Este proceso electoral se realizará por primera vez de forma electrónica y deberá emitir su voto para los siguientes procesos:<br/><br/>
 			- Representantes docentes para Asamblea Universitaria<br/>
 			- Representantes docentes para Consejo de Facultad<br/><br/>
 			Por su seguridad le enviamos una clave secreta que es totalmente confidencial:<br/><br/>
-			<strong>Clave Secreta:</strong> <mark>".$key.'</mark><br/><br/>
-			El registro para ingresar a la aplicación informática: Voto Electrónico es únicamente con su correo institucional de la UNSA.<br/><br/>
-			Para efectuar su voto, debe ingresar el dia 08/06/2020 en el horario de 07:00 PM a 09:00 PM al siguiente Link:<br><br/>
-			Link: <a href="https://evote.unsa.edu.pe/">https://evote.unsa.edu.pe</a> <br/><br/>
-			Ante algun incidente, puede comunicarse al correo: ouisdesarrollo@unsa.edu.pe.<br/><br/>
-			<strong>Atte,<br/><br/>
+			<strong>Clave Secreta:</strong>&nbsp;<mark>".$key.'</mark><br/><br/>
+			El registro para ingresar a la aplicación informática: Voto Electrónico, es únicamente con su correo institucional de la UNSA.<br/><br/>
+			Para efectuar su voto, debe ingresar el día 11/06/2020 en el horario de 05:45 PM a 06:00 PM al siguiente Link:<br><br/>
+			Link:&nbsp;<a href="https://evote.unsa.edu.pe/">https://evote.unsa.edu.pe</a> <br/><br/>
+			Ante algún incidente, puede comunicarse al correo: &nbsp; ouisdesarrollo@unsa.edu.pe.<br/><br/>
+			<strong>Atte.<br/><br/>
 			Oficina Universitaria de Informática y Sistemas.</strong><br/>
 			</html>';
 		$mailer->msgHtml($message);
@@ -63,13 +63,13 @@ function send_keys($list, $process_name, $mailer, $conn){
 			$total++;
 			echo $total.": Mensaje enviado con exito a ".$email."\n";
 			// update database
-			pg_query("UPDATE padron_electoral SET enviado = true WHERE id_elector = ".$id);
+			echo "actualizando ".$id."\n";
+			pg_query($conn, "UPDATE padron_electoral SET enviado = true WHERE id_padron_electoral = ".$id);
 		}
 		$mailer->ClearAllRecipients();
 		sleep(1);
 	}
 	echo "<strong>la fecha fin es:</strong> " . date("d") . " del " . date("m") . " de " . date("Y").", Hora: ".date("G").":".date("i").":".date("s")."<br>";
-
 }
 
 function get_mailer_layout($email_user, $email_pwd, $email_name, $email_subject){
