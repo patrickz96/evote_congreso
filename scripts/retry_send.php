@@ -14,7 +14,7 @@ $nombre_proceso = "Proceso electoral 2020";
 $list = [];
 $email_user = "notificacion@unsa.edu.pe";
 $email_pwd = "Temporal2000$";
-$email_name = "EVOTE - ENVIO DE CLAVES (PARA PRUEBA FINAL DEL SISTEMA)";
+$email_name = "EVOTE - ENVIO DE CLAVES (PARA PRUEBA DEL SISTEMA)";
 $email_subject = "CLAVES DE INGRESO A ELECCIONES VIRTUALES - ".$nombre_proceso;
 $connStr = "host=10.100.100.206 port=5432 dbname=evote user=postgres password=infounsadbmaster2020evote";
 
@@ -49,7 +49,7 @@ function send_keys($list, $process_name, $mailer, $conn){
 			Por su seguridad le enviamos una clave secreta que es totalmente confidencial:<br/><br/>
 			<strong>Clave Secreta:</strong>&nbsp;<mark>".$key.'</mark><br/><br/>
 			El registro para ingresar a la aplicación informática: Voto Electrónico, es únicamente con su correo institucional de la UNSA.<br/><br/>
-			Para efectuar su voto, debe ingresar el día 11/06/2020 en el horario de 05:45 PM a 06:00 PM al siguiente Link:<br><br/>
+			Para efectuar su voto, debe ingresar el día 13/06/2020 en el horario de 08:00 AM a 03:00 PM al siguiente Link:<br><br/>
 			Link:&nbsp;<a href="https://evote.unsa.edu.pe/">https://evote.unsa.edu.pe</a> <br/><br/>
 			Ante algún incidente, puede comunicarse al correo: &nbsp; ouisdesarrollo@unsa.edu.pe.<br/><br/>
 			<strong>Atte.<br/><br/>

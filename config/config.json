@@ -5,6 +5,7 @@
     "database": "evote",
     "host": "10.100.100.206",
     "dialect": "postgres",
+    "timezone": "America/Lima",
     "define": {
       "timestamps": true
     }

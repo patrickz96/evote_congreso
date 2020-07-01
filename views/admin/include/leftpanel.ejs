@@ -30,7 +30,7 @@
       <ul class="sidebar-menu">
         <li class="header" align="center" style="color:#3c8dbc; font-size: 14px"> OPCIONES</li>
         <li class="treeview">
-        <a href="/admin/panel" id='resume'>
+        <a href="/admin/panel" id='clean_system'>
             <i class="fa fa-broom"></i> <span>LIMPIAR SISTEMA</span>
             <span class="pull-right-container">
               <!--i class="fa fa-angle-left pull-right"></i-->
@@ -65,7 +65,7 @@
               </a>
           </li> 
 
-          <li class="treeview">
+          <li class="treeview" id='padron_activo'>
             <a href="/admin/padron-activo">
                 <i class="fa fa-paper-plane"></i> <span> PADRON ACTIVO </span>
                 <span class="pull-right-container">
@@ -161,6 +161,9 @@ data.company_name = "juanito";
 
     $('#electoral_process').hide();
     $('#election_type').hide();
+    $('#padron_activo').hide();
+    $('#clean_system').hide();
+    
   }
 
 

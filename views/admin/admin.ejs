@@ -56,7 +56,7 @@
     </section-->
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content" id = "mycontent">
 
       <% include dashboard.ejs %> 
       <!-- Default box -->
@@ -89,6 +89,26 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <!-- SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+<script>
+
+function GetIdCompany(){
+    return JSON.parse($.ajax({
+        type: "GET",
+        url: "/admin/get_info_user",
+        cache: false,
+        async: false
+    }).responseText);
+ }
+
+//console.log("Changing name left panel");
+var data = GetIdCompany();
+
+  if(data.rol == '1'){
+    $('#mycontent').hide();
+  }
+
+</script>
 
 </body>
 </html>

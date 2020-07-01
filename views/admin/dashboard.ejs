@@ -71,7 +71,7 @@ function get_tb_asistencia(){
 
 function get_tb_votacion(){
   $.get("/admin/votacion/all", function(asistencias, status){
-    console.log(asistencias);
+    //console.log(asistencias);
     var table = $('#table_votation');
     var i=1;
     
@@ -91,6 +91,7 @@ function clean_tb_votacion(){
   Swal.fire({
         title: 'Usted esta a punto de limpiar la tabla de votacion ingrese el password',
         input: 'text',
+        
         icon: 'warning',
         showCancelButton: true,
         reverseButtons: true,
@@ -98,7 +99,7 @@ function clean_tb_votacion(){
         cancelButtonColor: '#d33',
         confirmButtonText: 'SI, CONFIRMAR'
       }).then((result) => {
-        console.log(result);
+        //console.log(result);
         if (result.value) {
           var rpta = $.ajax({
               type: "POST",
