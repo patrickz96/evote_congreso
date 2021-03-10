@@ -41,7 +41,7 @@ https://github.com/UNSA-OUIS/elecciones-virtuales
 cd elecciones-virtuales
 npm install
 npm audit fix
-pm2 start ./bin/www # start the app in background
+pm2 start ./bin/www --name 'evote' # start the app in background
 pm2 list # to retrieve its ID
 pm2 stop ID 
 pm2 delete ID 
